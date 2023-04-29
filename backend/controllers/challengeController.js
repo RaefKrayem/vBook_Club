@@ -11,14 +11,7 @@ const getChallenges = asyncHandler(async (req, res) => {
     if (error) {
       throw error;
     }
-
-    if (results.length === 0) {
-      res
-        .status(404)
-        .json({ message: "There is no challenges. You can start now!" });
-    } else {
-      res.status(200).json(results);
-    }
+    res.status(200).json(results);
   });
 });
 
@@ -76,7 +69,7 @@ const createChallenge = asyncHandler(async (req, res) => {
           if (error) {
             throw error;
           } else {
-            res.status(201).json({ message: "Challenge created" });
+            res.status(201).json(challenge);
           }
         });
       }
@@ -88,17 +81,12 @@ const createChallenge = asyncHandler(async (req, res) => {
 // @route   PUT /api/challenges/update
 // @access  Private
 const updateChallenge = asyncHandler(async (req, res) => {
-  const {
-    challenge_id,
-    name,
-    total_pages,
-    completed_pages,
-    start_date,
-    end_date,
-  } = req.body;
+  const { name, total_pages, completed_pages, start_date, end_date } = req.body;
+
+  const challenge_id = req.params.id;
 
   const getChallengeQuery =
-    "SELECT * FROM challenges WHERE id = ? and creator_id = ?";
+    "SELECT * FROM challenges WHERE id = ? and creator_id = ? && status = 'in progress'";
   db.query(getChallengeQuery, [challenge_id, req.user.id], (error, results) => {
     if (error) {
       throw error;
@@ -122,11 +110,9 @@ const updateChallenge = asyncHandler(async (req, res) => {
       if (challenge.end_date < challenge.start_date) {
         res.status(400).json({ message: "End date is before start date." });
       }
-      // if the completed pages is greater than the total pages, return error
+      // if the completed pages is greater than the total pages, set completed pages to total pages
       if (challenge.completed_pages > challenge.total_pages) {
-        res.status(400).json({
-          message: "Completed pages is greater than total pages.",
-        });
+        challenge.completed_pages = challenge.total_pages;
       }
 
       // if current new completed pages is less than the current completed pages, return error
@@ -135,6 +121,18 @@ const updateChallenge = asyncHandler(async (req, res) => {
           message:
             "Completed pages cannot be less than current completed pages.",
         });
+      }
+
+      if (challenge.completed_pages === challenge.total_pages) {
+        challenge.status = "completed";
+      }
+
+      // if end date is before today, and status is not completed, set status to failed
+      if (
+        challenge.end_date < new Date().toISOString().slice(0, 10) &&
+        challenge.status !== "completed"
+      ) {
+        challenge.status = "failed";
       }
 
       // update Query
@@ -164,7 +162,7 @@ const updateChallenge = asyncHandler(async (req, res) => {
 // @access  Private
 const deleteChallenge = asyncHandler(async (req, res) => {
   console.log("delete challenge function in backend");
-  const challenge_id = req.params.challenge_id;
+  const challenge_id = req.params.id;
   const getChallengeQuery =
     "SELECT * FROM challenges WHERE id = ? AND creator_id = ?";
   db.query(getChallengeQuery, [challenge_id, req.user.id], (error, results) => {
@@ -178,7 +176,7 @@ const deleteChallenge = asyncHandler(async (req, res) => {
         if (error) {
           throw error;
         } else {
-          res.status(200).json({ challenge_id: challenge_id });
+          res.status(200).json({ id: challenge_id });
         }
       });
     }

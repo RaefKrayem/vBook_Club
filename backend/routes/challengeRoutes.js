@@ -12,7 +12,7 @@ const {
 router.get("/", protect, getChallenges);
 router.get("/challenge", protect, getChallenge);
 router.post("/create", protect, createChallenge);
-router.put("/update", protect, updateChallenge);
-router.delete("/delete/:challenge_id", protect, deleteChallenge);
+router.put("/update/:id", protect, updateChallenge);
+router.delete("/delete/:id", protect, deleteChallenge);
 
 module.exports = router;

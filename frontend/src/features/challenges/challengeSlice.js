@@ -97,11 +97,11 @@ export const challengeSlice = createSlice({
         state.isSuccess = true;
         state.challenges = action.payload;
       })
-      .addCase(getAllChallenges.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-      })
+      // .addCase(getAllChallenges.rejected, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isError = true;
+      //   state.message = action.payload.message;
+      // })
       .addCase(deleteChallenge.pending, (state) => {
         state.isLoading = true;
       })

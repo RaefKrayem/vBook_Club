@@ -28,16 +28,34 @@ const getChallenges = async (token) => {
 
 // Delete challenge
 const deleteChallenge = async (challenge_id, token) => {
-  console.log("challenge_id", challenge_id);
-  console.log("token", token);
   // send the token in the request header
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.delete(
-    API_URL + "delete?challenge_id=" + challenge_id,
+  try {
+    const response = await axios.delete(
+      API_URL + "delete/" + challenge_id,
+      config
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// update challenge
+const updateChallenge = async (challenge_id, challengeData, token) => {
+  // send the token in the request header
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.put(
+    API_URL + "update/" + challenge_id,
+    challengeData,
     config
   );
   return response.data;

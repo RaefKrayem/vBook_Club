@@ -18,7 +18,7 @@ function Dashboard() {
   );
 
   useEffect(() => {
-    if (isError) {
+    if (isError && challenges.length > 0) {
       console.log(message);
     }
 
@@ -43,22 +43,22 @@ function Dashboard() {
         <h1>Welcome {user && user.username}</h1>
         <p>Challenges Dashboard</p>
       </section>
-      <ChallengeForm />
 
       <section className="content">
         {challenges.length > 0 ? (
           <div className="goals">
             {challenges.map((challenge) => (
-              <ChallengeItem
-                key={challenge._id || challenge.id}
-                challenge={challenge}
-              />
+              <ChallengeItem key={challenge.id} challenge={challenge} />
             ))}
           </div>
         ) : (
           <h3>You have not set any challenges</h3>
         )}
       </section>
+
+      <h1>Create new Challenges</h1>
+
+      <ChallengeForm />
     </>
   );
 }

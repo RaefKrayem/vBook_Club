@@ -86,6 +86,7 @@ function Login() {
               name="password"
               value={password}
               placeholder="Enter password"
+              // minLength={8}
               onChange={onChange}
             />
           </div>

@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { deleteChallenge } from "../features/challenges/challengeSlice";
+import { deleteChallenge } from "../../features/challenges/challengeSlice";
 
 function ChallengeItem({ challenge }) {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ function ChallengeItem({ challenge }) {
       <div>End Date: {challenge.end_date.slice(0, 10)}</div>
       <div>Completed pages: {challenge.completed_pages}</div>
       <div>total pages: {challenge.total_pages}</div>
-      <div>satus: {challenge.status}</div>
+      <div>status: {challenge.status}</div>
 
       <button
         className="close"

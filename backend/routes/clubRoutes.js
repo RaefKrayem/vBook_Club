@@ -15,6 +15,6 @@ router.post("/", protect, createClub);
 router.get("/club", protect, getClub);
 router.get("/myClubs", protect, getMyClubs);
 router.post("/join", protect, joinClub);
-router.delete("/leave", protect, leaveClub);
+router.delete("/leave/:id", protect, leaveClub);
 
 module.exports = router;

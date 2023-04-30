@@ -7,16 +7,11 @@ const { uuid } = require("uuidv4");
 // @access  Private
 const getClubs = asyncHandler(async (req, res) => {
   const getClubsQuery = "SELECT * FROM clubs";
-  db.query(getClubsQuery, (error, results) => {
+  db.query(getClubsQuery, [req.user.id], (error, results) => {
     if (error) {
       throw error;
     }
-
-    if (results.length === 0) {
-      res.status(404).json({ message: "No Clubs in Database" });
-    } else {
-      res.status(200).json({ clubs: results });
-    }
+    res.status(200).json(results);
   });
 });
 
@@ -24,16 +19,22 @@ const getClubs = asyncHandler(async (req, res) => {
 // @route   GET /api/clubs/myClubs
 // @access  Private
 const getMyClubs = asyncHandler(async (req, res) => {
-  const getClubsQuery = "SELECT * FROM join_club WHERE user_id = ?";
+  const getClubsQuery = "SELECT club_id FROM join_club WHERE user_id = ?";
   db.query(getClubsQuery, [req.user.id], (error, results) => {
     if (error) {
       throw error;
     }
 
     if (results.length === 0) {
-      res.status(404).json({ message: "Join clubs and start chatting" });
+      res.status(200).json(results);
     } else {
-      res.status(200).json({ clubs: results });
+      // request all friends info from users table
+      const clubs = results.map((club) => club.club_id);
+      const getClubsInfoQuery = "SELECT * FROM clubs WHERE id IN (?)";
+      db.query(getClubsInfoQuery, [clubs], (error, results) => {
+        if (error) throw error;
+        res.status(200).json(results);
+      });
     }
   });
 });
@@ -59,7 +60,7 @@ const getClub = asyncHandler(async (req, res) => {
 // @route   POST /api/clubs/join
 // @access  Private
 const joinClub = asyncHandler(async (req, res) => {
-  const club_id = req.body.club_id;
+  const club_id = req.body.id;
   const joinClubQuery =
     "INSERT INTO join_club (club_id, user_id) VALUES (?, ?)";
 
@@ -67,8 +68,11 @@ const joinClub = asyncHandler(async (req, res) => {
     if (error) {
       throw error;
     } else {
-      res.status(200).json({
-        message: `User ${req.user.id} joined ${club_id} successfully`,
+      // select the club info from clubs table where id = club_id
+      const getClubQuery = "SELECT * FROM clubs WHERE id = ?";
+      db.query(getClubQuery, [club_id], (error, results) => {
+        if (error) throw error;
+        res.status(200).json(results);
       });
     }
   });
@@ -78,20 +82,41 @@ const joinClub = asyncHandler(async (req, res) => {
 // @route   DELETE /api/clubs/leave
 // @access  Private
 const leaveClub = asyncHandler(async (req, res) => {
-  const club_id = req.body.club_id;
+  const club_id = req.params.id;
 
-  // Update the text of the goal in the database
-  const unsaveQuery = "DELETE FROM join_club WHERE club_id = ? and user_id = ?";
+  const leaveQuery = "DELETE FROM join_club WHERE club_id = ? and user_id = ?";
 
-  db.query(unsaveQuery, [club_id, req.user.id], function (error, results) {
+  db.query(leaveQuery, [club_id, req.user.id], function (error, results) {
     if (error) {
       console.error(error);
       return res.status(500).json({ message: "Internal Server Error" });
     }
     if (results.affectedRows === 0) {
       return res.status(404).json({ message: `Club ${club_id} not found.` });
+    } else {
+      // select the clubs ids from join_club table where user_id = req.user.id
+      const getClubsQuery = "SELECT club_id FROM join_club WHERE user_id = ?";
+      db.query(getClubsQuery, [req.user.id], (error, results) => {
+        if (error) {
+          throw error;
+        } else {
+          console.log(club_id);
+          res.status(200).json({ id: club_id });
+          // select the clubs info from clubs table where club_id IN results
+          // const clubs = results.map((club) => club.club_id);
+          // if (clubs.length > 0) {
+          //   const getClubsInfoQuery = "SELECT * FROM clubs WHERE id IN (?)";
+          //   db.query(getClubsInfoQuery, [clubs], (error, results) => {
+          //     if (error) throw error;
+          //     res.status(200).json(results);
+          //   });
+          // } else {
+          //   // return an empty array if no clubs are found
+          //   res.status(200).json([]);
+          // }
+        }
+      });
     }
-    res.status(200).json({ message: `Leaved club ${club_id} successfully.` });
   });
 });
 

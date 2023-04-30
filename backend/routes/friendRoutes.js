@@ -9,6 +9,6 @@ const {
 
 router.get("/", protect, getFriends);
 router.get("/friend", protect, getFriend);
-router.delete("/remove", protect, removeFriend);
+router.delete("/remove/:id", protect, removeFriend);
 
 module.exports = router;

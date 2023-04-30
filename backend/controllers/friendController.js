@@ -53,7 +53,7 @@ const getFriend = asyncHandler(async (req, res) => {
 // @access  Private
 const removeFriend = asyncHandler(async (req, res) => {
   const user_id = req.user.id;
-  const friend_id = req.body.friend_id;
+  const friend_id = req.params.id;
 
   // check if friend exists
   const checkFriendQuery =
@@ -77,7 +77,7 @@ const removeFriend = asyncHandler(async (req, res) => {
           if (results.affectedRows === 0) {
             res.status(404).json({ message: "Friend not found" });
           } else {
-            res.status(200).json({ message: `Friend ${friend_id} removed` });
+            res.status(200).json({ id: friend_id });
           }
         }
       );

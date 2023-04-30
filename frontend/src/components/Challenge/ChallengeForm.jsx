@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createChallenge } from "../features/challenges/challengeSlice";
+import { createChallenge } from "../../features/challenges/challengeSlice";
 import { format } from "date-fns";
 
 function ChallengeForm() {

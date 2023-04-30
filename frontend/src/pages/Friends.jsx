@@ -2,32 +2,31 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // to check if the user exists in the local storage
 import { useSelector, useDispatch } from "react-redux";
-import ChallengeForm from "../components/Challenge/ChallengeForm";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
-import { getAllChallenges, reset } from "../features/challenges/challengeSlice";
-import ChallengeItem from "../components/Challenge/ChallengeItem";
+import { getFriends, reset } from "../features/friends/friendSlice";
+import FriendItem from "../components/FriendItem";
 
-function Dashboard() {
+function Friends() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-  const { challenges, isLoading, isError, message } = useSelector(
-    (state) => state.challenges
+  const { friends, isLoading, isError, message } = useSelector(
+    (state) => state.friends
   );
 
   useEffect(() => {
-    if (isError && challenges.length > 0) {
+    if (isError && friends.length > 0) {
       console.log(message);
     }
 
     if (!user) navigate("/login");
 
-    // get all challenges and put it in challenges variable above to be used in the return
-    dispatch(getAllChallenges());
+    // get all friends and put it in friends variable above to be used in the return
+    dispatch(getFriends());
 
-    // when the component unmounts, reset the challenges state by returning a function from useEffect
+    // when the component unmounts, reset the friends state by returning a function from useEffect
     return () => {
       dispatch(reset());
     };
@@ -41,26 +40,27 @@ function Dashboard() {
     <>
       <section className="heading">
         <h1>Welcome {user && user.username}</h1>
-        <p>Challenges Dashboard</p>
+        <p>Friends List</p>
       </section>
 
       <section className="content">
-        {challenges.length > 0 ? (
+        {friends.length > 0 ? (
           <div className="goals">
-            {challenges.map((challenge) => (
-              <ChallengeItem key={challenge.id} challenge={challenge} />
+            {friends.map((friend) => (
+              <FriendItem key={friend.id} friend={friend} />
             ))}
           </div>
         ) : (
-          <h3>You have not set any challenges</h3>
+          <h3>Start Adding friends</h3>
         )}
       </section>
 
-      <h1>Create new Challenges</h1>
+      <h1>Add new Friend</h1>
 
-      <ChallengeForm />
+      {/* Users component to let the user add new friends */}
+      {/* <Users /> */}
     </>
   );
 }
 
-export default Dashboard;
+export default Friends;

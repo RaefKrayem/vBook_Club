@@ -1,21 +1,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import clubService from "./clubService";
+import messageService from "./messageService";
 
 const initialState = {
-  clubs: [],
+  messages: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: "",
 };
 
-// get all clubs
-export const getAllClubs = createAsyncThunk(
-  "clubs/getAll",
-  async (_, thunkAPI) => {
+// get all messages
+export const getMessages = createAsyncThunk(
+  "messages/getMessages",
+  async (chat_id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await clubService.getClubs(token);
+      return await messageService.getMessages(chat_id, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -28,13 +28,13 @@ export const getAllClubs = createAsyncThunk(
   }
 );
 
-// join club
-export const joinClub = createAsyncThunk(
-  "clubs/join",
-  async (club_id, thunkAPI) => {
+// send message
+export const sendMessage = createAsyncThunk(
+  "messages/sendMessage",
+  async ({ content, chat_id }, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await clubService.joinClub(club_id, token);
+      return await messageService.sendMessage({ content, chat_id }, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -47,42 +47,43 @@ export const joinClub = createAsyncThunk(
   }
 );
 
-export const clubSlice = createSlice({
-  name: "clubs",
+export const messageSlice = createSlice({
+  name: "messages",
   initialState,
   reducers: {
     reset: (state) => initialState,
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllClubs.pending, (state) => {
+      .addCase(getMessages.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllClubs.fulfilled, (state, action) => {
+      .addCase(getMessages.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.clubs = action.payload;
+        state.messages = payload;
       })
-      .addCase(getAllClubs.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload.message;
-      })
-      .addCase(joinClub.pending, (state) => {
+      // .addCase(getMessages.rejected, (state, { payload }) => {
+      //     state.isLoading = false;
+      //     state.isError = true;
+      //     state.message = payload;
+      // }
+      // )
+      .addCase(sendMessage.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(joinClub.fulfilled, (state, action) => {
+      .addCase(sendMessage.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.isSuccess = true;
-        // state.myClubs.push(action.payload);
+        state.messages = [...state.messages, payload];
       })
-      .addCase(joinClub.rejected, (state, action) => {
+      .addCase(sendMessage.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.isError = true;
-        state.message = action.payload;
+        state.message = payload;
       });
   },
 });
 
-export const { reset } = clubSlice.actions;
-export default clubSlice.reducer;
+export const { reset } = messageSlice.actions;
+export default messageSlice.reducer;

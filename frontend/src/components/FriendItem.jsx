@@ -15,6 +15,8 @@ function FriendItem({ friend }) {
       >
         X
       </button>
+
+      <button>Chat</button>
     </div>
   );
 }

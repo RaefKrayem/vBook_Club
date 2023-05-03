@@ -4,8 +4,8 @@ import {
   FaUser,
   FaUserFriends,
 } from "react-icons/fa";
-
 import { MdGroups } from "react-icons/md";
+import { RiMessage3Fill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
@@ -45,6 +45,12 @@ function Header() {
               <Link to="/friends">
                 <FaUserFriends />
                 Friends
+              </Link>
+            </li>
+            <li>
+              <Link to="/inbox">
+                <RiMessage3Fill />
+                Inbox
               </Link>
             </li>
             <li>

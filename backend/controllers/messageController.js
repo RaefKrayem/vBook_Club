@@ -6,59 +6,32 @@ const { uuid } = require("uuidv4");
 // @route   GET /api/messages
 // @access  Private
 const getMessages = asyncHandler(async (req, res) => {
-  const { sender_id, receiver_id } = req.body;
+  const chat_id = req.params.id;
 
-  // get messages between two users
+  // get messages from a chat
   const getMessagesQuery =
-    "SELECT * FROM messages WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) ORDER BY sent_at ASC";
-  db.query(
-    getMessagesQuery,
-    [sender_id, receiver_id, receiver_id, sender_id],
-    (error, results) => {
-      if (error) {
-        throw error;
-      } else if (results.length === 0) {
-        res.status(404).json({ message: `No messages found.` });
-      } else {
-        // select the sender_id and receiver_id info from users table
-        const getSenderReceiverQuery =
-          "SELECT id, username, email FROM users WHERE id = ? OR id = ?";
-        db.query(
-          getSenderReceiverQuery,
-          [sender_id, receiver_id],
-          (error, results2) => {
-            if (error) {
-              throw error;
-            } else {
-              // add sender and receiver info to each message
-              results.forEach((message) => {
-                results2.forEach((user) => {
-                  if (message.sender_id === user.id) {
-                    message.sender_username = user.username;
-                    message.sender_email = user.email;
-                  }
-                });
-              });
-            }
-            res.status(200).json(results);
-          }
-        );
-      }
+    "SELECT * FROM messages WHERE chat_id = ? ORDER BY sent_at ASC";
+  db.query(getMessagesQuery, [chat_id], (error, results) => {
+    if (error) {
+      throw error;
+    } else if (results.length === 0) {
+      res.status(200).json([]);
+    } else {
+      res.status(200).json(results);
     }
-  );
+  });
 });
 
 // @desc    Send message
 // @route   POST /api/messages/send
 // @access  Private
 const sendMessage = asyncHandler(async (req, res) => {
-  // id sender_id receiver_id message sent_at
-
   const message = {
     id: uuid(),
+    sender_username: req.user.username,
     sender_id: req.user.id,
-    receiver_id: req.body.receiver_id,
-    message: req.body.message,
+    chat_id: req.body.chat_id,
+    content: req.body.content,
     sent_at: new Date().toISOString().slice(0, 19).replace("T", " "),
   };
   const sendMessageQuery = "INSERT INTO messages SET ?";

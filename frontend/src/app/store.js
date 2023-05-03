@@ -4,6 +4,8 @@ import challengeReducer from "../features/challenges/challengeSlice";
 import friendSlice from "../features/friends/friendSlice";
 import clubSlice from "../features/clubs/clubSlice";
 import myClubSlice from "../features/myClubs/myClubSlice";
+import chatSlice from "../features/chats/chatSlice";
+import messageSlice from "../features/messages/messageSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +14,7 @@ export const store = configureStore({
     friends: friendSlice,
     clubs: clubSlice,
     myClubs: myClubSlice,
+    chats: chatSlice,
+    messages: messageSlice,
   },
 });

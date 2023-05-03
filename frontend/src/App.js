@@ -8,6 +8,8 @@ import Register from "./pages/Register";
 import Friends from "./pages/Friends";
 import Clubs from "./pages/Clubs";
 import MyClubs from "./pages/MyClubs";
+import Inbox from "./pages/Inbox";
+import Messages from "./pages/Messages";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
             <Route path="/friends" element={<Friends />} />
             <Route path="/clubs" element={<Clubs />} />
             <Route path="/myclubs" element={<MyClubs />} />
+            <Route path="/inbox" element={<Inbox />} />
+            <Route path="/messages/:id" element={<Messages />} />
           </Routes>
         </div>
       </Router>

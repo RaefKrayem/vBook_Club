@@ -1,12 +1,14 @@
 import { useDispatch } from "react-redux";
 import { getAllClubs, joinClub } from "../features/clubs/clubSlice";
 import { getMyClubs, leaveClub } from "../features/myClubs/myClubSlice";
+import { useState } from "react";
 
 function ClubItem({ club, isJoined }) {
   const dispatch = useDispatch();
+
   return (
     <div className="goal">
-      <div>id {club.id}</div>
+      <div>{club.name}</div>
 
       {isJoined ? ( // if isJoined is true, show the following
         <button
@@ -32,6 +34,7 @@ function ClubItem({ club, isJoined }) {
           Join
         </button>
       )}
+      <button>Club Chat</button>
     </div>
   );
 }

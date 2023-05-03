@@ -25,11 +25,9 @@ function Clubs() {
 
     if (!user) navigate("/login");
 
-    // get all friends and put it in friends variable above to be used in the return
     dispatch(getAllClubs());
     dispatch(getMyClubs());
 
-    // when the component unmounts, reset the friends state by returning a function from useEffect
     return () => {
       dispatch(reset());
     };

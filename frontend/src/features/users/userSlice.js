@@ -1,20 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import friendService from "./friendService";
+import userService from "./userService";
 
 const initialState = {
-  friends: [],
+  users: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: "",
 };
 
-export const getFriends = createAsyncThunk(
-  "friends/getAll",
+// get all users to be added
+// in the users page, Add button will be remove button for friends users
+// if the user id is in the friends array then dissplay the button "remove"
+export const getUsers = createAsyncThunk(
+  "users/getUsers",
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await friendService.getFriends(token);
+      return await userService.getUsers(token);
     } catch (error) {
       const message =
         (error.response &&
@@ -27,12 +30,12 @@ export const getFriends = createAsyncThunk(
   }
 );
 
-export const removeFriend = createAsyncThunk(
-  "friends/delete",
+export const addFriend = createAsyncThunk(
+  "users/addFriend",
   async (friend_id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await friendService.removeFriend(friend_id, token);
+      return await userService.addFriend(friend_id, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -45,38 +48,36 @@ export const removeFriend = createAsyncThunk(
   }
 );
 
-export const friendSlice = createSlice({
-  name: "friends",
+export const userSlice = createSlice({
+  name: "users",
   initialState,
   reducers: {
     reset: (state) => initialState,
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getFriends.pending, (state) => {
+      .addCase(getUsers.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getFriends.fulfilled, (state, action) => {
+      .addCase(getUsers.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.friends = action.payload;
+        state.users = action.payload;
       })
-      // .addCase(getFriends.rejected, (state, action) => {
-      //   state.isLoading = false;
-      //   state.isError = false;
-      //   state.friends = action.payload;
-      // })
-      .addCase(removeFriend.pending, (state) => {
+      .addCase(getUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload.messsage;
+      })
+      .addCase(addFriend.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(removeFriend.fulfilled, (state, action) => {
+      .addCase(addFriend.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.friends = state.friends.filter(
-          (friend) => friend.id !== action.payload.id
-        );
+        // state.users = state.users.filter((user) => user.id !== payload.id);
       })
-      .addCase(removeFriend.rejected, (state, action) => {
+      .addCase(addFriend.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -84,5 +85,5 @@ export const friendSlice = createSlice({
   },
 });
 
-export const { reset } = friendSlice.actions;
-export default friendSlice.reducer;
+export const { reset } = userSlice.actions;
+export default userSlice.reducer;

@@ -28,7 +28,7 @@ const getMyClubs = asyncHandler(async (req, res) => {
     if (results.length === 0) {
       res.status(200).json(results);
     } else {
-      // request all friends info from users table
+      // request all clubs info from clubs table
       const clubs = results.map((club) => club.club_id);
       const getClubsInfoQuery = "SELECT * FROM clubs WHERE id IN (?)";
       db.query(getClubsInfoQuery, [clubs], (error, results) => {

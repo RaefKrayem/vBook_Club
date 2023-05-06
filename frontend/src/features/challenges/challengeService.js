@@ -46,7 +46,8 @@ const deleteChallenge = async (challenge_id, token) => {
 };
 
 // update challenge
-const updateChallenge = async (challenge_id, challengeData, token) => {
+const updateChallenge = async ({ challenge }, token) => {
+  console.log("update challenge", challenge);
   // send the token in the request header
   const config = {
     headers: {
@@ -54,8 +55,8 @@ const updateChallenge = async (challenge_id, challengeData, token) => {
     },
   };
   const response = await axios.put(
-    API_URL + "update/" + challenge_id,
-    challengeData,
+    API_URL + "update/" + challenge.id,
+    { challenge },
     config
   );
   return response.data;
@@ -65,6 +66,7 @@ const challengeService = {
   createChallenge,
   getChallenges,
   deleteChallenge,
+  updateChallenge,
 };
 
 export default challengeService;

@@ -11,7 +11,31 @@ const getChallenges = asyncHandler(async (req, res) => {
     if (error) {
       throw error;
     }
-    res.status(200).json(results);
+    // update the status of each challenge if the end date is before today and the status is not completed
+    results.forEach((challenge) => {
+      if (
+        challenge.end_date < new Date().toISOString().slice(0, 10) &&
+        challenge.status !== "completed"
+      ) {
+        challenge.status = "failed";
+        db.query(
+          "UPDATE challenges SET status = 'failed' WHERE id = ?",
+          challenge.id,
+          (error, results) => {
+            if (error) {
+              throw error;
+            }
+          }
+        );
+      }
+    });
+    // get the challenges again
+    db.query(getChallengesQuery, req.user.id, (error, results) => {
+      if (error) {
+        throw error;
+      }
+      res.status(200).json(results);
+    });
   });
 });
 
@@ -49,8 +73,6 @@ const createChallenge = asyncHandler(async (req, res) => {
     creator_id: req.user.id,
   };
 
-  console.log("new challenge in database", challenge);
-
   // if the start date is before today or the end date is before the start date, return error
   if (challenge.start_date < new Date().toISOString().slice(0, 10)) {
     res.status(400).json({ message: "Start date is before today." });
@@ -81,8 +103,8 @@ const createChallenge = asyncHandler(async (req, res) => {
 // @route   PUT /api/challenges/update
 // @access  Private
 const updateChallenge = asyncHandler(async (req, res) => {
-  const { name, total_pages, completed_pages, start_date, end_date } = req.body;
-
+  const { name, total_pages, completed_pages, start_date, end_date } =
+    req.body.challenge;
   const challenge_id = req.params.id;
 
   const getChallengeQuery =
@@ -96,11 +118,14 @@ const updateChallenge = asyncHandler(async (req, res) => {
       const currentChallenge = results[0];
       const challenge = {
         name: name || currentChallenge.name,
-        total_pages: total_pages || currentChallenge.total_pages,
-        completed_pages: completed_pages || currentChallenge.completed_pages,
+        total_pages: parseInt(total_pages) || currentChallenge.total_pages,
+        completed_pages:
+          parseInt(completed_pages) || currentChallenge.completed_pages,
         start_date: start_date || currentChallenge.start_date,
         end_date: end_date || currentChallenge.end_date,
       };
+
+      console.log("challenge: ", challenge);
 
       // if the start date is before today or the end date is before the start date, return error
       if (challenge.start_date < new Date().toISOString().slice(0, 10)) {
@@ -123,7 +148,7 @@ const updateChallenge = asyncHandler(async (req, res) => {
         });
       }
 
-      if (challenge.completed_pages === challenge.total_pages) {
+      if (challenge.completed_pages == challenge.total_pages) {
         challenge.status = "completed";
       }
 

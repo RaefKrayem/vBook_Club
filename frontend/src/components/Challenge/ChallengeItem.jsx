@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteChallenge } from "../../features/challenges/challengeSlice";
+import ChallengeEditForm from "./ChallengeEditForm";
 
 function ChallengeItem({ challenge }) {
   const dispatch = useDispatch();
+  const [isEditing, setIsEditing] = useState(false);
+
   return (
     <div className="goal">
       <h2>{challenge.name}</h2>
@@ -19,6 +23,16 @@ function ChallengeItem({ challenge }) {
       >
         X
       </button>
+
+      {challenge.status === "in progress" ? (
+        <button className="edit" onClick={() => setIsEditing(true)}>
+          Edit
+        </button>
+      ) : (
+        <></>
+      )}
+
+      {isEditing && <ChallengeEditForm challenge={challenge} />}
     </div>
   );
 }

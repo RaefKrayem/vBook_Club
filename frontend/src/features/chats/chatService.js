@@ -31,9 +31,27 @@ const createChat = async (chat, token) => {
   }
 };
 
+// access chat
+// const accessChat = async (friend_id, token) => {
+//   // send the token in the request header
+//   const config = {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   };
+
+//   try {
+//     const response = await axios.post(API_URL, { friend_id }, config);
+//     return response.data;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
 const chatService = {
   getChats,
   createChat,
+  // accessChat,
 };
 
 export default chatService;

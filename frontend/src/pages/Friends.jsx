@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import { getFriends, reset } from "../features/friends/friendSlice";
-import FriendItem from "../components/FriendItem";
+import UserItem from "../components/UserItem";
 
 function Friends() {
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ function Friends() {
         {friends.length > 0 ? (
           <div className="goals">
             {friends.map((friend) => (
-              <FriendItem key={friend.id} friend={friend} />
+              <UserItem key={friend.id} user={friend} isFriend={true} />
             ))}
           </div>
         ) : (

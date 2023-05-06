@@ -5,9 +5,11 @@ const {
   getMessages,
   sendMessage,
   deleteMessage,
+  getFriendMessages,
 } = require("../controllers/messageController");
 
-router.get("/:id", protect, getMessages);
+router.get("/message/:id", protect, getMessages);
+router.get("/friend/:friend_id", protect, getFriendMessages);
 router.post("/send", protect, sendMessage);
 router.delete("/delete", protect, deleteMessage);
 

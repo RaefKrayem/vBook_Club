@@ -9,7 +9,6 @@ const { db } = require("../config/db");
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  console.log("register user function called");
   const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
@@ -112,35 +111,41 @@ const getUsers = asyncHandler(async (req, res) => {
 // @route   POST /api/users/add
 // @access  Private
 const addFriend = asyncHandler(async (req, res) => {
+  // add the user_id and friend_id to the friends table
+  // return the friend information to be added to the friends array in the redux state
+
   const friend_id = req.body.friend_id;
   const user_id = req.user.id;
 
   // check if friend exists
-  const checkFriendQuery =
-    "SELECT * FROM friends WHERE user_id = ? AND friend_id = ?";
+  // const checkFriendQuery =
+  //   "SELECT * FROM friends WHERE user_id = ? AND friend_id = ?";
 
-  db.query(checkFriendQuery, [user_id, friend_id], (error, results) => {
-    if (error) throw error;
+  // db.query(checkFriendQuery, [user_id, friend_id], (error, results) => {
+  //   if (error) throw error;
 
-    if (results.length === 0) {
-      // add friend to friends list of both users
-      const addFriendQuery =
-        "INSERT INTO friends (user_id, friend_id) VALUES (?, ?), (?, ?)";
+  //   if (results.length === 0) {
+  // add friend to friends list of both users
+  const addFriendQuery =
+    "INSERT INTO friends (user_id, friend_id) VALUES (?, ?), (?, ?)";
 
-      db.query(
-        addFriendQuery,
-        [user_id, friend_id, friend_id, user_id],
-        (error, results) => {
-          if (error) throw error;
-
-          res.status(201).json({ message: `Friend ${friend_id} added` });
-        }
-      );
-    } else {
-      res.status(400).json({ message: "Friend already exists" });
+  db.query(
+    addFriendQuery,
+    [user_id, friend_id, friend_id, user_id],
+    (error, results) => {
+      if (error) throw error;
+      const friendInfoQuery = "SELECT * FROM users WHERE id = ?";
+      db.query(friendInfoQuery, [friend_id], (error, results) => {
+        if (error) throw error;
+        res.status(200).json(results);
+      });
     }
-  });
+  );
+  // } else {
+  //   res.status(400).json({ message: "Friend already exists" });
+  // }
 });
+// });
 
 // Generate JWT
 const generateToken = (id) => {

@@ -3,10 +3,10 @@ const router = express.Router();
 const { protect } = require("../middleware/authMiddleware");
 const {
   getChats,
-  createChat,
+  // accessChat,
   getClubChats,
 } = require("../controllers/chatController");
 
-router.route("/").get(protect, getChats).post(protect, createChat);
+router.route("/").get(protect, getChats);
 
 module.exports = router;

@@ -6,6 +6,7 @@ import clubSlice from "../features/clubs/clubSlice";
 import myClubSlice from "../features/myClubs/myClubSlice";
 import chatSlice from "../features/chats/chatSlice";
 import messageSlice from "../features/messages/messageSlice";
+import userSlice from "../features/users/userSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     myClubs: myClubSlice,
     chats: chatSlice,
     messages: messageSlice,
+    users: userSlice,
   },
 });

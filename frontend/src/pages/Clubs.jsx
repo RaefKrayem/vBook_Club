@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// to check if the user exists in the local storage
 import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import { getAllClubs, reset } from "../features/clubs/clubSlice";
 import ClubItem from "../components/ClubItem";

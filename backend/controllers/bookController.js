@@ -25,7 +25,7 @@ const getBooks = asyncHandler(async (req, res) => {
 // @access  Private
 const saveBook = asyncHandler(async (req, res) => {
   const book = {
-    book_id: req.body.book_id,
+    book_selfLink: req.body.book_selfLink,
     user_id: req.user.id,
     book_title: req.body.book_title,
     book_author: req.body.book_author,

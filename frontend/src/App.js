@@ -10,6 +10,8 @@ import Clubs from "./pages/Clubs";
 import MyClubs from "./pages/MyClubs";
 import Inbox from "./pages/Inbox";
 import Messages from "./pages/Messages";
+import Users from "./pages/Users";
+import Books from "./pages/Books";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
             <Route path="/myclubs" element={<MyClubs />} />
             <Route path="/inbox" element={<Inbox />} />
             <Route path="/messages/:id" element={<Messages />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/books" element={<Books />} />
           </Routes>
         </div>
       </Router>

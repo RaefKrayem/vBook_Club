@@ -9,6 +9,7 @@ import { RiMessage3Fill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
+import { GiBookCover } from "react-icons/gi";
 
 function Header() {
   const navigate = useNavigate();
@@ -30,6 +31,12 @@ function Header() {
         {user ? (
           <>
             <li>
+              <Link to="/books">
+                <GiBookCover />
+                Books
+              </Link>
+            </li>
+            <li>
               <Link to="/clubs">
                 <MdGroups />
                 Clubs
@@ -45,6 +52,12 @@ function Header() {
               <Link to="/friends">
                 <FaUserFriends />
                 Friends
+              </Link>
+            </li>
+            <li>
+              <Link to="/users">
+                <FaUserFriends />
+                Users
               </Link>
             </li>
             <li>

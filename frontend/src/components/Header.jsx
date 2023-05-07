@@ -31,6 +31,12 @@ function Header() {
         {user ? (
           <>
             <li>
+              <Link to="/mybooks">
+                <GiBookCover />
+                My Books
+              </Link>
+            </li>
+            <li>
               <Link to="/books">
                 <GiBookCover />
                 Books

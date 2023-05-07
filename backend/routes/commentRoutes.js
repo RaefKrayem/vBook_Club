@@ -7,8 +7,8 @@ const {
   deleteComment,
 } = require("../controllers/commentController");
 
-router.get("/", protect, getComments);
+router.post("/all", protect, getComments);
 router.post("/add", protect, addComment);
-router.delete("/delete", protect, deleteComment);
+router.delete("/delete/:id", protect, deleteComment);
 
 module.exports = router;

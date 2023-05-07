@@ -6,17 +6,18 @@ const { uuid } = require("uuidv4");
 // @route   GET /api/comments
 // @access  Private
 const getComments = asyncHandler(async (req, res) => {
-  const { book_id } = req.body;
+  const { book_selfLink } = req.body;
 
-  // get comments for a book
-  const getCommentsQuery = "SELECT * FROM comments WHERE book_id = ?";
-  db.query(getCommentsQuery, [book_id], (error, results) => {
+  // get comments for a book and sort by date from oldest to newest
+  const getCommentsQuery =
+    "SELECT * FROM comments WHERE book_selfLink = ? ORDER BY created_at ASC";
+  db.query(getCommentsQuery, [book_selfLink], (error, results) => {
     if (error) {
       throw error;
     } else if (results.length === 0) {
-      res.status(404).json({ message: `No comments found.` });
+      res.status(200).json([]);
     } else {
-      res.status(200).json({ comments: results });
+      res.status(200).json(results);
     }
   });
 });
@@ -25,35 +26,35 @@ const getComments = asyncHandler(async (req, res) => {
 // @route   POST /api/comments/add
 // @access  Private
 const addComment = asyncHandler(async (req, res) => {
-  const { book_id, comment_text } = req.body;
-  const comment_id = uuid();
-  const created_at = new Date().toISOString().slice(0, 19).replace("T", " ");
-  const addCommentQuery =
-    "INSERT INTO comments (id, book_id, user_id, comment_text, created_at) VALUES (?, ?, ?, ?, ?)";
-  db.query(
-    addCommentQuery,
-    [comment_id, book_id, req.user.id, comment_text, created_at],
-    (error, results) => {
-      if (error) {
-        throw error;
-      } else {
-        res.status(200).json({ message: "Comment added" });
-      }
+  const comment = {
+    id: uuid(),
+    book_selfLink: req.body.book_selfLink,
+    user_id: req.user.id,
+    username: req.user.username,
+    comment_text: req.body.comment_text,
+    created_at: new Date().toISOString().slice(0, 19).replace("T", " "),
+  };
+  const addCommentQuery = "INSERT INTO comments SET ?";
+  db.query(addCommentQuery, [comment], (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      res.status(200).json(comment);
     }
-  );
+  });
 });
 
 // @desc    Delete comment
 // @route   DELETE /api/comments/delete
 // @access  Private
 const deleteComment = asyncHandler(async (req, res) => {
-  const { comment_id } = req.body;
+  const comment_id = req.params.id;
   const deleteCommentQuery = "DELETE FROM comments WHERE id = ?";
   db.query(deleteCommentQuery, [comment_id], (error, results) => {
     if (error) {
       throw error;
     } else {
-      res.status(200).json({ message: "Comment deleted" });
+      res.status(200).json(comment_id);
     }
   });
 });

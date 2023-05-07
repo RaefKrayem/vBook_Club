@@ -1,59 +1,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import bookService from "./bookService";
+import commentService from "./commentService";
 
 const initialState = {
-  books: [],
+  comments: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: "",
 };
 
-// get saved books
-export const getBooks = createAsyncThunk(
-  "books/getAll",
-  async (_, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await bookService.getBooks(token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-// save book
-export const saveBook = createAsyncThunk(
-  "books/save",
-  async (book, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await bookService.saveBook(book, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-// unsave book
-export const unsaveBook = createAsyncThunk(
-  "books/unsave",
+// get all comments
+export const getComments = createAsyncThunk(
+  "comments/getComments",
   async (book_selfLink, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await bookService.unsaveBook(book_selfLink, token);
+      return await commentService.getComments(book_selfLink, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -66,51 +28,90 @@ export const unsaveBook = createAsyncThunk(
   }
 );
 
-export const bookSlice = createSlice({
-  name: "books",
+// create comment
+export const addComment = createAsyncThunk(
+  "comments/addComment",
+  async (comment, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await commentService.addComment(comment, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// delete comment
+export const deleteComment = createAsyncThunk(
+  "comments/deleteComment",
+  async (comment_id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await commentService.deleteComment(comment_id, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const commentSlice = createSlice({
+  name: "comments",
   initialState,
   reducers: {
     reset: (state) => initialState,
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getBooks.pending, (state) => {
+      .addCase(getComments.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getBooks.fulfilled, (state, { payload }) => {
+      .addCase(getComments.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.books = payload;
+        state.comments = payload;
+        // state.comments = [];
       })
-      .addCase(getBooks.rejected, (state, { payload }) => {
+      .addCase(getComments.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.comments = payload;
+      })
+      .addCase(addComment.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addComment.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.comments.push(payload);
+      })
+      .addCase(addComment.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.isError = true;
         state.message = payload;
       })
-      .addCase(saveBook.pending, (state) => {
+      .addCase(deleteComment.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(saveBook.fulfilled, (state, { payload }) => {
+      .addCase(deleteComment.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.books.push(payload);
-      })
-      .addCase(saveBook.rejected, (state, { payload }) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = payload;
-      })
-      .addCase(unsaveBook.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(unsaveBook.fulfilled, (state, { payload }) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.books = state.books.filter(
-          (book) => book.book_selfLink !== payload
+        state.comments = state.comments.filter(
+          (comment) => comment.id !== payload
         );
       })
-      .addCase(unsaveBook.rejected, (state, { payload }) => {
+      .addCase(deleteComment.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.isError = true;
         state.message = payload;
@@ -118,5 +119,5 @@ export const bookSlice = createSlice({
   },
 });
 
-export const { reset } = bookSlice.actions;
-export default bookSlice.reducer;
+export const { reset } = commentSlice.actions;
+export default commentSlice.reducer;

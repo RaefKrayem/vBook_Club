@@ -12,6 +12,8 @@ import Inbox from "./pages/Inbox";
 import Messages from "./pages/Messages";
 import Users from "./pages/Users";
 import Books from "./pages/Books";
+import MyBooks from "./pages/MyBooks";
+import BookItem from "./components/Book/BookItem";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
             <Route path="/messages/:id" element={<Messages />} />
             <Route path="/users" element={<Users />} />
             <Route path="/books" element={<Books />} />
+            <Route path="/mybooks" element={<MyBooks />} />
+            <Route path="/book/:id" element={<BookItem />} />
           </Routes>
         </div>
       </Router>

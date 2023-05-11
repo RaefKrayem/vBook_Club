@@ -1,14 +1,24 @@
 import { useEffect, useState, useContext } from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { useNavigate, Link, useParams, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
-import { getMessages, reset } from "../features/messages/messageSlice";
+import {
+  getFriendMessages,
+  getMessages,
+  reset,
+} from "../features/messages/messageSlice";
 import MessageItem from "../components/Message/MessageItem.jsx";
 import MessageForm from "../components/Message/MessageForm.jsx";
 
 function Messages() {
-  const { id } = useParams();
+  const location = useLocation();
+  // const id  = useParams();
+
+  // new added code
+  const [userInfo, setUserInfo] = useState(location.state.userInfo);
+  const [id, setId] = useState(location.state.id);
+  //
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,7 +35,14 @@ function Messages() {
 
     if (!user) navigate("/login");
 
-    dispatch(getMessages(id));
+    if (id) {
+      dispatch(getMessages(id));
+      console.log(id);
+    }
+    if (userInfo) {
+      dispatch(getFriendMessages({ friend_id: userInfo.id, chatName: "" }));
+      console.log(userInfo);
+    }
 
     return () => {
       dispatch(reset());
@@ -39,12 +56,13 @@ function Messages() {
   return (
     <div>
       <section className="content">
-        {messages.map((message) => (
-          <MessageItem key={message.id} message={message} />
-        ))}
+        {!messages.chat_id_emp &&
+          messages.map((message) => (
+            <MessageItem key={message.id} message={message} />
+          ))}
       </section>
 
-      <MessageForm chat_id={id} />
+      <MessageForm chat_id={id ? id : messages[0].chat_id_emp} />
     </div>
   );
 }

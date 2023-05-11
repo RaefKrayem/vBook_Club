@@ -14,6 +14,8 @@ import Users from "./pages/Users";
 import Books from "./pages/Books";
 import MyBooks from "./pages/MyBooks";
 import BookItem from "./components/Book/BookItem";
+import User from "./pages/User";
+import BardLogin from "./components/BardLogin";
 
 function App() {
   return (
@@ -29,11 +31,13 @@ function App() {
             <Route path="/clubs" element={<Clubs />} />
             <Route path="/myclubs" element={<MyClubs />} />
             <Route path="/inbox" element={<Inbox />} />
-            <Route path="/messages/:id" element={<Messages />} />
+            <Route path="/messages" element={<Messages />} />
             <Route path="/users" element={<Users />} />
             <Route path="/books" element={<Books />} />
             <Route path="/mybooks" element={<MyBooks />} />
             <Route path="/book/:id" element={<BookItem />} />
+            <Route path="/user" element={<User />} />
+            <Route path="/bard" element={<BardLogin />} />
           </Routes>
         </div>
       </Router>

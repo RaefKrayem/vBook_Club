@@ -1,0 +1,55 @@
+.container {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.username {
+  font-size: 1.25rem;
+  margin-right: 1rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.addBtn {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.addBtn:hover {
+  background-color: #388e3c;
+}
+
+.removeBtn {
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.removeBtn:hover {
+  background-color: #d32f2f;
+}
+
+.chatBtn {
+  text-decoration: none;
+}

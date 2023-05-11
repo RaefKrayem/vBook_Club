@@ -4,8 +4,8 @@ import { saveBook, unsaveBook, getBooks } from "../../features/books/bookSlice";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
 import Comments from "../Comments/Comments";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function BookItem() {
   const location = useLocation();
@@ -17,10 +17,13 @@ function BookItem() {
       <Container>
         <Row>
           <Col xs={12} md={4}>
-            <Image
+            <LazyLoadImage
+              height={400}
+              width={400}
+              threshold={0.95}
               src={bookInfo.imageLinks && bookInfo.imageLinks.thumbnail}
-              fluid
-              style={{ height: "400px", objectFit: "contain" }}
+              alt="book cover"
+              // style={{ height: "400px", objectFit: "contain" }}
             />
           </Col>
           <Col xs={12} md={8}>

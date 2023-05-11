@@ -7,7 +7,6 @@ const { uuid } = require("uuidv4");
 // @access  Private
 const getMessages = asyncHandler(async (req, res) => {
   const chat_id = req.params.id;
-
   // get messages from a chat
   const getMessagesQuery =
     "SELECT * FROM messages WHERE chat_id = ? ORDER BY sent_at ASC";
@@ -15,7 +14,8 @@ const getMessages = asyncHandler(async (req, res) => {
     if (error) {
       throw error;
     } else if (results.length === 0) {
-      res.status(200).json([]);
+      results[0] = { chat_id: chat_id };
+      res.status(200).json(results);
     } else {
       res.status(200).json(results);
     }
@@ -29,6 +29,7 @@ const getMessages = asyncHandler(async (req, res) => {
 const getFriendMessages = asyncHandler(async (req, res) => {
   const friend_id = req.params.friend_id;
   let chatName = "";
+  console.log("friend id: ", friend_id);
 
   // get friend's username
   const getFriendUsernameQuery = "SELECT username FROM users WHERE id = ?";
@@ -38,7 +39,6 @@ const getFriendMessages = asyncHandler(async (req, res) => {
     }
     const friendUsername = results[0].username;
     chatName = `${req.user.username} ${friendUsername}`;
-    console.log("chatName: ", chatName);
   });
   // check if there is already a chat between the two users
   if (friend_id) {
@@ -49,6 +49,7 @@ const getFriendMessages = asyncHandler(async (req, res) => {
         throw error;
       }
       if (results.length > 0) {
+        console.log("get the message controller friends");
         const chat = results[0];
         // get messages from the chat
         const getMessagesQuery =
@@ -58,8 +59,12 @@ const getFriendMessages = asyncHandler(async (req, res) => {
             throw error;
           }
           if (results.length === 0) {
-            res.status(200).json([]);
+            results[0] = {
+              chat_id_emp: chat.id,
+            };
+            res.status(200).json(results);
           } else {
+            console.log("messages from chat: ", results);
             res.status(200).json(results);
           }
         });
@@ -101,8 +106,13 @@ const getFriendMessages = asyncHandler(async (req, res) => {
                     db.query(getMessagesQuery, [chat.id], (error, results) => {
                       if (error) {
                         throw error;
-                      } else if (results.length === 0) {
-                        res.status(200).json([]);
+                      }
+                      if (results.length === 0) {
+                        console.log("no messages");
+                        results[0] = {
+                          chat_id: chat.id,
+                        };
+                        res.status(200).json(results);
                       } else {
                         res.status(200).json(results);
                       }
@@ -110,7 +120,7 @@ const getFriendMessages = asyncHandler(async (req, res) => {
                   }
                 );
               } else {
-                res.status(200).json(chat);
+                res.status(200).json([{ chat_id: chat.id }]);
               }
             }
           );

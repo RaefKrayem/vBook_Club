@@ -15,6 +15,10 @@ function ChallengeItem({ challenge }) {
       <div>End Date: {challenge.end_date.slice(0, 10)}</div>
       <div>Completed pages: {challenge.completed_pages}</div>
       <div>total pages: {challenge.total_pages}</div>
+      <div>
+        Remaining Pages: {challenge.total_pages - challenge.completed_pages}
+      </div>
+      <div>Time left: </div>
       <div>status: {challenge.status}</div>
 
       <button

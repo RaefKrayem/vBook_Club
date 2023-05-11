@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 // to check if the user exists in the local storage
 import { useSelector, useDispatch } from "react-redux";
@@ -6,10 +6,17 @@ import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import { getFriends, reset } from "../features/friends/friendSlice";
 import UserItem from "../components/UserItem";
+import { Container, Row, Col, Button } from "react-bootstrap";
 
 function Friends() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [limit, setLimit] = useState(12);
+
+  const loadMore = () => {
+    setLimit(limit + 12);
+  };
 
   const { user } = useSelector((state) => state.auth);
   const { friends, isLoading, isError, message } = useSelector(
@@ -38,27 +45,44 @@ function Friends() {
 
   return (
     <>
-      <section className="heading">
-        <h1>Welcome {user && user.username}</h1>
-        <p>Friends List</p>
-      </section>
+      <>
+        <section className="heading">
+          <p>Friends List</p>
+        </section>
 
-      <section className="content">
-        {friends.length > 0 ? (
-          <div className="goals">
-            {friends.map((friend) => (
-              <UserItem key={friend.id} user={friend} isFriend={true} />
-            ))}
-          </div>
-        ) : (
-          <h3>Start Adding friends</h3>
-        )}
-      </section>
+        <section className="content">
+          <Container fluid>
+            <Row xs={1} sm={1} md={1} lg={1} xl={2} xxl={2} g={3}>
+              {friends.length > 0 &&
+                friends
+                  .filter(
+                    (user) => !friends.find((friend) => friend.id === user.id)
+                  )
+                  .slice(0, limit)
+                  .map((user) => (
+                    <Col key={user.id}>
+                      <UserItem user={user} isFriend={false} />
+                    </Col>
+                  ))}
 
-      <h1>Add new Friend</h1>
+              {friends.length > 0 &&
+                friends.map((friend) => (
+                  <Col key={friend.id}>
+                    <UserItem key={friend.id} user={friend} isFriend={true} />
+                  </Col>
+                ))}
 
-      {/* Users component to let the user add new friends */}
-      {/* <Users /> */}
+              {friends.length > limit && (
+                <Col xs={12} className="text-center">
+                  <Button variant="primary" onClick={loadMore}>
+                    Load More
+                  </Button>
+                </Col>
+              )}
+            </Row>
+          </Container>
+        </section>
+      </>
     </>
   );
 }

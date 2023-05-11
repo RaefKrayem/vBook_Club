@@ -5,7 +5,8 @@ import { saveBook, unsaveBook, getBooks } from "../../features/books/bookSlice";
 import { Link } from "react-router-dom";
 
 function BookCard({ book, isSaved }) {
-  const { title, authors, description, imageLinks } = book.volumeInfo;
+  const { title, authors, description, imageLinks, categories, publishedDate } =
+    book.volumeInfo;
   const dispatch = useDispatch();
 
   const handleSaveBook = () => {
@@ -30,34 +31,67 @@ function BookCard({ book, isSaved }) {
   };
 
   return (
-    <Card style={{ width: "17rem", backgroundColor: "red", height: "451px" }}>
+    <Card
+      style={{
+        width: "17rem",
+        backgroundColor: "#1d1e20",
+        height: "470px",
+        border: "1px solid white",
+        borderRadius: "20px",
+      }}
+    >
       <Card.Img
         variant="top"
         src={imageLinks && imageLinks.thumbnail}
         style={{
           height: 200,
+          width: "100%",
           padding: 2,
-          paddingTop: 5,
+          paddingTop: 10,
           width: "100%",
           objectPosition: "center",
           objectFit: "contain",
+          backgroundColor: "#2f2a29",
+          borderTopLeftRadius: "20px",
+          borderTopRightRadius: "20px",
         }}
       />
-      <Card.Body>
-        <Card.Title>{title}</Card.Title>
+      <Card.Body
+        style={{
+          borderBottomLeftRadius: "20px",
+          borderBottomRightRadius: "20px",
+        }}
+      >
+        <Card.Title>
+          {title.length > 20 ? title.substring(0, 20) + "..." : title}
+        </Card.Title>
         <Card.Text>
-          {description
-            ? description.substring(0, 100) + "..."
-            : "No description available"}
+          {/* {description
+            ? description.substring(0, 50) + "..."
+            : "No description available"} */}
+          <h4>
+            {categories ? categories.join(", ") : "No categories available"}
+          </h4>
+          {authors ? authors.join(", ") : "No authors available"}
+          <br />
+          {publishedDate ? publishedDate : "No published date available"}
         </Card.Text>
 
         {/* if isSaved true show unsave button, else show save button */}
         {isSaved ? (
-          <Button variant="danger" onClick={handleUnsaveBook}>
+          <Button
+            variant="danger"
+            onClick={handleUnsaveBook}
+            style={{ marginRight: 10 }}
+          >
             unsave
           </Button>
         ) : (
-          <Button variant="success" onClick={handleSaveBook}>
+          <Button
+            variant="success"
+            onClick={handleSaveBook}
+            style={{ marginRight: 10 }}
+          >
             save
           </Button>
         )}

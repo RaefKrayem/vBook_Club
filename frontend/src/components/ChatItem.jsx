@@ -1,6 +1,11 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getMessages } from "../features/messages/messageSlice";
+import { useNavigate, Link } from "react-router-dom";
+import Button from "react-bootstrap/esm/Button";
 
 function ChatItem({ chat }) {
+  const dispatch = useDispatch();
+
   const { user } = useSelector((state) => state.auth);
 
   return (
@@ -16,7 +21,28 @@ function ChatItem({ chat }) {
           <div>{chat.name}</div>
         )}
 
-        <button>Access Chat</button>
+        {/* <button
+          onClick={(e) => {
+            dispatch(getMessages(chat.id));
+            navigate("/messages/" + chat.id);
+            console.log("selectedChatId", chat.id);
+          }}
+        > 
+          Access Chat
+        </button> */}
+
+        <Link
+          to={`/messages`}
+          state={{ id: chat.id }} // <-- state prop
+          key={chat.id}
+        >
+          <Button
+            variant="primary"
+            onClick={() => dispatch(getMessages(chat.id))}
+          >
+            Access Chat
+          </Button>
+        </Link>
       </div>
     </>
   );

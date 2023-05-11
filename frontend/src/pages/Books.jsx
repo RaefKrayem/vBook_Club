@@ -2,9 +2,12 @@ import { useState, useEffect } from "react";
 import BookCard from "../components/Book/BookCard";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { getBooks } from "../features/books/bookSlice";
+import randomwords from "random-words";
+import Form from "react-bootstrap/Form";
+import "../styles/general.css";
 
 // import bootstrap css
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,8 +16,9 @@ function Books() {
   const [fetchedBooks, setFetchedBooks] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
-  const maxResults = 20; // The maximum number of results to fetch in one request
-  const query = "harry potter"; // The search query
+  // const [query, setQuery] = useState(randomwords(1)[0]); // Set default category to Computer Science
+  const [query, setQuery] = useState("computer science");
+  const maxResults = 20;
   const dispatch = useDispatch();
   const { books, isLoading, isError, message } = useSelector(
     (state) => state.books
@@ -30,29 +34,38 @@ function Books() {
     const response = await fetch(url);
     const data = await response.json();
     setFetchedBooks((prevBooks) => [...prevBooks, ...data.items]);
+
     setStartIndex(startIndex);
     setTotalItems(data.totalItems);
   }
 
-  // function handleLoadMoreClick() {
-  //   fetchBooks(startIndex + maxResults);
-  // }
+  const handleCategoryChange = (e) => {
+    const category = e.target.value;
+    setQuery(category);
+    setFetchedBooks([]);
+    setStartIndex(0);
+    fetchBooks(0);
+  };
 
   return (
-    <div>
+    <div
+      className="booksContainer"
+      style={{
+        backgroundColor: "#1d1e20",
+      }}
+    >
       <h1>Books</h1>
-      {/* <Row xs={1} md={4} className="g-4">
-        {books.map((book) => (
-          <Col>
-            <BookCard book={book} />
-          </Col>
-        ))}
-      </Row> */}
 
-      {/* check if the saved_books array of saved books objects 
-      contains a book with the same selfLink as the book being mapped over */}
-      {/* if it does return the book with isSaved={true} */}
-      {/* if it does not return the book with isSaved={false} */}
+      <Form.Select
+        aria-label="Floating label select example"
+        onChange={handleCategoryChange}
+      >
+        <option>Select a category</option>
+        <option value="Computer Science">Computer Science</option>
+        <option value="Fiction">Fiction</option>
+        <option value="History">History</option>
+      </Form.Select>
+
       <Row xs={1} md={4} className="g-4">
         {fetchedBooks.map((fetched_book) => (
           <Col>

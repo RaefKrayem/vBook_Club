@@ -1,13 +1,16 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// to check if the user exists in the local storage
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import { getMyClubs, reset } from "../features/myClubs/myClubSlice";
 import ClubItem from "../components/ClubItem";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-function Clubs() {
+function MyClubs() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -38,24 +41,23 @@ function Clubs() {
 
   return (
     <>
-      <section className="heading">
-        <h1>Welcome {user && user.username}</h1>
-        <p>Your Clubs List</p>
-      </section>
-
-      <section className="content">
-        {myClubs.length > 0 ? (
-          <div className="goals">
-            {myClubs.map((club) => (
-              <ClubItem key={club.id} club={club} isJoined={true} />
-            ))}
-          </div>
-        ) : (
-          <h3>No clubs in database</h3>
-        )}
-      </section>
+      <Container>
+        <Row>
+          <Col>
+            <h1>Welcome {user && user.username}</h1>
+            <p>Your Clubs List</p>
+          </Col>
+        </Row>
+        <Row>
+          {myClubs.map((club) => (
+            <Col sm={12} key={club.id}>
+              <ClubItem club={club} isJoined={true} />
+            </Col>
+          ))}
+        </Row>
+      </Container>
     </>
   );
 }
 
-export default Clubs;
+export default MyClubs;

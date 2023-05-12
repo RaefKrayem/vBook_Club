@@ -1,3 +1,4 @@
+import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useDispatch } from "react-redux";
@@ -10,9 +11,6 @@ function BookCard({ book, isSaved }) {
   const dispatch = useDispatch();
 
   const handleSaveBook = () => {
-    // get the title and split it into an array and then join it with a + sign then add the id to the end
-    // const bookId = title.split(" ").join("+") + "+" + book.id;
-    // console.log(bookId);
     const bookData = {
       book_selfLink: book.selfLink,
       book_title: title,
@@ -20,7 +18,6 @@ function BookCard({ book, isSaved }) {
       book_description: description,
       book_image: imageLinks ? imageLinks.thumbnail : null,
     };
-    console.log(bookData);
     dispatch(saveBook(bookData));
     dispatch(getBooks());
   };
@@ -33,77 +30,64 @@ function BookCard({ book, isSaved }) {
   return (
     <Card
       style={{
-        width: "17rem",
-        backgroundColor: "#1d1e20",
-        height: "470px",
-        border: "1px solid white",
+        maxWidth: "100%",
         borderRadius: "20px",
+        overflow: "hidden",
+        height: "500px",
       }}
     >
-      <Card.Img
-        variant="top"
-        src={imageLinks && imageLinks.thumbnail}
+      <div
         style={{
-          height: 200,
-          width: "100%",
-          padding: 2,
-          paddingTop: 10,
-          width: "100%",
-          objectPosition: "center",
-          objectFit: "contain",
-          backgroundColor: "#2f2a29",
-          borderTopLeftRadius: "20px",
-          borderTopRightRadius: "20px",
-        }}
-      />
-      <Card.Body
-        style={{
-          borderBottomLeftRadius: "20px",
-          borderBottomRightRadius: "20px",
+          height: "60%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#F5F5F5",
         }}
       >
-        <Card.Title>
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            backgroundImage: `url(${imageLinks && imageLinks.thumbnail})`,
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "contain",
+          }}
+        />
+      </div>
+      <Card.Body style={{ padding: "20px" }}>
+        <Card.Title style={{ marginBottom: "10px" }}>
           {title.length > 20 ? title.substring(0, 20) + "..." : title}
         </Card.Title>
         <Card.Text>
-          {/* {description
-            ? description.substring(0, 50) + "..."
-            : "No description available"} */}
-          <h4>
-            {categories ? categories.join(", ") : "No categories available"}
-          </h4>
           {authors ? authors.join(", ") : "No authors available"}
           <br />
-          {publishedDate ? publishedDate : "No published date available"}
+          {publishedDate
+            ? publishedDate.substring(0, 4)
+            : "No published date available"}
+          <br />
+          {categories ? categories.join(", ") : "No categories available"}
         </Card.Text>
-
-        {/* if isSaved true show unsave button, else show save button */}
-        {isSaved ? (
-          <Button
-            variant="danger"
-            onClick={handleUnsaveBook}
-            style={{ marginRight: 10 }}
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          {isSaved ? (
+            <Button variant="outline-secondary" onClick={handleUnsaveBook}>
+              Unsave
+            </Button>
+          ) : (
+            <Button variant="success" onClick={handleSaveBook}>
+              Save
+            </Button>
+          )}
+          <Link
+            to={`/book/${book.id}`}
+            state={{ book: book }}
+            key={book.id}
+            style={{ textDecoration: "none" }}
           >
-            unsave
-          </Button>
-        ) : (
-          <Button
-            variant="success"
-            onClick={handleSaveBook}
-            style={{ marginRight: 10 }}
-          >
-            save
-          </Button>
-        )}
-
-        {/* Add a button to navigate to the book component */}
-        <Link
-          to={`/book/${book.id}`}
-          state={{ book: book }} // <-- state prop
-          key={book.id}
-        >
-          <Button variant="primary">View</Button>
-        </Link>
+            <Button variant="primary">View</Button>
+          </Link>
+        </div>
       </Card.Body>
     </Card>
   );

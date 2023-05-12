@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { useNavigate, Link, useParams, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -22,6 +22,7 @@ function Messages() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const messagesEndRef = useRef(null);
 
   const { user } = useSelector((state) => state.auth);
   const { messages, isLoading, isError, message } = useSelector(
@@ -49,6 +50,12 @@ function Messages() {
     };
   }, [user, navigate, isError, message, dispatch]);
 
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -58,8 +65,14 @@ function Messages() {
       <section className="content">
         {!messages.chat_id_emp &&
           messages.map((message) => (
-            <MessageItem key={message.id} message={message} />
+            // if (message.sender_id === user.id) give the MessageItem a prop isUserMessage = true
+            <MessageItem
+              key={message.id}
+              message={message}
+              isUserMessage={message.sender_id === user._id}
+            />
           ))}
+        <div ref={messagesEndRef}></div>
       </section>
 
       <MessageForm chat_id={id ? id : messages[0].chat_id_emp} />

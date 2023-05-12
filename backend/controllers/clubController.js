@@ -143,7 +143,7 @@ const createClub = asyncHandler(async (req, res) => {
           throw error;
         } else {
           res.status(200).json({
-            message: `Club ${club.club_id} created successfully`,
+            message: `Club ${club.name} created successfully`,
           });
         }
       });

@@ -28,10 +28,18 @@ const saveBook = asyncHandler(async (req, res) => {
     book_selfLink: req.body.book_selfLink,
     user_id: req.user.id,
     book_title: req.body.book_title,
-    book_authors: req.body.book_authors,
+    // if book_authors is an array, join it into a string excpet for the last element
+    book_authors: Array.isArray(req.body.book_authors)
+      ? req.body.book_authors.slice(0, -1).join(", ") +
+        " and " +
+        req.body.book_authors.slice(-1)
+      : req.body.book_authors,
+
     book_description: req.body.book_description,
     book_image: req.body.book_image,
   };
+
+  console.log("save: ", book);
 
   const saveQuery = "Insert INTO saved_books SET ?";
 

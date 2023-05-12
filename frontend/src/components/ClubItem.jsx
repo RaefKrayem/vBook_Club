@@ -3,55 +3,75 @@ import { getAllClubs, joinClub } from "../features/clubs/clubSlice";
 import { getMyClubs, leaveClub } from "../features/myClubs/myClubSlice";
 import { getMessages } from "../features/messages/messageSlice";
 import { Link } from "react-router-dom";
-import { Card, Button } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 function ClubItem({ club, isJoined }) {
   const dispatch = useDispatch();
 
   return (
-    <Card style={{ width: "18rem" }}>
-      <Card.Img variant="top" src="https://picsum.photos/100" />
-      <Card.Body>
-        <Card.Title>{club.name}</Card.Title>
-        <Card.Text>{club.description}</Card.Text>
-        {isJoined ? (
-          <>
-            <Button
-              variant="danger"
-              onClick={() => {
-                dispatch(leaveClub(club.id));
-                dispatch(getAllClubs());
-                dispatch(getMyClubs());
-              }}
-            >
-              Leave
-            </Button>
-            <Link
-              to={`/messages`}
-              state={{ id: club.id }} // <-- state prop
-              key={club.id}
-            >
-              <Button
-                variant="primary"
-                onClick={() => dispatch(getMessages(club.id))}
-              >
-                Access Chat
-              </Button>
-            </Link>
-          </>
-        ) : (
-          <Button
-            variant="success"
-            onClick={() => {
-              dispatch(joinClub(club.id));
-              dispatch(getAllClubs());
-              dispatch(getMyClubs());
-            }}
-          >
-            Join
-          </Button>
-        )}
-      </Card.Body>
+    <Card className="my-3">
+      <Row noGutters>
+        <Col xs={12} md={4}>
+          <Card.Img
+            variant="top"
+            src="https://picsum.photos/100"
+            style={{ height: "100%" }}
+          />
+        </Col>
+        <Col xs={12} md={8}>
+          <Card.Body style={{ backgroundColor: "#8e2b32", color: "#dcdcdc" }}>
+            {/* let the name be bold */}
+            <Card.Title>
+              <strong>{club.name}</strong>
+            </Card.Title>
+
+            <Card.Text>{club.description}</Card.Text>
+            <div className="d-flex justify-content-end align-items-center">
+              {isJoined ? (
+                <>
+                  <Link
+                    to={`/messages`}
+                    state={{ id: club.id }} // <-- state prop
+                    key={club.id}
+                    style={{ marginRight: "10px" }}
+                  >
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() => dispatch(getMessages(club.id))}
+                    >
+                      Chat
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="outline-danger"
+                    onClick={() => {
+                      dispatch(leaveClub(club.id));
+                      dispatch(getAllClubs());
+                      dispatch(getMyClubs());
+                    }}
+                  >
+                    Leave
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  variant="outline-primary"
+                  onClick={() => {
+                    dispatch(joinClub(club.id));
+                    dispatch(getAllClubs());
+                    dispatch(getMyClubs());
+                  }}
+                >
+                  Join
+                </Button>
+              )}
+            </div>
+          </Card.Body>
+        </Col>
+      </Row>
     </Card>
   );
 }

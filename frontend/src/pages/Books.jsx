@@ -2,15 +2,10 @@ import { useState, useEffect } from "react";
 import BookCard from "../components/Book/BookCard";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-// import Button from "react-bootstrap/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { getBooks } from "../features/books/bookSlice";
 import randomwords from "random-words";
 import Form from "react-bootstrap/Form";
-import "../styles/general.css";
-
-// import bootstrap css
-// import "bootstrap/dist/css/bootstrap.min.css";
 
 function Books() {
   const [fetchedBooks, setFetchedBooks] = useState([]);

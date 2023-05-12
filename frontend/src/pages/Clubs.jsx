@@ -5,6 +5,9 @@ import Spinner from "../components/Spinner";
 import { getAllClubs, reset } from "../features/clubs/clubSlice";
 import ClubItem from "../components/ClubItem";
 import { getMyClubs } from "../features/myClubs/myClubSlice";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function Clubs() {
   const navigate = useNavigate();
@@ -45,33 +48,25 @@ function Clubs() {
       {/* if the club id is in the myClubs array return the club item with isJoined={true} */}
       {/* if the club id is not in the myClubs array return the club item with isJoined={false} */}
 
-      <section className="content">
-        <div className="goals">
-          {clubs.length > 0 ? (
-            <>
-              {clubs
-                .filter(
-                  (club) =>
-                    !myClubs.find((joinedClub) => joinedClub.id === club.id)
+      <Container>
+        <Row>
+          {clubs.length > 0 &&
+            clubs.map(
+              (club) =>
+                !myClubs.find((joinedClub) => joinedClub.id === club.id) && (
+                  <Col sm={12} key={club.id}>
+                    <ClubItem club={club} isJoined={false} />
+                  </Col>
                 )
-                .map((club) => (
-                  <ClubItem key={club.id} club={club} isJoined={false} />
-                ))}
-            </>
-          ) : (
-            <></>
-          )}
-          {myClubs.length > 0 ? (
-            <>
-              {myClubs.map((club) => (
-                <ClubItem key={club.id} club={club} isJoined={true} />
-              ))}
-            </>
-          ) : (
-            <></>
-          )}
-        </div>
-      </section>
+            )}
+          {myClubs.length > 0 &&
+            myClubs.map((club) => (
+              <Col sm={12} key={club.id}>
+                <ClubItem club={club} isJoined={true} />
+              </Col>
+            ))}
+        </Row>
+      </Container>
     </>
   );
 }

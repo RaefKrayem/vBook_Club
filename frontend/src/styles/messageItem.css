@@ -1,0 +1,22 @@
+.user-message {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+}
+
+.other-message {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.message-item {
+  max-width: 70%;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  word-wrap: break-word;
+  background-color: #ece5dd;
+}

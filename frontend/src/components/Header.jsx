@@ -82,7 +82,7 @@ function Header() {
               </>
             ) : (
               <>
-                <Nav.Link>
+                {/* <Nav.Link>
                   <Link to="/login">
                     <FaSignInAlt /> Login
                   </Link>
@@ -91,7 +91,7 @@ function Header() {
                   <Link to="/register">
                     <FaUser /> Register
                   </Link>
-                </Nav.Link>
+                </Nav.Link> */}
               </>
             )}
           </Nav>

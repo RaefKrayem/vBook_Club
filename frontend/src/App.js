@@ -16,13 +16,18 @@ import MyBooks from "./pages/MyBooks";
 import BookItem from "./components/Book/BookItem";
 import User from "./pages/User";
 import BardLogin from "./components/BardLogin";
+import { useSelector } from "react-redux";
 
 function App() {
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
   return (
     <>
       <Router>
-        <div className="container">
-          <Header />
+        <div className="container" id="customContainer">
+          {user && <Header />}
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />

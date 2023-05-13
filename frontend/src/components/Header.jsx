@@ -25,7 +25,12 @@ function Header() {
 
   return (
     <Navbar bg="light" expand="md">
-      <Container>
+      <Container
+        style={{
+          backgroundColor: "#8e2b32",
+          color: "#dcdcdc",
+        }}
+      >
         <Navbar.Brand>
           <Link to="/">vBookClub</Link>
         </Navbar.Brand>
@@ -81,18 +86,7 @@ function Header() {
                 </Nav.Link>
               </>
             ) : (
-              <>
-                {/* <Nav.Link>
-                  <Link to="/login">
-                    <FaSignInAlt /> Login
-                  </Link>
-                </Nav.Link>
-                <Nav.Link>
-                  <Link to="/register">
-                    <FaUser /> Register
-                  </Link>
-                </Nav.Link> */}
-              </>
+              <></>
             )}
           </Nav>
           {user && (

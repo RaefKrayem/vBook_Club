@@ -18,8 +18,8 @@ function BookItem() {
         <Row>
           <Col xs={12} md={4}>
             <LazyLoadImage
-              height={400}
-              width={400}
+              height={"100%"}
+              width={"100%"}
               threshold={0.95}
               src={bookInfo.imageLinks && bookInfo.imageLinks.thumbnail}
               alt="book cover"

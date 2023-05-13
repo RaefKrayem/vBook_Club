@@ -9,8 +9,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import loginImage from "../assets/login.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import RegisterImage from "../assets/Register.jpg";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -70,7 +70,7 @@ function Register() {
           height={"100%"}
           width={"100%"}
           threshold={0.95}
-          src={loginImage}
+          src={RegisterImage}
           alt="register picture"
           fluid
         />

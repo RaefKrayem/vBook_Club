@@ -41,8 +41,7 @@ function Clubs() {
   return (
     <>
       <section className="heading">
-        <h1>Welcome {user && user.username}</h1>
-        <p>Clubs List</p>
+        <h1>Clubs List</h1>
       </section>
 
       {/* if the club id is in the myClubs array return the club item with isJoined={true} */}

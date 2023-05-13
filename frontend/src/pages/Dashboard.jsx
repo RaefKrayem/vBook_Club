@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// to check if the user exists in the local storage
 import { useSelector, useDispatch } from "react-redux";
-import ChallengeForm from "../components/Challenge/ChallengeForm";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import { getAllChallenges, reset } from "../features/challenges/challengeSlice";
+import ChallengeForm from "../components/Challenge/ChallengeForm";
 import ChallengeItem from "../components/Challenge/ChallengeItem";
+import { Container, Row, Col } from "react-bootstrap";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -24,10 +24,8 @@ function Dashboard() {
 
     if (!user) navigate("/login");
 
-    // get all challenges and put it in challenges variable above to be used in the return
     dispatch(getAllChallenges());
 
-    // when the component unmounts, reset the challenges state by returning a function from useEffect
     return () => {
       dispatch(reset());
     };
@@ -38,28 +36,42 @@ function Dashboard() {
   }
 
   return (
-    <>
+    <div
+      style={{
+        backgroundColor: "#8e2b32",
+      }}
+    >
       <section className="heading">
-        <h1>Welcome {user && user.username}</h1>
-        <p>Challenges Dashboard</p>
+        <p
+          style={{
+            color: "#dcdcdc",
+          }}
+        >
+          Challenges Dashboard
+        </p>
       </section>
 
       <section className="content">
-        {challenges.length > 0 ? (
-          <div className="goals">
-            {challenges.map((challenge) => (
-              <ChallengeItem key={challenge.id} challenge={challenge} />
-            ))}
-          </div>
-        ) : (
-          <h3>You have not set any challenges</h3>
-        )}
+        <Container>
+          <Row>
+            {challenges.length > 0 ? (
+              challenges.map((challenge) => (
+                <Col key={challenge.id} xs={12} md={6} lg={4}>
+                  <ChallengeItem challenge={challenge} />
+                </Col>
+              ))
+            ) : (
+              <h3>You have not set any challenges</h3>
+            )}
+          </Row>
+          <Row>
+            <Col>
+              <ChallengeForm />
+            </Col>
+          </Row>
+        </Container>
       </section>
-
-      <h1>Create new Challenges</h1>
-
-      <ChallengeForm />
-    </>
+    </div>
   );
 }
 

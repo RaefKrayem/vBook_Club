@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateChallenge } from "../../features/challenges/challengeSlice";
-import { format, set } from "date-fns";
+import { Form, InputGroup, Button, Row, Col } from "react-bootstrap";
 
-function ChallengeEditForm({ challenge }) {
+function ChallengeEditForm({ challenge, onCancel }) {
   const [name, setName] = useState(challenge.name);
   const [total_pages, setTotalPages] = useState(challenge.total_pages);
   const [completed_pages, setCompletedPages] = useState(
@@ -38,86 +38,50 @@ function ChallengeEditForm({ challenge }) {
 
   return (
     <section className="form">
-      <form onSubmit={onSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">Name</label>
-          <input
+      <Form onSubmit={onSubmit}>
+        <Form.Group controlId="name">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
             type="name"
             placeholder="Enter challenge name"
-            name="name"
-            id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="total_pages">Total pages</label>
-          <input
+        </Form.Group>
+        <Form.Group controlId="total_pages">
+          <Form.Label>Total pages</Form.Label>
+          <Form.Control
             type="number"
             placeholder="Enter total pages"
-            name="total_pages"
-            id="total_pages"
             value={total_pages}
             onChange={(e) => setTotalPages(e.target.value)}
             required
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="completed_pages">Completed pages</label>
-          <input
+        </Form.Group>
+        <Form.Group controlId="completed_pages">
+          <Form.Label>Completed pages</Form.Label>
+          <Form.Control
             type="number"
-            placeholder="Enter total pages"
-            name="completed_pages"
-            id="completed_pages"
+            placeholder="Enter completed pages"
             value={completed_pages}
             onChange={(e) => setCompletedPages(e.target.value)}
             required
           />
-        </div>
-
-        {/* <div className="form-group">
-          <label htmlFor="start_date">Start date</label>
-          <input
-            type="date"
-            placeholder="Enter start date"
-            name="start_date"
-            id="start_date"
-            value={start_date}
-            onChange={(e) => setStartDate(e.target.value)}
-            required
-            onBlur={(e) => {
-              const formattedDate = format(
-                new Date(e.target.value),
-                "yyyy-MM-dd"
-              );
-              setStartDate(formattedDate);
-            }}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="end_date">End date</label>
-          <input
-            type="date"
-            placeholder="Enter end date"
-            name="end_date"
-            id="end_date"
-            value={end_date}
-            onChange={(e) => setEndDate(e.target.value)}
-            required
-            onBlur={(e) => {
-              const formattedDate = format(
-                new Date(e.target.value),
-                "yyyy-MM-dd"
-              );
-              setEndDate(formattedDate);
-            }}
-          />
-        </div> */}
-        <div className="form-group">
-          <button className="btn btn-block">Update challenge</button>
-        </div>
-      </form>
+        </Form.Group>
+        <Row>
+          <Col sm={6}>
+            <Button variant="secondary" onClick={onCancel}>
+              Cancel
+            </Button>
+          </Col>
+          <Col sm={6}>
+            <Button variant="success" type="submit">
+              Update
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     </section>
   );
 }

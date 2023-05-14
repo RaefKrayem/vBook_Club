@@ -26,7 +26,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className="container" id="customContainer">
+        <div className="" id="customContainer">
           {user && <Header />}
           <Routes>
             <Route path="/" element={<Dashboard />} />

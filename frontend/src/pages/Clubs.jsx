@@ -49,6 +49,12 @@ function Clubs() {
 
       <Container>
         <Row>
+          {myClubs.length > 0 &&
+            myClubs.map((club) => (
+              <Col sm={12} key={club.id}>
+                <ClubItem club={club} isJoined={true} />
+              </Col>
+            ))}
           {clubs.length > 0 &&
             clubs.map(
               (club) =>
@@ -58,12 +64,6 @@ function Clubs() {
                   </Col>
                 )
             )}
-          {myClubs.length > 0 &&
-            myClubs.map((club) => (
-              <Col sm={12} key={club.id}>
-                <ClubItem club={club} isJoined={true} />
-              </Col>
-            ))}
         </Row>
       </Container>
     </>

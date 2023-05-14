@@ -6,7 +6,7 @@ const { db } = require("../config/db");
 // @access  Private
 const getBooks = asyncHandler(async (req, res) => {
   const getBooksQuery =
-    "SELECT book_selfLink, book_title, book_authors, book_description, book_image FROM saved_books WHERE user_id = ?";
+    "SELECT book_selfLink, book_title, book_authors, book_categories, book_description, book_image FROM saved_books WHERE user_id = ?";
   db.query(getBooksQuery, [req.user.id], (error, results) => {
     if (error) {
       throw error;
@@ -24,6 +24,7 @@ const getBooks = asyncHandler(async (req, res) => {
 // @route   POST /api/books
 // @access  Private
 const saveBook = asyncHandler(async (req, res) => {
+  console.log("req.body categories: ", req.body.book_categories);
   const book = {
     book_selfLink: req.body.book_selfLink,
     user_id: req.user.id,
@@ -34,12 +35,15 @@ const saveBook = asyncHandler(async (req, res) => {
         " and " +
         req.body.book_authors.slice(-1)
       : req.body.book_authors,
+    // if book_categories is an array, join it into a string excpet for the last element
+    book_categories: Array.isArray(req.body.book_categories)
+      ? req.body.book_categories.slice(0, -1).join(" & ") +
+        req.body.book_categories.slice(-1)
+      : req.body.book_categories,
 
     book_description: req.body.book_description,
     book_image: req.body.book_image,
   };
-
-  console.log("save: ", book);
 
   const saveQuery = "Insert INTO saved_books SET ?";
 

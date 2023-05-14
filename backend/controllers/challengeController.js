@@ -128,9 +128,9 @@ const updateChallenge = asyncHandler(async (req, res) => {
       console.log("challenge: ", challenge);
 
       // if the start date is before today or the end date is before the start date, return error
-      if (challenge.start_date < new Date().toISOString().slice(0, 10)) {
-        res.status(400).json({ message: "Start date is before today." });
-      }
+      // if (challenge.start_date < new Date().toISOString().slice(0, 10)) {
+      //   res.status(400).json({ message: "Start date is before today." });
+      // }
       // if the end date is before the start date, return error
       if (challenge.end_date < challenge.start_date) {
         res.status(400).json({ message: "End date is before start date." });

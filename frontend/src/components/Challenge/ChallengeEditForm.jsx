@@ -71,12 +71,12 @@ function ChallengeEditForm({ challenge, onCancel }) {
         </Form.Group>
         <Row>
           <Col sm={6}>
-            <Button variant="secondary" onClick={onCancel}>
+            <Button variant="outline-secondary" onClick={onCancel}>
               Cancel
             </Button>
           </Col>
           <Col sm={6}>
-            <Button variant="success" type="submit">
+            <Button variant="outline-success" type="submit">
               Update
             </Button>
           </Col>

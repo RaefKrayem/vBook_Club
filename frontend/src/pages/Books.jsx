@@ -6,13 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { getBooks } from "../features/books/bookSlice";
 import randomwords from "random-words";
 import Form from "react-bootstrap/Form";
+import { FaSearch } from "react-icons/fa";
+import Button from "react-bootstrap/Button";
 
 function Books() {
   const [fetchedBooks, setFetchedBooks] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
   // const [query, setQuery] = useState(randomwords(1)[0]); // Set default category to Computer Science
-  const [query, setQuery] = useState("computer science");
+  const [query, setQuery] = useState("The Phoenix Project");
   const maxResults = 20;
   const dispatch = useDispatch();
   const { books, isLoading, isError, message } = useSelector(
@@ -34,48 +36,121 @@ function Books() {
     setTotalItems(data.totalItems);
   }
 
-  const handleCategoryChange = (e) => {
-    const category = e.target.value;
-    setQuery(category);
+  const handleSearchSubmit = (e) => {
+    setQuery(query);
     setFetchedBooks([]);
     setStartIndex(0);
     fetchBooks(0);
   };
 
+  const handleSearchChange = (e) => {
+    const searchValue = e.target.value;
+    setQuery(searchValue);
+  };
+
   return (
-    <div
-      className="booksContainer"
-      style={{
-        backgroundColor: "#1d1e20",
-      }}
-    >
-      <h1>Books</h1>
+    <>
+      <div className="contentContainer">
+        <h2
+          style={{
+            fontWeight: 500,
+            fontSize: 32,
+            lineHeight: "40px",
+            color: "#fff",
+            marginBottom: 20,
+            // paddingLeft: 20,
+            textAlign: "center",
+          }}
+        >
+          Books
+        </h2>
 
-      <Form.Select
-        aria-label="Floating label select example"
-        onChange={handleCategoryChange}
-      >
-        <option>Select a category</option>
-        <option value="Computer Science">Computer Science</option>
-        <option value="Fiction">Fiction</option>
-        <option value="History">History</option>
-      </Form.Select>
-
-      <Row xs={1} md={4} className="g-4">
-        {fetchedBooks.map((fetched_book) => (
-          <Col>
-            {/* if an object of the books array contains an item that have the same selfLink with fetched_book then isSaved is true */}
-            {books.some(
-              (book) => book.book_selfLink === fetched_book.selfLink
-            ) ? (
-              <BookCard book={fetched_book} isSaved={true} />
+        {/* Add a search bar */}
+        <div className="searchBox">
+          <div
+            className="mb-3"
+            controlId="formBasicEmail"
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              maxWidth: 1224,
+              paddingLeft: 200,
+              paddingRight: 200,
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
+            <Form.Control
+              type="text"
+              placeholder="Enter a book title"
+              value={query}
+              style={{
+                backgroundColor: "#37383c",
+                borderColor: "#878a94",
+                color: "#fff",
+                ":focus": {
+                  borderColor: "#878a94",
+                },
+              }}
+              onChange={handleSearchChange}
+            />
+            {query ? (
+              <Button
+                type="button"
+                style={{
+                  backgroundColor: "transparent",
+                  border: "none",
+                  borderColor: "#878a94",
+                  color: "#fff",
+                }}
+                onClick={handleSearchSubmit}
+              >
+                <FaSearch
+                  style={{
+                    color: "#fff",
+                    fontSize: 20,
+                  }}
+                />
+              </Button>
             ) : (
-              <BookCard book={fetched_book} isSaved={false} />
+              <Button
+                type="button"
+                style={{
+                  backgroundColor: "transparent",
+                  border: "none",
+                  borderColor: "#878a94",
+                  color: "#fff",
+                }}
+              >
+                <FaSearch
+                  style={{
+                    color: "#fff",
+                    fontSize: 20,
+                  }}
+                />
+              </Button>
             )}
-          </Col>
-        ))}
-      </Row>
-    </div>
+          </div>
+        </div>
+
+        <Row xs={1} md={2} lg={4} className="g-4">
+          {fetchedBooks.map((fetched_book) => (
+            <Col>
+              {/* if an object of the books array contains an item that have the same selfLink with fetched_book then isSaved is true */}
+              {books.some(
+                (book) => book.book_selfLink === fetched_book.selfLink
+              ) ? (
+                <BookCard book={fetched_book} isSaved={true} />
+              ) : (
+                <BookCard book={fetched_book} isSaved={false} />
+              )}
+            </Col>
+          ))}
+        </Row>
+      </div>
+    </>
   );
 }
 

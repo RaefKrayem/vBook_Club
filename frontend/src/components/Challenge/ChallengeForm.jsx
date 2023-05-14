@@ -31,7 +31,7 @@ function ChallengeForm() {
       className="mb-3"
       style={{
         backgroundColor: "#d0ab7f",
-        color: "#8e2b32",
+        textcolor: "#8e2b32",
         height: "100%",
       }}
     >

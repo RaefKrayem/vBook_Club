@@ -44,8 +44,7 @@ function MyClubs() {
       <Container>
         <Row>
           <Col>
-            <h1>Welcome {user && user.username}</h1>
-            <p>Your Clubs List</p>
+            <h1>Your Clubs List</h1>
           </Col>
         </Row>
         <Row>

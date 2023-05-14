@@ -11,11 +11,11 @@
 }
 
 .message-item {
-  max-width: 70%;
+  max-width: 80%;
   border-radius: 20px;
   padding: 10px;
-  margin: 10px;
-  font-size: 16px;
+  margin: 5px 10px;
+  font-size: 20px;
   font-weight: 500;
   word-wrap: break-word;
   background-color: #ece5dd;

@@ -6,7 +6,7 @@ import Spinner from "../components/Spinner";
 import { getAllChallenges, reset } from "../features/challenges/challengeSlice";
 import ChallengeForm from "../components/Challenge/ChallengeForm";
 import ChallengeItem from "../components/Challenge/ChallengeItem";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -36,38 +36,45 @@ function Dashboard() {
   }
 
   return (
-    <div
-      style={{
-        backgroundColor: "#8e2b32",
-      }}
-    >
+    <div style={{ backgroundColor: "#EDEEC9" }}>
       <section className="heading">
-        <p
-          style={{
-            color: "#dcdcdc",
-          }}
-        >
+        <h2 style={{ textAlign: "center", margin: "1rem 0" }}>
           Challenges Dashboard
-        </p>
+        </h2>
       </section>
 
       <section className="content">
         <Container>
           <Row>
-            {challenges.length > 0 ? (
-              challenges.map((challenge) => (
+            {challenges
+              .filter((challenge) => challenge.status === "in progress")
+              .map((challenge) => (
                 <Col key={challenge.id} xs={12} md={6} lg={4}>
                   <ChallengeItem challenge={challenge} />
                 </Col>
               ))
-            ) : (
-              <h3>You have not set any challenges</h3>
-            )}
+              .concat(
+                challenges
+                  .filter((challenge) => challenge.status === "completed")
+                  .map((challenge) => (
+                    <Col key={challenge.id} xs={12} md={6} lg={4}>
+                      <ChallengeItem challenge={challenge} />
+                    </Col>
+                  ))
+              )
+              .concat(
+                challenges
+                  .filter((challenge) => challenge.status === "failed")
+                  .map((challenge) => (
+                    <Col key={challenge.id} xs={12} md={6} lg={4}>
+                      <ChallengeItem challenge={challenge} />
+                    </Col>
+                  ))
+              )}
           </Row>
+
           <Row>
-            <Col>
-              <ChallengeForm />
-            </Col>
+            <Col>{/* <ChallengeForm /> */}</Col>
           </Row>
         </Container>
       </section>

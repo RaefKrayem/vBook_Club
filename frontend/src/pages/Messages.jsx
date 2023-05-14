@@ -61,7 +61,7 @@ function Messages() {
   }
 
   return (
-    <div>
+    <div className="GradientBack">
       <section className="content">
         {!messages.chat_id_emp &&
           messages.map((message) => (

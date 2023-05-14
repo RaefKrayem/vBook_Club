@@ -24,15 +24,30 @@ function Header() {
   };
 
   return (
-    <Navbar bg="light" expand="md">
-      <Container
-        style={{
-          backgroundColor: "#8e2b32",
-          color: "#dcdcdc",
-        }}
-      >
+    <Navbar
+      bg="#A8763E"
+      expand="md"
+      style={{
+        backgroundColor: "#1d1e20",
+        color: "#eeeff0",
+        borderColor: "#37383c",
+        borderBottom: "5px solid #505258",
+        maxWidth: "1424px",
+      }}
+      // text color
+      variant="#F7F3E3"
+    >
+      <Container>
         <Navbar.Brand>
-          <Link to="/">vBookClub</Link>
+          <Link
+            to="/"
+            style={{
+              color: "#eeeff0",
+              textDecoration: "none",
+            }}
+          >
+            vBookClub
+          </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
@@ -40,47 +55,97 @@ function Header() {
             {user ? (
               <>
                 <Nav.Link>
-                  <Link to="/bard">Bard</Link>
+                  <Link
+                    to="/bard"
+                    style={{
+                      color: "#eeeff0",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Bard
+                  </Link>
                 </Nav.Link>
                 <Nav.Link>
-                  <Link to="/mybooks">
-                    <GiBookCover />
+                  <Link
+                    to="/mybooks"
+                    style={{
+                      color: "#eeeff0",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <GiBookCover /> {"    "}
                     My Books
                   </Link>
                 </Nav.Link>
                 <Nav.Link>
-                  <Link to="/books">
-                    <GiBookCover />
+                  <Link
+                    to="/books"
+                    style={{
+                      color: "#eeeff0",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <GiBookCover /> {"    "}
                     Books
                   </Link>
                 </Nav.Link>
                 <Nav.Link>
-                  <Link to="/clubs">
-                    <MdGroups />
+                  <Link
+                    to="/clubs"
+                    style={{
+                      color: "#eeeff0",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <MdGroups /> {"    "}
                     Clubs
                   </Link>
                 </Nav.Link>
                 <Nav.Link>
-                  <Link to="/myclubs">
-                    <MdGroups />
+                  <Link
+                    to="/myclubs"
+                    style={{
+                      color: "#eeeff0",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <MdGroups /> {"    "}
                     My Clubs
                   </Link>
                 </Nav.Link>
                 <Nav.Link>
-                  <Link to="/friends">
-                    <FaUserFriends />
+                  <Link
+                    to="/friends"
+                    style={{
+                      color: "#eeeff0",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <FaUserFriends /> {"    "}
                     Friends
                   </Link>
                 </Nav.Link>
                 <Nav.Link>
-                  <Link to="/users">
-                    <FaUserFriends />
+                  <Link
+                    to="/users"
+                    style={{
+                      color: "#eeeff0",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <FaUserFriends /> {"    "}
                     Users
                   </Link>
                 </Nav.Link>
                 <Nav.Link>
-                  <Link to="/inbox">
-                    <RiMessage3Fill />
+                  <Link
+                    to="/inbox"
+                    style={{
+                      color: "#eeeff0",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <RiMessage3Fill /> {"    "}
                     Inbox
                   </Link>
                 </Nav.Link>
@@ -92,8 +157,14 @@ function Header() {
           {user && (
             <Nav>
               <Nav.Link>
-                <button className="btn" onClick={onLogout}>
-                  <FaSignOutAlt /> Logout
+                <button
+                  className="btn header-link"
+                  onClick={onLogout}
+                  style={{
+                    color: "#eeeff0",
+                  }}
+                >
+                  <FaSignOutAlt /> {"    "} Logout
                 </button>
               </Nav.Link>
             </Nav>

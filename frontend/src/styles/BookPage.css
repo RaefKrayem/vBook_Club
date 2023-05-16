@@ -1,0 +1,20 @@
+/* Book image Container styles */
+.image_container {
+  border: 1px solid #505258;
+  padding: 2rem;
+  border-radius: 14px;
+  background-color: #2a2d33;
+}
+
+/* Book image styles */
+.book_image {
+  border-radius: 14px;
+}
+
+/* Book Info box styles */
+.book_box {
+  background-color: #1d1e20;
+  max-width: 100%;
+  padding: 1rem 0;
+  color: #fff;
+}

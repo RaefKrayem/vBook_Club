@@ -1,0 +1,27 @@
+.comment_input_group {
+  border: 1px solid #2a2d33;
+  border-radius: 8px;
+}
+
+/* add a focus even to the input so that when the user focus on the comment_input 
+    the border of the comment_input_group will change to green with a transition for enter and leave the focus
+*/
+.comment_input_group:focus-within {
+  border: 1px solid #fff;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.comment_input {
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  border-radius: 0;
+}
+
+.comment_input:focus {
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  border-radius: 0;
+  box-shadow: 0 0 0 0;
+}

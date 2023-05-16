@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Spinner from "../../components/Spinner";
 import { getComments, reset } from "../../features/comments/commentSlice";
-import CommentItem from "./CommentItem";
 import CommentForm from "./CommentForm";
 import { useNavigate } from "react-router-dom";
+import "../../styles/Comments.css";
+import Comment from "./Comment";
 
 function Comments({ book_selfLink }) {
   const navigate = useNavigate();
@@ -16,10 +17,6 @@ function Comments({ book_selfLink }) {
   );
 
   useEffect(() => {
-    if (isError && comments.length > 0) {
-      console.log(message);
-    }
-
     if (!user) navigate("/login");
 
     dispatch(getComments(book_selfLink));
@@ -34,29 +31,25 @@ function Comments({ book_selfLink }) {
   }
 
   return (
-    <>
-      <section className="heading">
-        <p>Comments List</p>
-      </section>
+    <div className="comments-page">
+      <div className="comments-list">
+        <h2 className="comments-heading">Comments</h2>
 
-      <section className="content">
-        <div className="goals">
-          {comments && comments.length > 0 ? (
-            <>
-              {comments.map((comment) => (
-                <CommentItem key={comment.id} comment={comment} />
-              ))}
-            </>
-          ) : (
-            <p>No comments</p>
-          )}
+        {comments && comments.length > 0 ? (
+          comments.map((comment) => (
+            <Comment key={comment.id} comment={comment} />
+          ))
+        ) : (
+          <p>No comments</p>
+        )}
+      </div>
+
+      {user && (
+        <div className="comment-form-container">
+          <CommentForm book_selfLink={book_selfLink} />
         </div>
-      </section>
-
-      <section className="content">
-        <CommentForm book_selfLink={book_selfLink} />
-      </section>
-    </>
+      )}
+    </div>
   );
 }
 

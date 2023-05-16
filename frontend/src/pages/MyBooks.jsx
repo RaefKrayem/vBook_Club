@@ -52,7 +52,7 @@ function MyBooks() {
             textAlign: "center",
           }}
         >
-          Books
+          My Books
         </h2>
 
         {/* Add a search bar */}

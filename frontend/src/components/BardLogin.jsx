@@ -1,38 +1,68 @@
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 import "../styles/Book.css";
+import RomanceNovel from "../assets/clubs/RomanceNovel.jpg";
 
+import "../styles/testClub.css";
 function BardLogin() {
   return (
-    <div className="contentContainer">
-      <Card className="book_card">
-        <div className="card_image_container">
-          <Card.Img
-            variant="top"
-            src="http://books.google.com/books/content?id=gi3_wQEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-            loading="lazy"
-            className="card_image"
-          />
-        </div>
-        <Card.Body className="card_body">
-          <Card.Title>
-            <div className="card_title_container">
-              <h5 className="card_title">Productivity</h5>
-              <span class="card_bookmark_icon">
-                <Button variant="link" className="card_bookmark_button">
-                  <FaRegBookmark id="bookmark-icon" />
-                </Button>
-              </span>
-            </div>
-          </Card.Title>
-          <Card.Text className="card_text">
-            <h3 className="book_title">The Procrastination Cure</h3>
-            <h4 class="book_authors">By Damon Zahariades</h4>
-          </Card.Text>
-        </Card.Body>
-      </Card>
-    </div>
+    <></>
+    // <div className="club_cards_container">
+    //   <div className="club_card_container">
+    //     <img
+    //       src={imagesObject[club.name.replace(/\s/g, "")]}
+    //       alt=""
+    //       loading="lazy"
+    //     />
+    //     <div className="club_card_content">
+    //       <div className="club_card_text">
+    //         <div className="club_card_title">
+    //           <h2>{club.name}</h2>
+    //         </div>
+    //         {club.description}
+    //       </div>
+
+    //       <div className="club_card_btns">
+    //         {isJoined ? (
+    //           <>
+    //             <Link
+    //               to={`/messages`}
+    //               state={{ id: club.id }} // <-- state prop
+    //               key={club.id}
+    //             >
+    //               <button
+    //                 className="button"
+    //                 onClick={() => dispatch(getMessages(club.id))}
+    //               >
+    //                 Chat
+    //               </button>
+    //             </Link>
+    //             <button
+    //               className="button"
+    //               onClick={() => {
+    //                 dispatch(leaveClub(club.id));
+    //                 dispatch(getAllClubs());
+    //                 dispatch(getMyClubs());
+    //               }}
+    //             >
+    //               Leave
+    //             </button>
+    //           </>
+    //         ) : (
+    //           <button
+    //             // variant="primary"
+    //             onClick={() => {
+    //               dispatch(joinClub(club.id));
+    //               dispatch(getAllClubs());
+    //               dispatch(getMyClubs());
+    //             }}
+    //             className="button"
+    //           >
+    //             Join
+    //           </button>
+    //         )}
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
   );
 }
 

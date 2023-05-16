@@ -11,6 +11,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import RegisterImage from "../assets/Register.jpg";
+import "../styles/Login.css";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -55,17 +56,8 @@ function Register() {
   }
 
   return (
-    <Row
-      className="justify-content-center align-items-center"
-      style={{
-        backgroundColor: "#8e2b32",
-        color: "#dcdcdc",
-        fontSize: "1.1rem",
-        minHeight: "100vh",
-      }}
-      id="registerRow"
-    >
-      <Col lg={6} style={{ height: "100vh" }}>
+    <Row className="justify-content-center align-items-center" id="loginRow">
+      <Col lg={6} className="image_column">
         <LazyLoadImage
           height={"100%"}
           width={"100%"}
@@ -77,16 +69,13 @@ function Register() {
       </Col>
       <Col lg={6}>
         <section className="form-container">
-          <section className="heading text-center">
-            <h1 style={{ color: "#d0ab7f", fontSize: "3rem" }}>
+          <section className="heading text-center page_title">
+            <h1 className="title_text">
               <FaUser /> Register
             </h1>
           </section>
           <section className="form">
-            <Form
-              onSubmit={onSubmit}
-              style={{ color: "#d0ab7f", fontSize: "1.2rem" }}
-            >
+            <Form onSubmit={onSubmit} className="user_form">
               <Form.Group controlId="username">
                 <Form.Label className="text-left">Username</Form.Label>
                 <Form.Control
@@ -97,7 +86,7 @@ function Register() {
                   minLength={6}
                   onChange={onChange}
                   required
-                  style={{ fontSize: "1.2rem", marginBottom: "18px" }}
+                  className="user_input"
                 />
               </Form.Group>
               <Form.Group controlId="email">
@@ -109,7 +98,7 @@ function Register() {
                   value={email}
                   onChange={onChange}
                   required
-                  style={{ fontSize: "1.2rem", marginBottom: "18px" }}
+                  className="user_input"
                 />
               </Form.Group>
               <Form.Group controlId="password">
@@ -122,7 +111,7 @@ function Register() {
                   minLength={4}
                   onChange={onChange}
                   required
-                  style={{ fontSize: "1.2rem", marginBottom: "18px" }}
+                  className="user_input"
                 />
               </Form.Group>
               <Form.Group controlId="password2">
@@ -135,30 +124,16 @@ function Register() {
                   minLength={4}
                   onChange={onChange}
                   required
-                  style={{ fontSize: "1.2rem" }}
+                  className="user_input"
                 />
               </Form.Group>
-              <Button
-                variant="primary"
-                type="submit"
-                className="submit-button"
-                style={{
-                  margin: "15px 0px",
-                  backgroundColor: "#d0ab7f",
-                  color: "#8e2b32",
-                  border: "none",
-                  fontSize: "1.2rem",
-                }}
-              >
+              <button type="submit" className="button">
                 Register
-              </Button>
+              </button>
             </Form>
-            <p
-              className="create-account"
-              style={{ color: "#d0ab7f", fontSize: "1.2rem" }}
-            >
+            <p>
               Already have an account?{" "}
-              <a href="/login" style={{ color: "#d0ab7f", fontSize: "1.2rem" }}>
+              <a href="/login" className="create_link">
                 Login
               </a>
             </p>

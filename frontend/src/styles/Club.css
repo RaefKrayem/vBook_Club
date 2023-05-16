@@ -1,0 +1,32 @@
+/* Card image styles */
+
+.card_image_container {
+  background-color: #2a2d33;
+  border-bottom: 5px solid #505258;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border-radius: 12px 12px 0 0;
+  padding: 26px 19px 24px;
+  text-align: center;
+  height: 230px;
+}
+
+.card_image {
+  transition: all 0.2s ease-in-out;
+  border-radius: 10px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.11));
+  max-width: 110px;
+  border-radius: 10px;
+  height: auto;
+  vertical-align: middle;
+}
+
+.card_image:hover {
+  cursor: pointer;
+  transform: scale(1.07);
+  transition: all 0.2s ease-in-out;
+}

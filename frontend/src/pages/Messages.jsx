@@ -61,8 +61,9 @@ function Messages() {
   }
 
   return (
-    <div className="GradientBack">
-      <section className="content">
+    <>
+      {/* <div className="GradientBack"> */}
+      {/* <section className="content">
         {!messages.chat_id_emp &&
           messages.map((message) => (
             // if (message.sender_id === user.id) give the MessageItem a prop isUserMessage = true
@@ -73,10 +74,31 @@ function Messages() {
             />
           ))}
         <div ref={messagesEndRef}></div>
-      </section>
+      </section> */}
 
-      <MessageForm chat_id={id ? id : messages[0].chat_id_emp} />
-    </div>
+      <div
+        className="messages_container"
+        style={{
+          backgroundColor: "#1d1e20",
+          padding: "1rem 3rem ",
+        }}
+      >
+        <div className="chat-body">
+          <ul className="chat-list">
+            {messages.map((message) => (
+              <MessageItem
+                key={message.id}
+                message={message}
+                isUserMessage={message.sender_id === user._id}
+              />
+            ))}
+          </ul>
+        </div>
+        <MessageForm chat_id={id ? id : messages[0].chat_id_emp} />
+      </div>
+
+      {/* </div> */}
+    </>
   );
 }
 

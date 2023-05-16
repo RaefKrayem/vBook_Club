@@ -1,12 +1,9 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import { getMyClubs, reset } from "../features/myClubs/myClubSlice";
 import ClubItem from "../components/ClubItem";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -40,22 +37,27 @@ function MyClubs() {
   }
 
   return (
-    <>
-      <Container>
-        <Row>
-          <Col>
-            <h1>Your Clubs List</h1>
-          </Col>
-        </Row>
-        <Row>
-          {myClubs.map((club) => (
-            <Col sm={12} key={club.id}>
-              <ClubItem club={club} isJoined={true} />
-            </Col>
-          ))}
-        </Row>
-      </Container>
-    </>
+    <div className="club_cards_container">
+      <h2
+        style={{
+          fontWeight: 500,
+          fontSize: 32,
+          lineHeight: "40px",
+          color: "#fff",
+          marginBottom: 20,
+          // paddingLeft: 20,
+          textAlign: "center",
+        }}
+      >
+        My Clubs
+      </h2>
+
+      {myClubs.map((club) => (
+        <Col sm={12} key={club.id}>
+          <ClubItem club={club} isJoined={true} />
+        </Col>
+      ))}
+    </div>
   );
 }
 

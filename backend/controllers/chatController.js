@@ -29,4 +29,23 @@ const getClubChats = asyncHandler(async (req, res) => {
   res.status(200).json(results);
 });
 
-module.exports = { getChats, getClubChats };
+// @desc    Create a chat
+// @route   POST /api/chats/
+// @access  Private
+const createChat = asyncHandler(async (req, res) => {
+  const chat = {
+    id: req.body.id,
+    name: req.body.name,
+    chatAdmin_id: req.user.id,
+    isClubChat: req.body.isClubChat,
+  };
+  const insertQuery = "INSERT INTO chats SET ?";
+  db.query(insertQuery, chat, (error, results) => {
+    if (error) {
+      throw error;
+    }
+    res.status(201).json(`Chat ${chat.name} created`);
+  });
+});
+
+module.exports = { getChats, getClubChats, createChat };

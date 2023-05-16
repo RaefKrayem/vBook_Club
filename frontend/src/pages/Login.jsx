@@ -6,11 +6,12 @@ import { toast } from "react-toastify";
 import { login, reset } from "../features/auth/authSlice";
 import Spinner from "../components/Spinner";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import loginImage from "../assets/login.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import "../styles/Login.css";
+import "../styles/testClub.css";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -63,17 +64,8 @@ function Login() {
   }
 
   return (
-    <Row
-      className="justify-content-center align-items-center"
-      style={{
-        backgroundColor: "#8e2b32",
-        color: "#dcdcdc",
-        fontSize: "1.1rem",
-        minHeight: "100vh",
-      }}
-      id="loginRow"
-    >
-      <Col lg={6} style={{ height: "100vh" }}>
+    <Row className="justify-content-center align-items-center" id="loginRow">
+      <Col lg={6} className="image_column">
         <LazyLoadImage
           height={"100%"}
           width={"100%"}
@@ -85,16 +77,13 @@ function Login() {
       </Col>
       <Col lg={6}>
         <section className="form-container">
-          <section className="heading text-center">
-            <h1 style={{ color: "#d0ab7f", fontSize: "3rem" }}>
+          <section className="heading text-center page_title">
+            <h1 className="title_text">
               <FaSignInAlt /> Login
             </h1>
           </section>
           <section className="form">
-            <Form
-              onSubmit={onSubmit}
-              style={{ color: "#d0ab7f", fontSize: "1.2rem" }}
-            >
+            <Form onSubmit={onSubmit} className="user_form">
               <Form.Group controlId="email">
                 <Form.Label className="text-left">Email Address</Form.Label>
                 <Form.Control
@@ -104,7 +93,7 @@ function Login() {
                   value={email}
                   onChange={onChange}
                   required
-                  style={{ fontSize: "1.2rem", marginBottom: "18px" }}
+                  className="user_input"
                 />
               </Form.Group>
               <Form.Group controlId="password">
@@ -116,33 +105,16 @@ function Login() {
                   value={password}
                   onChange={onChange}
                   required
-                  style={{ fontSize: "1.2rem" }}
+                  className="user_input"
                 />
               </Form.Group>
-              <Button
-                variant="primary"
-                type="submit"
-                className="submit-button"
-                style={{
-                  margin: "15px 0px",
-                  backgroundColor: "#d0ab7f",
-                  color: "#8e2b32",
-                  border: "none",
-                  fontSize: "1.2rem",
-                }}
-              >
+              <button type="submit" className="button">
                 Login
-              </Button>
+              </button>
             </Form>
-            <p
-              className="create-account"
-              style={{ color: "#d0ab7f", fontSize: "1.2rem" }}
-            >
+            <p>
               Don't have an account?{" "}
-              <a
-                href="/register"
-                style={{ color: "#d0ab7f", fontSize: "1.2rem" }}
-              >
+              <a href="/register" className="create_link">
                 Create one
               </a>
             </p>

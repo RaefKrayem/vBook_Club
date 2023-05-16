@@ -18,7 +18,7 @@ function BookCard({ book, isSaved }) {
       book_title: title,
       book_authors: authors,
       book_description: description,
-      book_categories: categories,
+      book_categories: categories || "No categories available",
       book_image: imageLinks ? imageLinks.thumbnail : null,
     };
     dispatch(saveBook(bookData));
@@ -33,23 +33,30 @@ function BookCard({ book, isSaved }) {
   return (
     <>
       <Card className="book_card">
-        <div className="card_image_container">
-          <Card.Img
-            variant="top"
-            src={imageLinks && imageLinks.thumbnail}
-            loading="lazy"
-            className="card_image"
-          />
-        </div>
+        <Link
+          to={`/book/${book.id}`}
+          state={{ book: book }}
+          key={book.id}
+          style={{ textDecoration: "none" }}
+        >
+          <div className="card_image_container">
+            <Card.Img
+              variant="top"
+              src={imageLinks && imageLinks.thumbnail}
+              loading="lazy"
+              className="card_image"
+            />
+          </div>
+        </Link>
         <Card.Body className="card_body">
           <Card.Title>
             <div className="card_title_container">
               <h5 className="card_title">
                 {categories ? categories.join(", ") : "No categories available"}
               </h5>
-              <span class="card_bookmark_icon">
+              <span className="card_bookmark_icon">
                 <Button
-                  variant="link"
+                  variant="button"
                   className="card_bookmark_button"
                   onClick={isSaved ? handleUnsaveBook : handleSaveBook}
                 >

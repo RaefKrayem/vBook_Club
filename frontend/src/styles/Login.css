@@ -1,0 +1,51 @@
+#loginRow {
+  text-align: center;
+  width: 100%;
+  margin: 0;
+  background-color: #1d1e20;
+  color: #eeeff0;
+  font-size: 1.1rem;
+  min-height: 100vh;
+}
+
+#loginRow > * {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.form-container {
+  padding: 0 100px;
+}
+
+/* Image Column */
+.image_column {
+  height: 100vh;
+}
+
+/* Login, Register title */
+.page_title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.page_title .title_text {
+  font-size: 3rem;
+}
+
+/* Login, register form */
+.user_form {
+  font-size: 1.1em;
+}
+
+.user_input {
+  margin-bottom: 1rem;
+}
+
+.user_form .button {
+  margin: 1rem 0px 1rem 0px;
+  border: none;
+}
+
+.create_link {
+  color: #eeeff0;
+}

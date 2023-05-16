@@ -6,6 +6,7 @@ const { uuid } = require("uuidv4");
 // @route   GET /api/clubs
 // @access  Private
 const getClubs = asyncHandler(async (req, res) => {
+  console.log(uuid());
   const getClubsQuery = "SELECT * FROM clubs";
   db.query(getClubsQuery, [req.user.id], (error, results) => {
     if (error) {

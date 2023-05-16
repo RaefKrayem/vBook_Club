@@ -26,25 +26,23 @@ function App() {
   return (
     <>
       <Router>
-        <div className="" id="customContainer">
-          {user && <Header />}
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/friends" element={<Friends />} />
-            <Route path="/clubs" element={<Clubs />} />
-            <Route path="/myclubs" element={<MyClubs />} />
-            <Route path="/inbox" element={<Inbox />} />
-            <Route path="/messages" element={<Messages />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/books" element={<Books />} />
-            <Route path="/mybooks" element={<MyBooks />} />
-            <Route path="/book/:id" element={<BookItem />} />
-            <Route path="/user" element={<User />} />
-            <Route path="/bard" element={<BardLogin />} />
-          </Routes>
-        </div>
+        {user && <Header />}
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/friends" element={<Friends />} />
+          <Route path="/clubs" element={<Clubs />} />
+          <Route path="/myclubs" element={<MyClubs />} />
+          <Route path="/inbox" element={<Inbox />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/books" element={<Books />} />
+          <Route path="/mybooks" element={<MyBooks />} />
+          <Route path="/book/:id" element={<BookItem />} />
+          <Route path="/user" element={<User />} />
+          <Route path="/bard" element={<BardLogin />} />
+        </Routes>
       </Router>
       <ToastContainer />
     </>

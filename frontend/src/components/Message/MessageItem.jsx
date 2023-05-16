@@ -1,22 +1,24 @@
-// import messageItem css file
-import "../../styles/messageItem.css";
+// import Messages css file
+import "../../styles/Messages.css";
 
 function MessageItem({ message, isUserMessage }) {
   return (
-    <div className={isUserMessage ? "user-message" : "other-message"}>
-      <div className="message-item">
-        <div></div>
-        <div>
+    <li className={isUserMessage ? "out" : "in"}>
+      <div className="chat-img">
+        <img
+          src="https://www.bootdey.com/img/Content/avatar/avatar1.png"
+          alt="Avatar"
+        />
+      </div>
+      <div className="chat-body">
+        <div className="chat-message">
           {/* if the sender username was equal to the user username do not display the name */}
-          {!isUserMessage && (
-            <span className="message-username" style={{ color: "#8e2b32" }}>
-              {message.sender_username}:{" "}
-            </span>
-          )}
-          {message.content}
+
+          {!isUserMessage ? <h5>{message.sender_username}: </h5> : ""}
+          <p>{message.content}</p>
         </div>
       </div>
-    </div>
+    </li>
   );
 }
 

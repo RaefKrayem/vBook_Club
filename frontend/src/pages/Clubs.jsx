@@ -39,34 +39,38 @@ function Clubs() {
   }
 
   return (
-    <>
-      <section className="heading">
-        <h1>Clubs List</h1>
-      </section>
+    <div className="club_cards_container">
+      <h2
+        style={{
+          fontWeight: 500,
+          fontSize: 32,
+          lineHeight: "40px",
+          color: "#fff",
+          marginBottom: 20,
+          // paddingLeft: 20,
+          textAlign: "center",
+        }}
+      >
+        Clubs
+      </h2>
 
-      {/* if the club id is in the myClubs array return the club item with isJoined={true} */}
-      {/* if the club id is not in the myClubs array return the club item with isJoined={false} */}
+      {/* if the club is fined in myclubs array give it a prop isJoined=true  else 
+          give it a prop isJoined=false */}
 
-      <Container>
-        <Row>
-          {myClubs.length > 0 &&
-            myClubs.map((club) => (
-              <Col sm={12} key={club.id}>
-                <ClubItem club={club} isJoined={true} />
-              </Col>
-            ))}
-          {clubs.length > 0 &&
-            clubs.map(
-              (club) =>
-                !myClubs.find((joinedClub) => joinedClub.id === club.id) && (
-                  <Col sm={12} key={club.id}>
-                    <ClubItem club={club} isJoined={false} />
-                  </Col>
-                )
-            )}
-        </Row>
-      </Container>
-    </>
+      {clubs.length > 0 &&
+        clubs.map((club) => (
+          <Col sm={12} key={club.id}>
+            <ClubItem
+              club={club}
+              isJoined={
+                myClubs.find((joinedClub) => joinedClub.id === club.id)
+                  ? true
+                  : false
+              }
+            />
+          </Col>
+        ))}
+    </div>
   );
 }
 

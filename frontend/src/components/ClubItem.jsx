@@ -17,6 +17,7 @@ import RomanceNovel from "../assets/clubs/RomanceNovel.jpg";
 import Science from "../assets/clubs/ScienceFiction.jpg";
 import Technology from "../assets/clubs/Technology.jpg";
 import Thriller from "../assets/clubs/Thriller.jpg";
+import "../styles/testClub.css";
 
 function ClubItem({ club, isJoined }) {
   const imagesObject = {
@@ -34,99 +35,63 @@ function ClubItem({ club, isJoined }) {
 
   return (
     // set a border of border: "1px solid #eef1f4"
-    <Card className="my-3">
-      <Row noGutters id="clubItem">
-        <Col xs={12} md={4}>
-          <div
-            className="d-flex justify-content-center align-items-center"
-            style={{ height: "100%" }}
-          >
-            <Card.Img
-              variant="top"
-              // convert the string to object name
-              src={imagesObject[club.name.replace(/\s/g, "")]}
-              // lazy loading
-              loading="lazy"
-              style={{ height: "100%", width: "100%" }}
-            />
+
+    <div className="club_card_container">
+      <img
+        src={imagesObject[club.name.replace(/\s/g, "")]}
+        alt=""
+        loading="lazy"
+      />
+      <div className="club_card_content">
+        <div className="club_card_text">
+          <div className="club_card_title">
+            <h2>{club.name}</h2>
           </div>
-        </Col>
-        <Col xs={12} md={8}>
-          <Card.Body
-            className="d-flex flex-column"
-            style={{
-              backgroundColor: "#E5E5E5",
-              color: "black",
-              height: "100%",
-            }}
-          >
-            {/* let the name be bold */}
-            <Card.Title className="text-center mb-3">
-              <strong>{club.name}</strong>
-            </Card.Title>
+          {club.description}
+        </div>
 
-            {/* let the text align to start from left and fill all the line */}
-
-            <Card.Text
-              className="flex-grow-1 mb-3"
-              style={{
-                textAlign: "left",
-                textJustify: "inter-word",
-                display: "-webkit-box",
-                WebkitBoxOrient: "vertical",
-              }}
-            >
-              {club.description}
-            </Card.Text>
-            <div className="d-flex justify-content-end align-items-center">
-              {isJoined ? (
-                <>
-                  <Link
-                    to={`/messages`}
-                    state={{ id: club.id }} // <-- state prop
-                    key={club.id}
-                    style={{ marginRight: "10px" }}
-                  >
-                    <Button
-                      variant="success"
-                      onClick={() => dispatch(getMessages(club.id))}
-                    >
-                      Chat
-                    </Button>
-                  </Link>
-                  <Button
-                    variant="danger"
-                    onClick={() => {
-                      dispatch(leaveClub(club.id));
-                      dispatch(getAllClubs());
-                      dispatch(getMyClubs());
-                    }}
-                  >
-                    Leave
-                  </Button>
-                </>
-              ) : (
-                <Button
-                  // variant="primary"
-                  onClick={() => {
-                    dispatch(joinClub(club.id));
-                    dispatch(getAllClubs());
-                    dispatch(getMyClubs());
-                  }}
-                  style={{
-                    backgroundColor: "#FCA311",
-                    color: "black",
-                    border: "none",
-                  }}
+        <div className="club_card_btns">
+          {isJoined ? (
+            <>
+              <Link
+                to={`/messages`}
+                state={{ id: club.id }} // <-- state prop
+                key={club.id}
+              >
+                <button
+                  className="button"
+                  onClick={() => dispatch(getMessages(club.id))}
                 >
-                  Join
-                </Button>
-              )}
-            </div>
-          </Card.Body>
-        </Col>
-      </Row>
-    </Card>
+                  Chat
+                </button>
+              </Link>
+              <button
+                className="button"
+                onClick={() => {
+                  dispatch(leaveClub(club.id));
+                  dispatch(getAllClubs());
+                  dispatch(getMyClubs());
+                }}
+              >
+                Leave
+              </button>
+            </>
+          ) : (
+            <button
+              // variant="primary"
+              onClick={() => {
+                dispatch(joinClub(club.id));
+                dispatch(getAllClubs());
+                dispatch(getMyClubs());
+              }}
+              className="button"
+            >
+              Join
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 

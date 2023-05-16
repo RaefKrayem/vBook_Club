@@ -1,0 +1,166 @@
+.club_cards_container {
+  min-height: 100vh;
+  padding-top: 1rem;
+  background-color: #1d1e20;
+}
+
+.club_card_container {
+  display: flex;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 2rem;
+  border: 3px solid #505258;
+  border-radius: 12px;
+  position: relative;
+  background-color: #1d1e20;
+  color: #eeeff0;
+}
+
+.club_card_container:hover {
+  cursor: pointer;
+  border: 3px solid #878a94;
+  transition: all 0.2s ease-in-out;
+}
+
+.club_card_container img {
+  width: 100%;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-right: 3px solid #505258;
+}
+
+.club_card_content {
+  max-width: 70%;
+}
+
+.club_card_text {
+  text-align: left;
+  padding: 0 1.5rem;
+  padding-top: 1rem;
+}
+
+.club_card_text .club_card_title {
+  text-align: left;
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 1rem 0;
+}
+
+.club_card_btns {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding: 1rem 2rem;
+}
+
+/* Button styles */
+.button {
+  margin-right: 0.5rem;
+  padding: 10px 15px;
+  gap: 15px;
+  color: #eeeff0;
+  background-color: #1d1e20;
+  outline: 0.3px #eeeff0 solid;
+  outline-offset: -0.8px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.button .text {
+  color: white;
+  font-weight: 700;
+  font-size: 1em;
+  transition: 400ms;
+}
+
+.button svg path {
+  transition: 400ms;
+}
+
+.button:hover {
+  background-color: transparent;
+  outline: 0.3px #eeeff0 solid;
+  color: #1d1e20;
+  background-color: #eeeff0;
+}
+
+.button:hover .text {
+  color: #181717;
+}
+
+.button:hover svg path {
+  fill: #181717;
+}
+
+@media screen and (max-width: 900px) {
+  .club_card_container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .club_card_container img {
+    width: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    border-right: none;
+    border-bottom: 3px solid #505258;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 0px;
+  }
+  .club_card_content {
+    max-width: 100%;
+  }
+
+  .club_card_text {
+    text-align: justify;
+    padding: 1.5rem 2rem;
+  }
+
+  .club_card_btns {
+    position: initial;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 1rem 0;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .club_card_container {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .club_card_container {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card_container img {
+    width: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    border-right: none;
+    border-bottom: 3px solid #505258;
+  }
+
+  .club_card_text {
+    text-align: justify;
+    padding: 1.5rem 2rem;
+  }
+
+  .club_card_btns {
+    position: initial;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 1rem 0;
+  }
+}

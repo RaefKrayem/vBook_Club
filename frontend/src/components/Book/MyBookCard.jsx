@@ -13,7 +13,6 @@ function MyBookCard({ book }) {
     book_image,
     book_categories,
   } = book;
-  console.log(book);
   const dispatch = useDispatch();
 
   const handleUnsaveBook = () => {

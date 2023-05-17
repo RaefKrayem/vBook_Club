@@ -6,10 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FaRegUserCircle } from "react-icons/fa";
+import { FaUserMinus, FaUserPlus } from "react-icons/fa";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMessage } from "@fortawesome/free-solid-svg-icons";
+import { MdChat, MdRemoveCircle } from "react-icons/md";
+import "../styles/User.css";
 
 function UserItem({ user, isFriend }) {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { messages } = useSelector((state) => state.messages);
   const [chatClicked, setChatClicked] = useState(false);
@@ -33,16 +36,13 @@ function UserItem({ user, isFriend }) {
   };
 
   return (
-    <Container
-      className="user-item my-3 py-2 px-3"
-      style={{ backgroundColor: "#f8f9fa" }}
-    >
-      <Row className="align-items-center">
+    <Container className="user-item my-2 py-2 px-3 user_container">
+      <Row className="align-items-center ">
         <Col xs={12} md={2} className="text-center mb-2 mb-md-0">
           <Image src="https://picsum.photos/100" roundedCircle fluid />
         </Col>
         <Col xs={12} md={6}>
-          <h2 className="user-item__username mb-2">{user.username}</h2>
+          <h3 className="user-item__username mb-2">{user.username}</h3>
         </Col>
         <Col
           xs={12}
@@ -51,34 +51,28 @@ function UserItem({ user, isFriend }) {
         >
           {isFriend ? (
             <>
-              <Button
-                variant="danger"
-                size="sm"
-                className="me-2"
+              <button
+                className="button user-button"
                 onClick={handleRemoveFriend}
               >
-                Remove
-              </Button>
+                <FaUserMinus />
+              </button>
               <Link
                 to={`/messages`}
                 state={{ userInfo: user }}
                 key={user.id}
                 className="text-decoration-none"
               >
-                <Button variant="success" size="sm" onClick={handleChat}>
-                  Chat
-                </Button>
+                <button className="button user-button" onClick={handleChat}>
+                  {/* <MdChat /> */}
+                  <FontAwesomeIcon icon={faMessage} />
+                </button>
               </Link>
             </>
           ) : (
-            <Button
-              variant="primary"
-              size="sm"
-              className="me-2"
-              onClick={handleAddFriend}
-            >
-              Add
-            </Button>
+            <button className="button user-button" onClick={handleAddFriend}>
+              <FaUserPlus />
+            </button>
           )}
         </Col>
       </Row>

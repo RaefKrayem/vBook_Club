@@ -2,16 +2,23 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 // import create message from message slice
 import { sendMessage, getMessages } from "../../features/messages/messageSlice";
+import { PaperPlaneRight } from "phosphor-react";
+import InputGroup from "react-bootstrap/InputGroup";
+import Form from "react-bootstrap/Form";
 
 function MessageForm({ chat_id }) {
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(sendMessage({ content, chat_id }));
     dispatch(getMessages(chat_id));
     clearMessage();
+  };
+
+  const handleMessageChange = (e) => {
+    setContent(e.target.value);
   };
 
   const clearMessage = () => {
@@ -19,23 +26,34 @@ function MessageForm({ chat_id }) {
   };
 
   return (
-    <section className="form">
-      <form onSubmit={onSubmit}>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Write Message"
-            name="content"
-            id="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Send</button>
-        <button onClick={clearMessage}>clear</button>
-      </form>
-    </section>
+    <form onSubmit={handleSubmit}>
+      <InputGroup className="mb-3 comment_input_group">
+        <Form.Control
+          placeholder="Add Comment"
+          aria-label="Recipient's username"
+          aria-describedby="basic-addon2"
+          value={content}
+          onChange={handleMessageChange}
+          // modify the bootstrap form control styles to fit theme
+          className="comment_input"
+        />
+        <button
+          variant="outline-secondary"
+          id="button-addon2"
+          type="submit"
+          // override bootstrap button styles and modify to fit theme
+          style={{
+            border: "none",
+            backgroundColor: "transparent",
+            color: "#fff",
+            cursor: "pointer",
+          }}
+          disabled={content === "" ? true : false}
+        >
+          <PaperPlaneRight size={25} />
+        </button>
+      </InputGroup>
+    </form>
   );
 }
 

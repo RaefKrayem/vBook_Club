@@ -21,12 +21,6 @@ function BookItem() {
     setShowFullDescription(!showFullDescription);
   };
 
-  // get book category from book object and display:
-  // category
-  // title
-  // by authors
-  // any additional info
-
   return (
     <>
       <Container className="book_box">

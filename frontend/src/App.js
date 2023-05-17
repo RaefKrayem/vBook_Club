@@ -14,7 +14,6 @@ import Users from "./pages/Users";
 import Books from "./pages/Books";
 import MyBooks from "./pages/MyBooks";
 import BookItem from "./components/Book/BookItem";
-import User from "./pages/User";
 import BardLogin from "./components/BardLogin";
 import { useSelector } from "react-redux";
 
@@ -40,7 +39,6 @@ function App() {
           <Route path="/books" element={<Books />} />
           <Route path="/mybooks" element={<MyBooks />} />
           <Route path="/book/:id" element={<BookItem />} />
-          <Route path="/user" element={<User />} />
           <Route path="/bard" element={<BardLogin />} />
         </Routes>
       </Router>

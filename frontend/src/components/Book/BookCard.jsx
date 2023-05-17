@@ -14,6 +14,7 @@ function BookCard({ book, isSaved }) {
 
   const handleSaveBook = () => {
     const bookData = {
+      id: book.id,
       book_selfLink: book.selfLink,
       book_title: title,
       book_authors: authors,

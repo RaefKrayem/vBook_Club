@@ -6,7 +6,7 @@ const { db } = require("../config/db");
 // @access  Private
 const getBooks = asyncHandler(async (req, res) => {
   const getBooksQuery =
-    "SELECT book_selfLink, book_title, book_authors, book_categories, book_description, book_image FROM saved_books WHERE user_id = ?";
+    "SELECT id, book_selfLink, book_title, book_authors, book_categories, book_description, book_image FROM saved_books WHERE user_id = ?";
   db.query(getBooksQuery, [req.user.id], (error, results) => {
     if (error) {
       throw error;
@@ -24,8 +24,8 @@ const getBooks = asyncHandler(async (req, res) => {
 // @route   POST /api/books
 // @access  Private
 const saveBook = asyncHandler(async (req, res) => {
-  console.log("req.body categories: ", req.body.book_categories);
   const book = {
+    id: req.body.id,
     book_selfLink: req.body.book_selfLink,
     user_id: req.user.id,
     book_title: req.body.book_title,

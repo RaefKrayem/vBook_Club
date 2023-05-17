@@ -1,0 +1,31 @@
+.users-container {
+  background-color: #1d1e20;
+  min-height: 100vh;
+}
+
+.user_container {
+  background-color: transparent;
+  border: 3px solid #37383c;
+  border-radius: 14px;
+  color: #eeeff0;
+}
+
+.user_container:hover {
+  cursor: pointer;
+  background-color: #37383c;
+  transition: 0.3s;
+}
+
+.user-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2em;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.user-button:hover {
+  background-color: #eeeff0;
+  transition: 0.3s;
+}

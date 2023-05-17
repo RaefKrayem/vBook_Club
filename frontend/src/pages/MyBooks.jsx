@@ -133,12 +133,12 @@ function MyBooks() {
                 )
                 .map((book) => (
                   <Col>
-                    <MyBookCard book={book} key={book.selfLink} />
+                    <MyBookCard book={book} key={book.id} />
                   </Col>
                 ))
             : books.map((book) => (
                 <Col>
-                  <MyBookCard book={book} key={book.selfLink} />
+                  <MyBookCard book={book} key={book.id} />
                 </Col>
               ))}
         </Row>

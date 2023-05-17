@@ -4,15 +4,18 @@ import { useDispatch } from "react-redux";
 import { unsaveBook, getBooks } from "../../features/books/bookSlice";
 import { FaBookmark } from "react-icons/fa";
 import "../../styles/Book.css";
+import { Link } from "react-router-dom";
 
 function MyBookCard({ book }) {
   const {
+    id,
     book_title,
     book_authors,
     book_description,
     book_image,
     book_categories,
   } = book;
+  console.log(book);
   const dispatch = useDispatch();
 
   const handleUnsaveBook = () => {
@@ -22,33 +25,6 @@ function MyBookCard({ book }) {
 
   return (
     <>
-      {/* <Card style={{ width: "17rem", backgroundColor: "red", height: "451px" }}>
-      <Card.Img
-        variant="top"
-        src={book_image}
-        style={{
-          height: 200,
-          padding: 2,
-          paddingTop: 5,
-          width: "100%",
-          objectPosition: "center",
-          objectFit: "contain",
-        }}
-      />
-      <Card.Body>
-        <Card.Title>{book_title}</Card.Title>
-        <Card.Text>
-          {book_description
-            ? book_description.substring(0, 100) + "..."
-            : "No description available"}
-        </Card.Text>
-
-        <Button variant="danger" onClick={handleUnsaveBook}>
-          unsave
-        </Button>
-      </Card.Body>
-    </Card> */}
-
       <>
         <Card className="book_card">
           <div className="card_image_container">
@@ -91,6 +67,32 @@ function MyBookCard({ book }) {
           </Card.Body>
         </Card>
       </>
+      {/* <Card style={{ width: "17rem", backgroundColor: "red", height: "451px" }}>
+      <Card.Img
+        variant="top"
+        src={book_image}
+        style={{
+          height: 200,
+          padding: 2,
+          paddingTop: 5,
+          width: "100%",
+          objectPosition: "center",
+          objectFit: "contain",
+        }}
+      />
+      <Card.Body>
+        <Card.Title>{book_title}</Card.Title>
+        <Card.Text>
+          {book_description
+            ? book_description.substring(0, 100) + "..."
+            : "No description available"}
+        </Card.Text>
+
+        <Button variant="danger" onClick={handleUnsaveBook}>
+          unsave
+        </Button>
+      </Card.Body>
+    </Card> */}
     </>
   );
 }

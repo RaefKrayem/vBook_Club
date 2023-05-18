@@ -10,6 +10,7 @@ import {
 } from "../features/messages/messageSlice";
 import MessageItem from "../components/Message/MessageItem.jsx";
 import MessageForm from "../components/Message/MessageForm.jsx";
+import "../styles/Messages.css";
 
 function Messages() {
   const location = useLocation();
@@ -52,52 +53,43 @@ function Messages() {
 
   useEffect(() => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+      messagesEndRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "end",
+      });
     }
   }, [messages]);
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-
   return (
     <>
-      {/* <div className="GradientBack"> */}
-      {/* <section className="content">
-        {!messages.chat_id_emp &&
-          messages.map((message) => (
-            // if (message.sender_id === user.id) give the MessageItem a prop isUserMessage = true
-            <MessageItem
-              key={message.id}
-              message={message}
-              isUserMessage={message.sender_id === user._id}
-            />
-          ))}
-        <div ref={messagesEndRef}></div>
-      </section> */}
-
-      <div
-        className="messages_container"
-        style={{
-          backgroundColor: "#1d1e20",
-          padding: "1rem 3rem ",
-        }}
-      >
-        <div className="chat-body">
-          <ul className="chat-list">
-            {messages.map((message) => (
-              <MessageItem
-                key={message.id}
-                message={message}
-                isUserMessage={message.sender_id === user._id}
-              />
-            ))}
-          </ul>
+      <section className="messages_body">
+        <div
+          className="messages_container"
+          style={{
+            backgroundColor: "#1d1e20",
+            padding: "1rem 3rem ",
+          }}
+        >
+          <div className="chat-body">
+            <div className="chat-ul">
+              <ul className="chat-list">
+                {messages.map((message) => (
+                  <MessageItem
+                    key={message.id}
+                    message={message}
+                    isUserMessage={message.sender_id === user._id}
+                  />
+                ))}
+                <div ref={messagesEndRef} />
+              </ul>
+            </div>
+            <div className="div-form">
+              <MessageForm chat_id={id ? id : messages[0].chat_id_emp} />
+            </div>
+          </div>
         </div>
-        <MessageForm chat_id={id ? id : messages[0].chat_id_emp} />
-      </div>
-
-      {/* </div> */}
+      </section>
     </>
   );
 }

@@ -39,7 +39,7 @@ function Header() {
     >
       <Container>
         <Navbar.Brand>
-          <Link
+          <span
             to="/"
             style={{
               color: "#eeeff0",
@@ -47,7 +47,7 @@ function Header() {
             }}
           >
             vBookClub
-          </Link>
+          </span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
@@ -56,13 +56,13 @@ function Header() {
               <>
                 <Nav.Link>
                   <Link
-                    to="/bard"
+                    to="/challenges"
                     style={{
                       color: "#eeeff0",
                       textDecoration: "none",
                     }}
                   >
-                    Bard
+                    Challenges
                   </Link>
                 </Nav.Link>
                 <Nav.Link>

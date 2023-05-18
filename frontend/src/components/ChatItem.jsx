@@ -21,16 +21,6 @@ function ChatItem({ chat }) {
           <div>{chat.name}</div>
         )}
 
-        {/* <button
-          onClick={(e) => {
-            dispatch(getMessages(chat.id));
-            navigate("/messages/" + chat.id);
-            console.log("selectedChatId", chat.id);
-          }}
-        > 
-          Access Chat
-        </button> */}
-
         <Link
           to={`/messages`}
           state={{ id: chat.id }} // <-- state prop

@@ -1,0 +1,10 @@
+.challenges-container {
+  background-color: #1d1e20;
+  min-height: 100vh;
+}
+
+.challenges-heading {
+  padding: 1rem 0;
+  color: white;
+  text-align: center;
+}

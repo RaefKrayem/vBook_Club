@@ -27,7 +27,7 @@ function App() {
       <Router>
         {user && <Header />}
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/challenges" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/friends" element={<Friends />} />

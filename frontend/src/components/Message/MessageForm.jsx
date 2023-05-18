@@ -13,7 +13,7 @@ function MessageForm({ chat_id }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(sendMessage({ content, chat_id }));
-    dispatch(getMessages(chat_id));
+    // dispatch(getMessages(chat_id));
     clearMessage();
   };
 
@@ -27,7 +27,7 @@ function MessageForm({ chat_id }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <InputGroup className="mb-3 comment_input_group">
+      <InputGroup className=" comment_input_group">
         <Form.Control
           placeholder="Add Comment"
           aria-label="Recipient's username"

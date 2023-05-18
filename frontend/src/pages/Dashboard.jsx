@@ -7,6 +7,7 @@ import { getAllChallenges, reset } from "../features/challenges/challengeSlice";
 import ChallengeForm from "../components/Challenge/ChallengeForm";
 import ChallengeItem from "../components/Challenge/ChallengeItem";
 import { Container, Row, Col, Card } from "react-bootstrap";
+import "../styles/Challenges.css";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -36,14 +37,10 @@ function Dashboard() {
   }
 
   return (
-    <div style={{ backgroundColor: "#EDEEC9" }}>
-      <section className="heading">
-        <h2 style={{ textAlign: "center", margin: "1rem 0" }}>
-          Challenges Dashboard
-        </h2>
-      </section>
+    <div className="challenges-container">
+      <h2 className="challenges-heading">Challenges Dashboard</h2>
 
-      <section className="content">
+      <section>
         <Container>
           <Row>
             {challenges

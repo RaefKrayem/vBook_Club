@@ -1,3 +1,18 @@
+.messages_body {
+  margin: 0 auto;
+  min-height: 90vh;
+  background-color: #1d1e20;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.messages_container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1000px;
+}
+
 .chat-list {
   padding: 0;
   font-size: 0.8rem;
@@ -6,7 +21,7 @@
 .chat-list li {
   margin-bottom: 10px;
   overflow: auto;
-  color: #ffffff;
+  color: #1d1e20;
 }
 
 .chat-list .chat-img {
@@ -59,12 +74,6 @@
   width: 70%;
 }
 
-.chat-list .in .chat-message:before {
-  left: -6px;
-  border-bottom: 20px solid transparent;
-  border-right: 20px solid #5a99ee;
-}
-
 .chat-list .out .chat-img {
   float: right;
 }
@@ -76,13 +85,8 @@
 }
 
 .chat-list .out .chat-message {
-  background: #fc6d4c;
-}
-
-.chat-list .out .chat-message:before {
-  right: -6px;
-  border-bottom: 20px solid transparent;
-  border-left: 20px solid #fc6d4c;
+  background: #e24d2b;
+  color: #1d1e20;
 }
 
 .card .card-header:first-child {
@@ -99,3 +103,15 @@
   font-weight: 600;
   color: #ffffff;
 }
+
+.chat-ul {
+  overflow-y: auto;
+  height: 75vh;
+}
+
+/* .div-form {
+  position: fixed;
+  bottom: 1;
+  z-index: 1;
+  
+} */

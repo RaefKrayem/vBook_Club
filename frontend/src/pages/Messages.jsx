@@ -19,7 +19,6 @@ function Messages() {
   // new added code
   const [userInfo, setUserInfo] = useState(location.state.userInfo);
   const [id, setId] = useState(location.state.id);
-  //
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,17 +38,15 @@ function Messages() {
 
     if (id) {
       dispatch(getMessages(id));
-      console.log(id);
     }
     if (userInfo) {
       dispatch(getFriendMessages({ friend_id: userInfo.id, chatName: "" }));
-      console.log(userInfo);
     }
 
     return () => {
       dispatch(reset());
     };
-  }, [user, navigate, isError, message, dispatch]);
+  }, [user, navigate, isError, dispatch]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -74,18 +71,21 @@ function Messages() {
           <div className="chat-body">
             <div className="chat-ul">
               <ul className="chat-list">
-                {messages.map((message) => (
-                  <MessageItem
-                    key={message.id}
-                    message={message}
-                    isUserMessage={message.sender_id === user._id}
-                  />
-                ))}
+                {messages &&
+                  messages.map((message) => (
+                    <MessageItem
+                      key={message.id || message.chat_id_emp}
+                      message={message}
+                      isUserMessage={message.sender_id === user._id}
+                    />
+                  ))}
                 <div ref={messagesEndRef} />
               </ul>
             </div>
             <div className="div-form">
-              <MessageForm chat_id={id ? id : messages[0].chat_id_emp} />
+              {messages.length > 0 && (
+                <MessageForm chat_id={id ? id : messages[0].chat_id_emp} />
+              )}
             </div>
           </div>
         </div>

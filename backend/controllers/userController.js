@@ -150,7 +150,7 @@ const addFriend = asyncHandler(async (req, res) => {
 // Generate JWT
 const generateToken = (id) => {
   // jwt.sign( {data}, secret, {expiresIn: 1days})
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 };
 
 module.exports = {

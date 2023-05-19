@@ -27,6 +27,12 @@ function App() {
       <Router>
         {user && <Header />}
         <Routes>
+          {user ? (
+            <Route path="/" element={<Books />} />
+          ) : (
+            <Route path="/" element={<Login />} />
+          )}
+
           <Route path="/challenges" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

@@ -23,7 +23,7 @@ const getFriendMessages = async ({ friend_id, chatName }, token) => {
   };
   try {
     const response = await axios.get(API_URL + `friend/${friend_id}`, config);
-    console.log("getfriendsmessages response data: ", response.data);
+    console.log("friends messages response", response.data);
     return response.data;
   } catch (error) {
     console.error(error);

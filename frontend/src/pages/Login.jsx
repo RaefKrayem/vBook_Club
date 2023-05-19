@@ -35,7 +35,7 @@ function Login() {
     }
 
     if (isSuccess || user) {
-      navigate("/");
+      navigate("/books");
     }
 
     dispatch(reset());

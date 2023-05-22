@@ -19,6 +19,8 @@ function Messages() {
   // new added code
   const [userInfo, setUserInfo] = useState(location.state.userInfo);
   const [id, setId] = useState(location.state.id);
+  console.log("location.state: ", location.state);
+  const [chatName, setChatName] = useState(location.state.chatName);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,10 +39,8 @@ function Messages() {
     if (!user) navigate("/login");
 
     if (id) {
+      console.log("chatName", chatName);
       dispatch(getMessages(id));
-    }
-    if (userInfo) {
-      dispatch(getFriendMessages({ friend_id: userInfo.id, chatName: "" }));
     }
 
     return () => {
@@ -61,11 +61,16 @@ function Messages() {
   return (
     <>
       <section className="messages_body">
+        <div className="chatName">
+          <h2>{chatName ? chatName : userInfo.username}</h2>
+        </div>
         <div
           className="messages_container"
           style={{
             backgroundColor: "#1d1e20",
             padding: "1rem 3rem ",
+            border: "2px solid #505258",
+            borderRadius: "14px",
           }}
         >
           <div className="chat-body">
@@ -84,7 +89,7 @@ function Messages() {
             </div>
             <div className="div-form">
               {messages.length > 0 && (
-                <MessageForm chat_id={id ? id : messages[0].chat_id_emp} />
+                <MessageForm chat_id={id ? id : messages[0].chat_id} />
               )}
             </div>
           </div>

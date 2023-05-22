@@ -12,13 +12,46 @@ const getFriends = asyncHandler(async (req, res) => {
   db.query(getFriendsQuery, [user_id], (error, results) => {
     if (error) throw error;
 
-    // request all friends info from users table
     if (results.length > 0) {
       const friends = results.map((friend) => friend.friend_id);
       const getFriendsInfoQuery = "SELECT * FROM users WHERE id IN (?)";
       db.query(getFriendsInfoQuery, [friends], (error, results) => {
         if (error) throw error;
-        res.status(200).json(results);
+
+        const users = results;
+
+        const getFriendsQuery =
+          "SELECT user_id, COUNT(*) AS friends FROM friends GROUP BY user_id";
+        db.query(getFriendsQuery, (error, results) => {
+          if (error) throw error;
+
+          const friends = results;
+
+          const getChallengesQuery =
+            "SELECT creator_id, COUNT(*) AS challenges FROM challenges GROUP BY creator_id";
+          db.query(getChallengesQuery, (error, results) => {
+            if (error) throw error;
+
+            const challenges = results;
+
+            users.forEach((user) => {
+              user.friends = 0;
+              user.challenges = 0;
+              friends.forEach((friend) => {
+                if (user.id === friend.user_id) {
+                  user.friends = friend.friends;
+                }
+              });
+              challenges.forEach((challenge) => {
+                if (user.id === challenge.creator_id) {
+                  user.challenges = challenge.challenges;
+                }
+              });
+            });
+
+            res.status(200).json(users);
+          });
+        });
       });
     } else res.status(200).json(results);
   });

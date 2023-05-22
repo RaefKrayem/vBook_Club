@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getMessages } from "../features/messages/messageSlice";
 import { useNavigate, Link } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
+import "../styles/Inbox.css";
 
 function ChatItem({ chat }) {
   const dispatch = useDispatch();
@@ -10,30 +11,30 @@ function ChatItem({ chat }) {
 
   return (
     <>
-      <div className="goal">
-        {chat.isClubChat === 0 ? (
-          chat.name.split(" ")[0] === user.username ? (
-            <div>{chat.name.split(" ")[1]}</div>
-          ) : (
-            <div>{chat.name.split(" ")[0]}</div>
-          )
-        ) : (
-          <div>{chat.name}</div>
-        )}
-
-        <Link
-          to={`/messages`}
-          state={{ id: chat.id }} // <-- state prop
-          key={chat.id}
-        >
-          <Button
-            variant="primary"
-            onClick={() => dispatch(getMessages(chat.id))}
-          >
-            Access Chat
-          </Button>
-        </Link>
-      </div>
+      <Link
+        to={`/messages`}
+        state={{ id: chat.id, chatName: chat.name }} // <-- state prop
+        key={chat.id}
+        onClick={() => dispatch(getMessages(chat.id))}
+        style={{
+          textDecoration: "none",
+        }}
+      >
+        <div className="i-chat">
+          <div className="i-chat-avatar">
+            <img
+              src={chat.profile}
+              alt="profile"
+              className="i-chat-avatar"
+              loading="lazy"
+            />
+          </div>
+          <div className="i-chat-content">
+            <h2>{chat.name}</h2>
+            <p>Last message received...</p>
+          </div>
+        </div>
+      </Link>
     </>
   );
 }

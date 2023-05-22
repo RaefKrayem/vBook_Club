@@ -4,7 +4,6 @@ const { protect } = require("../middleware/authMiddleware");
 const {
   getChats,
   // accessChat,
-  getClubChats,
   createChat,
 } = require("../controllers/chatController");
 

@@ -65,7 +65,7 @@ function Login() {
 
   return (
     <Row className="justify-content-center align-items-center" id="loginRow">
-      <Col lg={6} className="image_column">
+      {/* <Col lg={6} className="image_column">
         <LazyLoadImage
           height={"100%"}
           width={"100%"}
@@ -74,8 +74,8 @@ function Login() {
           alt="login picture"
           fluid
         />
-      </Col>
-      <Col lg={6}>
+      </Col> */}
+      <Col lg={12}>
         <section className="form-container">
           <section className="heading text-center page_title">
             <h1 className="title_text">

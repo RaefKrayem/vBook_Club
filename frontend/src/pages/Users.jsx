@@ -115,6 +115,7 @@ function Users() {
                 backgroundColor: "#37383c",
                 borderColor: "#878a94",
                 color: "#fff",
+                width: "30rem",
               }}
               onChange={handleSearchChange}
             />

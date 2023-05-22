@@ -19,12 +19,11 @@
 .book_card:hover {
   cursor: pointer;
   border: 0.5px solid #878a94;
-  transition: all 0.2s ease-in-out;
 }
 
 /* Card image styles */
 
-.card_image_container {
+.book_card_image_container {
   background-color: #2a2d33;
   border-bottom: 5px solid #505258;
   border-top-left-radius: 12px;
@@ -35,7 +34,7 @@
   height: 230px;
 }
 
-.card_image {
+.book_card_image {
   transition: all 0.2s ease-in-out;
   border-radius: 10px;
   margin: 0 auto;
@@ -49,14 +48,14 @@
   vertical-align: middle;
 }
 
-.card_image:hover {
+.book_card_image:hover {
   cursor: pointer;
   transform: scale(1.07);
   transition: all 0.2s ease-in-out;
 }
 
 /* Card body styles */
-.card_body {
+.book_card_body {
   background-color: #1d1e20;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
@@ -65,14 +64,14 @@
 }
 
 /* Card Title styles */
-.card_title_container {
+.book_card_title_container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
 }
 
-.card_title {
+.book_card_title {
   color: #878a94;
   font-weight: bold;
   font-size: 14px;
@@ -81,18 +80,18 @@
   padding: 10px 19px 0px;
 }
 
-.card_bookmark_icon {
+.book_card_bookmark_icon {
   padding: 0px 19px;
 }
 
-.card_bookmark_button {
+.book_card_bookmark_button {
   background-color: transparent;
   border: none;
   padding: 0;
 }
 
 /* Card Text styles */
-.card_text {
+.book_card_text {
   padding: 0px 19px 19px;
   flex-grow: 1;
   display: flex;

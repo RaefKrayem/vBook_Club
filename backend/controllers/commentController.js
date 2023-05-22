@@ -10,13 +10,14 @@ const getComments = asyncHandler(async (req, res) => {
 
   // get comments for a book and sort by date from oldest to newest
   const getCommentsQuery =
-    "SELECT * FROM comments WHERE book_selfLink = ? ORDER BY created_at ASC";
+    "SELECT comments.*, users.profile FROM comments INNER JOIN users ON comments.user_id = users.id WHERE comments.book_selfLink = ? ORDER BY comments.created_at ASC";
   db.query(getCommentsQuery, [book_selfLink], (error, results) => {
     if (error) {
       throw error;
     } else if (results.length === 0) {
       res.status(200).json([]);
     } else {
+      console.log(results);
       res.status(200).json(results);
     }
   });
@@ -39,6 +40,7 @@ const addComment = asyncHandler(async (req, res) => {
     if (error) {
       throw error;
     } else {
+      comment.profile = req.user.profile;
       res.status(200).json(comment);
     }
   });

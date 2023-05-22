@@ -13,6 +13,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import RegisterImage from "../assets/Register.jpg";
 import "../styles/Login.css";
 
+import { Widget } from "@uploadcare/react-widget";
+
 function Register() {
   const [formData, setFormData] = useState({
     username: "",
@@ -20,7 +22,7 @@ function Register() {
     password: "",
     password2: "",
   });
-  const { username, email, password, password2 } = formData;
+  const { username, email, password, password2, profile } = formData;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, isLoading, isError, isSuccess, message } = useSelector(
@@ -46,7 +48,7 @@ function Register() {
     if (password !== password2) {
       toast.error("Passwords do not match");
     } else {
-      const userData = { username, email, password };
+      const userData = { username, email, password, profile };
       dispatch(register(userData));
     }
   };
@@ -57,7 +59,7 @@ function Register() {
 
   return (
     <Row className="justify-content-center align-items-center" id="loginRow">
-      <Col lg={6} className="image_column">
+      {/* <Col lg={6} className="image_column">
         <LazyLoadImage
           height={"100%"}
           width={"100%"}
@@ -66,8 +68,8 @@ function Register() {
           alt="register picture"
           fluid
         />
-      </Col>
-      <Col lg={6}>
+      </Col> */}
+      <Col lg={12}>
         <section className="form-container">
           <section className="heading text-center page_title">
             <h1 className="title_text">
@@ -127,7 +129,53 @@ function Register() {
                   className="user_input"
                 />
               </Form.Group>
-              <button type="submit" className="button">
+
+              <div
+                className="upload_profile"
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  className="text-left"
+                  style={{
+                    marginTop: "1rem",
+                    marginRight: "1rem",
+                  }}
+                >
+                  Upload Profile
+                </p>
+                <Widget
+                  publicKey="5f30f5f7cb01c02529d1"
+                  id="file"
+                  onFileSelect={(file) => {
+                    console.log("File changed: ", file);
+
+                    if (file) {
+                      file.progress((info) =>
+                        console.log("File progress: ", info.progress)
+                      );
+                      file.done((info) => {
+                        console.log("File uploaded: ", info);
+                        setFormData((prevState) => ({
+                          ...prevState,
+                          profile: info.cdnUrl,
+                        }));
+                      });
+                    }
+                  }}
+                  onChange={(info) => console.log("Upload completed:", info)}
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="button"
+                style={{ marginLeft: "1rem" }}
+              >
                 Register
               </button>
             </Form>

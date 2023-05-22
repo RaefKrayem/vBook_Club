@@ -8,40 +8,20 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 // import all images from assets folder
-import Fantasy from "../assets/clubs/Fantasy.jpg";
-import Mystery from "../assets/clubs/Mystery.jpg";
-import Philosophy from "../assets/clubs/Philosophy.jpg";
-import Poetry from "../assets/clubs/Poetry.jpg";
-import Politics from "../assets/clubs/Politics.jpg";
-import RomanceNovel from "../assets/clubs/RomanceNovel.jpg";
-import Science from "../assets/clubs/ScienceFiction.jpg";
-import Technology from "../assets/clubs/Technology.jpg";
-import Thriller from "../assets/clubs/Thriller.jpg";
+
 import "../styles/testClub.css";
 
 function ClubItem({ club, isJoined }) {
-  const imagesObject = {
-    Fantasy: Fantasy,
-    Mystery: Mystery,
-    Philosophy: Philosophy,
-    Poetry: Poetry,
-    Politics: Politics,
-    RomanceNovel: RomanceNovel,
-    ScienceFiction: Science,
-    Technology: Technology,
-    Thriller: Thriller,
-  };
   const dispatch = useDispatch();
 
   return (
     // set a border of border: "1px solid #eef1f4"
 
     <div className="club_card_container">
-      <img
-        src={imagesObject[club.name.replace(/\s/g, "")]}
-        alt=""
-        loading="lazy"
-      />
+      <div className="club_card_image">
+        <img src={club.profile} alt="" loading="lazy" />
+      </div>
+
       <div className="club_card_content">
         <div className="club_card_text">
           <div className="club_card_title">
@@ -55,7 +35,7 @@ function ClubItem({ club, isJoined }) {
             <>
               <Link
                 to={`/messages`}
-                state={{ id: club.id }} // <-- state prop
+                state={{ id: club.id, chatName: club.name }} // <-- state prop
                 key={club.id}
               >
                 <button

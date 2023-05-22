@@ -1,0 +1,27 @@
+.challenge_update_btn {
+  /* a green background and a text color that suits the dark theme  */
+  background-color: #4caf50;
+  color: white;
+  margin-top: 15px;
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  padding: 5px 10px;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.challenge_update_btn:hover {
+  /* a more darker background color #4caf50 when hovering */
+  background-color: #43a047;
+  color: #fff;
+  border: 1px solid #505258;
+  transition: all 0.3s ease;
+}
+
+.challenge_cancel:hover {
+  background-color: rgb(194, 36, 36);
+  color: #fff;
+  transition: all 0.3s ease;
+}

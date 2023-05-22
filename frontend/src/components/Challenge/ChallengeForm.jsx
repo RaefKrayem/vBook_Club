@@ -4,6 +4,7 @@ import { createChallenge } from "../../features/challenges/challengeSlice";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { format } from "date-fns";
 import Card from "react-bootstrap/Card";
+import "../../styles/ChallengeForm.css";
 
 function ChallengeForm() {
   const [name, setName] = useState("");
@@ -27,18 +28,11 @@ function ChallengeForm() {
   };
 
   return (
-    <Card
-      className="mb-3"
-      style={{
-        backgroundColor: "#d0ab7f",
-        textcolor: "#8e2b32",
-        height: "100%",
-      }}
-    >
+    <Card className="mb-3" id="challenge_form_card">
       <Card.Body>
-        <section className="form">
+        <section>
           <Form onSubmit={onSubmit}>
-            <Form.Group controlId="name">
+            <Form.Group controlId="name" id="challenge_form_group">
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="name"
@@ -48,7 +42,7 @@ function ChallengeForm() {
                 required
               />
             </Form.Group>
-            <Form.Group controlId="total_pages">
+            <Form.Group controlId="total_pages" id="challenge_form_group">
               <Form.Label>Total pages</Form.Label>
               {/* do not allow negative numbers or 0 or strings */}
               <Form.Control
@@ -60,7 +54,7 @@ function ChallengeForm() {
                 min="1"
               />
             </Form.Group>
-            <Form.Group controlId="start_date">
+            <Form.Group controlId="start_date" id="challenge_form_group">
               <Form.Label>Start date</Form.Label>
               <Form.Control
                 type="date"
@@ -77,7 +71,7 @@ function ChallengeForm() {
                 }}
               />
             </Form.Group>
-            <Form.Group controlId="end_date">
+            <Form.Group controlId="end_date" id="challenge_form_group">
               <Form.Label>End date</Form.Label>
               <Form.Control
                 type="date"
@@ -96,14 +90,18 @@ function ChallengeForm() {
             </Form.Group>
             <Row>
               <Col sm={6}>
-                <Button variant="success" type="submit">
-                  Add challenge
-                </Button>
+                <button className="friend_request" type="submit">
+                  Add
+                </button>
               </Col>
               <Col sm={6}>
-                <Button variant="secondary" onClick={clearForm}>
+                <button
+                  className="friend_request"
+                  id="challenge_clear"
+                  onClick={clearForm}
+                >
                   Clear
-                </Button>
+                </button>
               </Col>
             </Row>
           </Form>

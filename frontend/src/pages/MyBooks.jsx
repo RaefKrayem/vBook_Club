@@ -83,6 +83,7 @@ function MyBooks() {
                 ":focus": {
                   borderColor: "#878a94",
                 },
+                width: "40rem",
               }}
               onChange={handleSearchChange}
             />
@@ -126,7 +127,7 @@ function MyBooks() {
         </div>
 
         <Row xs={1} md={4} className="g-4">
-          {query
+          {query && books.length > 0
             ? books
                 .filter((book) =>
                   book.book_title.toLowerCase().includes(query.toLowerCase())

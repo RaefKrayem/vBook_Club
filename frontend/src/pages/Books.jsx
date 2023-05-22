@@ -93,6 +93,7 @@ function Books() {
                 ":focus": {
                   borderColor: "#878a94",
                 },
+                width: "30rem",
               }}
               onChange={handleSearchChange}
             />

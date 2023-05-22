@@ -9,7 +9,9 @@ const { db } = require("../config/db");
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, profile } = req.body;
+
+  console.log("req body: ", req.body);
 
   if (!username || !email || !password) {
     res.status(400);
@@ -33,6 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
         username: username,
         email: email,
         password: hashedPassword,
+        profile: profile,
       };
 
       db.query("INSERT INTO users SET ?", user, (error, results) => {
@@ -41,6 +44,7 @@ const registerUser = asyncHandler(async (req, res) => {
           _id: user.id,
           username: user.username,
           email: user.email,
+          profile: user.profile,
           token: generateToken(user.id),
         });
       });
@@ -76,6 +80,7 @@ const loginUser = asyncHandler(async (req, res) => {
             _id: user.id,
             username: user.username,
             email: user.email,
+            profile: user.profile,
             token: generateToken(user.id),
           });
         } else {
@@ -99,11 +104,44 @@ const getMe = asyncHandler(async (req, res) => {
 // @route   GET /api/users
 // @access  Private
 const getUsers = asyncHandler(async (req, res) => {
-  // get all users except the current user
   const getQuery = "SELECT * FROM users WHERE id != ?";
   db.query(getQuery, [req.user.id], (error, results) => {
     if (error) throw error;
-    res.status(200).json(results);
+
+    const users = results;
+
+    const getFriendsQuery =
+      "SELECT user_id, COUNT(*) AS friends FROM friends GROUP BY user_id";
+    db.query(getFriendsQuery, (error, results) => {
+      if (error) throw error;
+
+      const friends = results;
+
+      const getChallengesQuery =
+        "SELECT creator_id, COUNT(*) AS challenges FROM challenges GROUP BY creator_id";
+      db.query(getChallengesQuery, (error, results) => {
+        if (error) throw error;
+
+        const challenges = results;
+
+        users.forEach((user) => {
+          user.friends = 0;
+          user.challenges = 0;
+          friends.forEach((friend) => {
+            if (user.id === friend.user_id) {
+              user.friends = friend.friends;
+            }
+          });
+          challenges.forEach((challenge) => {
+            if (user.id === challenge.creator_id) {
+              user.challenges = challenge.challenges;
+            }
+          });
+        });
+
+        res.status(200).json(users);
+      });
+    });
   });
 });
 
@@ -117,15 +155,6 @@ const addFriend = asyncHandler(async (req, res) => {
   const friend_id = req.body.friend_id;
   const user_id = req.user.id;
 
-  // check if friend exists
-  // const checkFriendQuery =
-  //   "SELECT * FROM friends WHERE user_id = ? AND friend_id = ?";
-
-  // db.query(checkFriendQuery, [user_id, friend_id], (error, results) => {
-  //   if (error) throw error;
-
-  //   if (results.length === 0) {
-  // add friend to friends list of both users
   const addFriendQuery =
     "INSERT INTO friends (user_id, friend_id) VALUES (?, ?), (?, ?)";
 

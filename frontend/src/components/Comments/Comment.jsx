@@ -14,7 +14,16 @@ function Comment({ comment }) {
 
   return (
     <div className={styles.comment}>
-      <Avatar src="https://github.com/gabivechiatto.png" hasBorder={false} />
+      {comment.profile ? (
+        <Avatar src={comment.profile} hasBorder={false} loading="lazy" />
+      ) : (
+        <Avatar
+          src="https://github.com/gabivechiatto.png"
+          hasBorder={false}
+          loading="lazy"
+        />
+      )}
+
       <div className={styles.commentBox}>
         <div className={styles.commentContent}>
           <header>

@@ -26,6 +26,7 @@ const protect = asyncHandler(async (req, res, next) => {
             id: results[0].id,
             username: results[0].username,
             email: results[0].email,
+            profile: results[0].profile,
             // created_at: results[0].created_at,
           };
           next();

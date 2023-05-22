@@ -40,25 +40,25 @@ function BookCard({ book, isSaved }) {
           key={book.id}
           style={{ textDecoration: "none" }}
         >
-          <div className="card_image_container">
+          <div className="book_card_image_container">
             <Card.Img
               variant="top"
               src={imageLinks && imageLinks.thumbnail}
               loading="lazy"
-              className="card_image"
+              className="book_card_image"
             />
           </div>
         </Link>
-        <Card.Body className="card_body">
+        <Card.Body className="book_card_body">
           <Card.Title>
-            <div className="card_title_container">
-              <h5 className="card_title">
+            <div className="book_card_title_container">
+              <h5 className="book_card_title">
                 {categories ? categories.join(", ") : "No categories available"}
               </h5>
-              <span className="card_bookmark_icon">
+              <span className="book_card_bookmark_icon">
                 <Button
                   variant="button"
-                  className="card_bookmark_button"
+                  className="book_card_bookmark_button"
                   onClick={isSaved ? handleUnsaveBook : handleSaveBook}
                 >
                   {isSaved ? (
@@ -70,7 +70,7 @@ function BookCard({ book, isSaved }) {
               </span>
             </div>
           </Card.Title>
-          <Card.Text className="card_text">
+          <Card.Text className="book_card_text">
             <h3 className="book_title">
               {title.length > 20 ? title.substring(0, 20) + "..." : title}
             </h3>

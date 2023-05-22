@@ -29,3 +29,116 @@
   background-color: #eeeff0;
   transition: 0.3s;
 }
+
+/* uiverse.io styles */
+.user_card {
+  max-width: 320px;
+  border-radius: 1rem;
+  /* background-color: rgba(31, 41, 55, 1); */
+  border: 1px solid #505258;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.user_infos {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  grid-gap: 1rem;
+  gap: 1rem;
+}
+
+.user_image {
+  height: 7rem;
+  width: 7rem;
+  border-radius: 0.5rem;
+  background-color: rgb(118, 36, 194);
+  background: linear-gradient(
+    to bottom right,
+    rgb(118, 36, 194),
+    rgb(185, 128, 240)
+  );
+}
+
+.user_image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.user_info {
+  height: 7rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.user_name {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  margin-bottom: 0;
+}
+
+.user_function {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: rgba(156, 163, 175, 1);
+}
+
+.user_stats {
+  width: 100%;
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: rgba(0, 0, 0, 1);
+}
+
+.user_flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 4px;
+}
+
+.user_state-value {
+  font-weight: 700;
+  color: rgb(118, 36, 194);
+}
+
+.friend_request_container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem;
+}
+
+.user_request,
+.friend_request {
+  margin-top: 1.5rem;
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.friend_request_link {
+  grid-column-start: 1;
+  grid-column-end: 4;
+}
+
+.user_request:hover,
+.friend_request:hover {
+  background-color: rgb(118, 36, 194);
+  color: #fff;
+}

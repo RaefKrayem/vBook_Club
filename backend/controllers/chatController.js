@@ -6,27 +6,45 @@ const { uuid } = require("uuidv4");
 // @route   GET /api/chats
 // @access  Private
 const getChats = asyncHandler(async (req, res) => {
-  // select all chats from join_chat table where user_id = req.user.id and
-  // then get all chats from chats table where id = chat_id
-  const getQuery =
-    "SELECT * FROM chats WHERE id IN (SELECT chat_id FROM join_chat WHERE user_id = ?)";
-  db.query(getQuery, [req.user.id], (error, results) => {
+  // get the joined chats of the user
+  const getQuery = `SELECT * FROM chats WHERE id IN (SELECT chat_id FROM join_chat WHERE
+     user_id = '${req.user.id}')`;
+  db.query(getQuery, (error, results) => {
     if (error) {
       throw error;
     }
-    res.status(200).json(results);
-  });
-});
+    if (results.length > 0) {
+      // for the non club chats, get the other user's name and profile picture and update the results
+      results.forEach((chat) => {
+        if (!chat.isClubChat) {
+          const getOtherUserQuery = `SELECT * FROM users WHERE id IN (SELECT user_id FROM join_chat 
+            WHERE chat_id = '${chat.id}' AND user_id != '${req.user.id}')`;
+          db.query(getOtherUserQuery, (error, otherUser) => {
+            if (error) {
+              throw error;
+            }
+            chat.profile = otherUser[0].profile;
+            chat.name = otherUser[0].username;
+            // update the results array with the other user's name and profile picture
+            const index = results.findIndex((x) => x.id === chat.id);
+            results[index] = chat;
 
-// @desc    Get club chats
-// @route   GET /api/chats/club
-// @access  Private
-const getClubChats = asyncHandler(async (req, res) => {
-  const getQuery = "SELECT * FROM chats WHERE isClubChat = 1";
-  if (error) {
-    throw error;
-  }
-  res.status(200).json(results);
+            // if we reach the end of the results array, send the results
+            if (index === results.length - 1) {
+              res.status(200).json(results);
+            }
+          });
+        }
+      });
+
+      // handle the case when the user has only club chats
+      if (results.every((chat) => chat.isClubChat)) {
+        res.status(200).json(results);
+      }
+    } else {
+      res.status(200).json([]);
+    }
+  });
 });
 
 // @desc    Create a chat
@@ -48,4 +66,4 @@ const createChat = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { getChats, getClubChats, createChat };
+module.exports = { getChats, createChat };

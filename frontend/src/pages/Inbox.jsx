@@ -5,9 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Spinner from "../components/Spinner";
 import { getAllChats, reset } from "../features/chats/chatSlice";
 import ChatItem from "../components/ChatItem.jsx";
-
-/// Context
-import { MyContext } from "./MyContext";
+import "../styles/Inbox.css";
 
 function Inbox() {
   const navigate = useNavigate();
@@ -38,26 +36,22 @@ function Inbox() {
 
   return (
     <>
-      <section className="heading">
-        <h1>Welcome {user && user.username}</h1>
-        <p>Chats List</p>
-      </section>
-
-      <section className="content">
-        <div className="goals">
-          {chats.length > 0 ? (
-            <>
-              {chats.map((chat) => (
-                <>
+      <div class="inbox_body">
+        <div class="inbox">
+          <h1 class="inbox_h1">My Inbox</h1>
+          <div class="i-chat-container">
+            {chats.length > 0 ? (
+              <>
+                {chats.map((chat) => (
                   <ChatItem key={chat.id} chat={chat} />
-                </>
-              ))}
-            </>
-          ) : (
-            <></>
-          )}
+                ))}
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
-      </section>
+      </div>
     </>
   );
 }

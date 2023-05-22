@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateChallenge } from "../../features/challenges/challengeSlice";
 import { Form, InputGroup, Button, Row, Col } from "react-bootstrap";
+import "../../styles/ChallengeEditForm.css";
 
 function ChallengeEditForm({ challenge, onCancel }) {
   const [name, setName] = useState(challenge.name);
@@ -37,9 +38,19 @@ function ChallengeEditForm({ challenge, onCancel }) {
   };
 
   return (
-    <section className="form">
+    <section
+      className="challenge_edit-form"
+      style={{
+        height: "100%",
+      }}
+    >
       <Form onSubmit={onSubmit}>
-        <Form.Group controlId="name">
+        <Form.Group
+          controlId="name"
+          style={{
+            marginBottom: "1rem",
+          }}
+        >
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="name"
@@ -49,36 +60,43 @@ function ChallengeEditForm({ challenge, onCancel }) {
             required
           />
         </Form.Group>
-        <Form.Group controlId="total_pages">
-          <Form.Label>Total pages</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Enter total pages"
-            value={total_pages}
-            onChange={(e) => setTotalPages(e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Form.Group controlId="completed_pages">
-          <Form.Label>Completed pages</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Enter completed pages"
-            value={completed_pages}
-            onChange={(e) => setCompletedPages(e.target.value)}
-            required
-          />
-        </Form.Group>
         <Row>
           <Col sm={6}>
-            <Button variant="outline-secondary" onClick={onCancel}>
-              Cancel
-            </Button>
+            <Form.Group controlId="total_pages">
+              <Form.Label>Total pages</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Enter total pages"
+                value={total_pages}
+                onChange={(e) => setTotalPages(e.target.value)}
+                required
+              />
+            </Form.Group>{" "}
           </Col>
           <Col sm={6}>
-            <Button variant="outline-success" type="submit">
+            {" "}
+            {new Date(start_date) < new Date() ? (
+              <Form.Group controlId="completed_pages">
+                <Form.Label>Completed pages</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter completed pages"
+                  value={completed_pages}
+                  onChange={(e) => setCompletedPages(e.target.value)}
+                  required
+                />
+              </Form.Group>
+            ) : (
+              <></>
+            )}
+          </Col>
+        </Row>
+
+        <Row>
+          <Col sm={12}>
+            <button type="submit" className="challenge_update_btn">
               Update
-            </Button>
+            </button>
           </Col>
         </Row>
       </Form>

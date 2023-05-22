@@ -27,26 +27,26 @@ function MyBookCard({ book }) {
     <>
       <>
         <Card className="book_card">
-          <div className="card_image_container">
+          <div className="book_card_image_container">
             <Card.Img
               variant="top"
               src={book_image}
               loading="lazy"
-              className="card_image"
+              className="book_card_image"
             />
           </div>
-          <Card.Body className="card_body">
+          <Card.Body className="book_card_body">
             <Card.Title>
-              <div className="card_title_container">
-                <h5 className="card_title">
+              <div className="book_card_title_container">
+                <h5 className="book_card_title">
                   {book_categories
                     ? book_categories
                     : "No categories available"}
                 </h5>
-                <span class="card_bookmark_icon">
+                <span class="book_card_bookmark_icon">
                   <Button
                     variant="link"
-                    className="card_bookmark_button"
+                    className="book_card_bookmark_button"
                     onClick={handleUnsaveBook}
                   >
                     <FaBookmark id="bookmark-icon" />
@@ -54,7 +54,7 @@ function MyBookCard({ book }) {
                 </span>
               </div>
             </Card.Title>
-            <Card.Text className="card_text">
+            <Card.Text className="book_card_text">
               <h3 className="book_title">
                 {book_title.length > 20
                   ? book_title.substring(0, 20) + "..."

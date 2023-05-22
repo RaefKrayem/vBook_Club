@@ -69,11 +69,20 @@ const joinClub = asyncHandler(async (req, res) => {
     if (error) {
       throw error;
     } else {
-      // select the club info from clubs table where id = club_id
-      const getClubQuery = "SELECT * FROM clubs WHERE id = ?";
-      db.query(getClubQuery, [club_id], (error, results) => {
-        if (error) throw error;
-        res.status(200).json(results);
+      // add the user_id and club_id to join_chat table
+      const joinChatQuery =
+        "INSERT INTO join_chat (user_id, chat_id) VALUES (?, ?)";
+      db.query(joinChatQuery, [req.user.id, club_id], (error, results) => {
+        if (error) {
+          throw error;
+        } else {
+          // select the club info from clubs table where id = club_id
+          const getClubQuery = "SELECT * FROM clubs WHERE id = ?";
+          db.query(getClubQuery, [club_id], (error, results) => {
+            if (error) throw error;
+            res.status(200).json(results);
+          });
+        }
       });
     }
   });
@@ -95,26 +104,33 @@ const leaveClub = asyncHandler(async (req, res) => {
     if (results.affectedRows === 0) {
       return res.status(404).json({ message: `Club ${club_id} not found.` });
     } else {
-      // select the clubs ids from join_club table where user_id = req.user.id
-      const getClubsQuery = "SELECT club_id FROM join_club WHERE user_id = ?";
-      db.query(getClubsQuery, [req.user.id], (error, results) => {
+      // delete the user_id and club_id from join_chat table
+      const leaveChatQuery =
+        "DELETE FROM join_chat WHERE user_id = ? and chat_id = ?";
+      db.query(leaveChatQuery, [req.user.id, club_id], (error, results) => {
         if (error) {
           throw error;
         } else {
-          console.log(club_id);
-          res.status(200).json({ id: club_id });
-          // select the clubs info from clubs table where club_id IN results
-          // const clubs = results.map((club) => club.club_id);
-          // if (clubs.length > 0) {
-          //   const getClubsInfoQuery = "SELECT * FROM clubs WHERE id IN (?)";
-          //   db.query(getClubsInfoQuery, [clubs], (error, results) => {
-          //     if (error) throw error;
-          //     res.status(200).json(results);
-          //   });
-          // } else {
-          //   // return an empty array if no clubs are found
-          //   res.status(200).json([]);
-          // }
+          // delete the user from join_chat table where user_id = req.user.id and chat_id = club_id
+          const leaveChatQuery =
+            "DELETE FROM join_chat WHERE user_id = ? and chat_id = ?";
+          db.query(leaveChatQuery, [req.user.id, club_id], (error, results) => {
+            if (error) {
+              throw error;
+            }
+          });
+
+          // select the clubs ids from join_club table where user_id = req.user.id
+          const getClubsQuery =
+            "SELECT club_id FROM join_club WHERE user_id = ?";
+          db.query(getClubsQuery, [req.user.id], (error, results) => {
+            if (error) {
+              throw error;
+            } else {
+              console.log(club_id);
+              res.status(200).json({ id: club_id });
+            }
+          });
         }
       });
     }

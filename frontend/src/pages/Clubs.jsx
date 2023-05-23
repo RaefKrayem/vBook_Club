@@ -2,23 +2,27 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Spinner from "../components/Spinner";
-import { getAllClubs, reset } from "../features/clubs/clubSlice";
+import { getAllClubs, reset, createClub } from "../features/clubs/clubSlice";
 import ClubItem from "../components/ClubItem";
-import { getMyClubs } from "../features/myClubs/myClubSlice";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
-// import form, button and fasearch
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { FaSearch } from "react-icons/fa";
+import { FaPlus, FaSearch } from "react-icons/fa";
+import ClubForm from "../components/ClubForm";
 
 function Clubs() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.auth);
+  const [isCreating, setIsCreating] = useState(false);
+
+  const {
+    user,
+    isLoading: userLoading,
+    isError: userError,
+  } = useSelector((state) => state.auth);
   const { clubs, isLoading, isError, message } = useSelector(
     (state) => state.clubs
   );
@@ -36,18 +40,18 @@ function Clubs() {
       console.log(message);
     }
 
-    if (!user) navigate("/login");
+    if (!user && !userLoading && !userError) {
+      navigate("/login");
+    }
 
     dispatch(getAllClubs());
-    dispatch(getMyClubs());
 
     return () => {
       dispatch(reset());
     };
-  }, [user, navigate, isError, message, dispatch]);
+  }, [user, userLoading, userError, navigate, isError, message, dispatch]);
 
   useEffect(() => {
-    // Filter the clubs and myClubs based on the search query
     const filteredClubs = clubs.filter((club) =>
       club.name.toLowerCase().includes(query.toLowerCase())
     );
@@ -56,10 +60,8 @@ function Clubs() {
       club.name.toLowerCase().includes(query.toLowerCase())
     );
 
-    // Combine the filtered clubs and myClubs into a single array
     const combinedResults = [...filteredClubs, ...filteredMyClubs];
 
-    // Remove duplicates from the combined array based on club ID
     const uniqueResults = combinedResults.reduce((acc, current) => {
       const isDuplicate = acc.some((item) => item.id === current.id);
       if (!isDuplicate) {
@@ -71,7 +73,15 @@ function Clubs() {
     setFilteredResults(uniqueResults);
   }, [query, clubs, myClubs]);
 
-  if (isLoading) {
+  const handleCancelCreate = () => {
+    setIsCreating(false);
+  };
+
+  const handleCreateClub = (clubData) => {
+    dispatch(createClub(clubData));
+  };
+
+  if (isLoading || userLoading) {
     return <Spinner />;
   }
 
@@ -89,12 +99,15 @@ function Clubs() {
       >
         Clubs
       </h2>
+      <div style={{ margin: "0 auto", width: "30rem" }}>
+        {isCreating && (
+          <ClubForm onCancel={handleCancelCreate} onCreate={handleCreateClub} />
+        )}
+      </div>
 
-      {/* Add a search bar */}
-      <div className="searchBox">
+      {isCreating && (
         <div
-          className="mb-3"
-          controlId="formBasicEmail"
+          className="cancel_Div"
           style={{
             display: "flex",
             flexDirection: "row",
@@ -107,53 +120,118 @@ function Clubs() {
             marginRight: "auto",
           }}
         >
-          <Form.Control
-            type="text"
-            placeholder="Search for a club..."
-            value={query}
+          <Button
             style={{
               backgroundColor: "#37383c",
               borderColor: "#878a94",
               color: "#fff",
-              width: "30rem",
+              marginBottom: 20,
             }}
-            onChange={handleSearchChange}
-          />
-          <Button
-            type="button"
-            style={{
-              backgroundColor: "transparent",
-              border: "none",
-              borderColor: "#878a94",
-              color: "#fff",
+            onClick={() => {
+              setIsCreating(false);
+              dispatch(getAllClubs());
             }}
           >
-            <FaSearch
-              style={{
-                color: "#fff",
-                fontSize: 20,
-              }}
-            />
+            Cancel
           </Button>
         </div>
-      </div>
+      )}
 
-      {/* Render the filtered clubs */}
-      {filteredResults.length > 0 ? (
-        filteredResults.map((club) => (
-          <Col sm={12} key={club.id}>
-            <ClubItem
-              club={club}
-              isJoined={
-                myClubs.find((joinedClub) => joinedClub.id === club.id)
-                  ? true
-                  : false
-              }
-            />
-          </Col>
-        ))
-      ) : (
-        <p>No clubs found.</p>
+      {!isCreating && (
+        <>
+          <div
+            className="searchBox"
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              maxWidth: 1224,
+              width: "80%",
+            }}
+          >
+            <div
+              className="mb-3"
+              controlId="formBasicEmail"
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                maxWidth: 1224,
+              }}
+            >
+              <Form.Control
+                type="text"
+                placeholder="Search for a club..."
+                value={query}
+                style={{
+                  backgroundColor: "#37383c",
+                  borderColor: "#878a94",
+                  color: "#fff",
+                  width: "30rem",
+                }}
+                onChange={handleSearchChange}
+              />
+              <Button
+                type="button"
+                style={{
+                  backgroundColor: "transparent",
+                  border: "none",
+                  borderColor: "#878a94",
+                  color: "#fff",
+                }}
+              >
+                <FaSearch
+                  style={{
+                    color: "#fff",
+                    fontSize: 20,
+                  }}
+                />
+              </Button>
+            </div>
+            {!isCreating && (
+              <Button
+                variant="primary"
+                onClick={() => setIsCreating(true)}
+                style={{
+                  marginBottom: "1rem",
+
+                  // a suitable color for a create button
+                  backgroundColor: "#37383c",
+                  borderColor: "#878a94",
+                  color: "#fff",
+                }}
+              >
+                {/* plus icon from font awsome */}
+                <FaPlus />
+              </Button>
+            )}
+          </div>
+          {filteredResults.length > 0 ? (
+            <Row>
+              {filteredResults.map((club) => (
+                <Col sm={12} key={club.id}>
+                  <ClubItem
+                    club={club}
+                    isJoined={myClubs.some(
+                      (joinedClub) => joinedClub.id === club.id
+                    )}
+                  />
+                </Col>
+              ))}
+            </Row>
+          ) : (
+            <h3
+              style={{
+                color: "#fff",
+                textAlign: "center",
+              }}
+            >
+              No clubs found.
+            </h3>
+          )}
+        </>
       )}
     </div>
   );

@@ -47,6 +47,23 @@ export const joinClub = createAsyncThunk(
   }
 );
 
+// admin delete club
+export const deleteClub = createAsyncThunk(
+  "clubs/delete",
+  async (club_id, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token;
+    return await clubService.deleteClub(club_id, token);
+  }
+);
+
+export const createClub = createAsyncThunk(
+  "clubs/create",
+  async (club, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token;
+    return await clubService.createClub(club, token);
+  }
+);
+
 export const clubSlice = createSlice({
   name: "clubs",
   initialState,
@@ -77,6 +94,36 @@ export const clubSlice = createSlice({
         // state.myClubs.push(action.payload);
       })
       .addCase(joinClub.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+      .addCase(deleteClub.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteClub.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.clubs = state.clubs.filter(
+          (club) => club.id !== action.payload.id
+        );
+      })
+      .addCase(deleteClub.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(createClub.pending, (state) => {
+        state.isLoading = true;
+      })
+      // return the new club and push it to the array
+      .addCase(createClub.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.clubs.push(action.payload);
+      })
+      .addCase(createClub.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

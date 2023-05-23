@@ -11,8 +11,6 @@ const { db } = require("../config/db");
 const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password, profile } = req.body;
 
-  console.log("req body: ", req.body);
-
   if (!username || !email || !password) {
     res.status(400);
     throw new Error("Please add all fields");
@@ -81,6 +79,7 @@ const loginUser = asyncHandler(async (req, res) => {
             username: user.username,
             email: user.email,
             profile: user.profile,
+            isAdmin: user.isAdmin,
             token: generateToken(user.id),
           });
         } else {

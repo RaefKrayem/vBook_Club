@@ -196,46 +196,57 @@ function Header() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto d-flex justify-content-between">
-              <li className="nav-item px-3">
-                <Link className="nav-link" to="/challenges">
-                  Challenges
-                </Link>
-              </li>
-              <li className="nav-item px-3">
-                <Link className="nav-link" to="/mybooks">
-                  My Books
-                </Link>
-              </li>
-              <li className="nav-item px-3">
-                <Link className="nav-link" to="/books">
-                  Books
-                </Link>
-              </li>
-              <li className="nav-item px-3">
-                <Link className="nav-link" to="/clubs">
-                  Clubs
-                </Link>
-              </li>
-              <li className="nav-item px-3">
-                <Link className="nav-link" to="/myclubs">
-                  My Clubs
-                </Link>
-              </li>
-              <li className="nav-item px-3">
-                <Link className="nav-link" to="/friends">
-                  Friends
-                </Link>
-              </li>
-              <li className="nav-item px-3">
-                <Link className="nav-link" to="/users">
-                  Users
-                </Link>
-              </li>
-              <li className="nav-item px-3">
-                <Link className="nav-link" to="/inbox">
-                  Inbox
-                </Link>
-              </li>
+              {user.isAdmin === 1 ? (
+                <li className="nav-item px-3">
+                  <Link className="nav-link" to="/clubs">
+                    Clubs
+                  </Link>
+                </li>
+              ) : (
+                <>
+                  <li className="nav-item px-3">
+                    <Link className="nav-link" to="/challenges">
+                      Challenges
+                    </Link>
+                  </li>
+                  <li className="nav-item px-3">
+                    <Link className="nav-link" to="/mybooks">
+                      My Books
+                    </Link>
+                  </li>
+                  <li className="nav-item px-3">
+                    <Link className="nav-link" to="/books">
+                      Books
+                    </Link>
+                  </li>
+                  <li className="nav-item px-3">
+                    <Link className="nav-link" to="/clubs">
+                      Clubs
+                    </Link>
+                  </li>
+                  <li className="nav-item px-3">
+                    <Link className="nav-link" to="/myclubs">
+                      My Clubs
+                    </Link>
+                  </li>
+                  <li className="nav-item px-3">
+                    <Link className="nav-link" to="/friends">
+                      Friends
+                    </Link>
+                  </li>
+                  <li className="nav-item px-3">
+                    <Link className="nav-link" to="/users">
+                      Users
+                    </Link>
+                  </li>
+                  <li className="nav-item px-3">
+                    <Link className="nav-link" to="/inbox">
+                      Inbox
+                    </Link>
+                  </li>
+                </>
+              )}
+
               <li className="nav-item pr-3 pl-1">
                 <Link
                   className="nav-link sessionEmpty"

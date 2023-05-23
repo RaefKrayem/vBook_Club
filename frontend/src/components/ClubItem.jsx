@@ -1,18 +1,16 @@
-import { useDispatch } from "react-redux";
-import { getAllClubs, joinClub } from "../features/clubs/clubSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllClubs, joinClub, deleteClub } from "../features/clubs/clubSlice";
 import { getMyClubs, leaveClub } from "../features/myClubs/myClubSlice";
 import { getMessages } from "../features/messages/messageSlice";
 import { Link } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 // import all images from assets folder
 
 import "../styles/testClub.css";
 
 function ClubItem({ club, isJoined }) {
   const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.auth);
 
   return (
     // set a border of border: "1px solid #eef1f4"
@@ -31,43 +29,60 @@ function ClubItem({ club, isJoined }) {
         </div>
 
         <div className="club_card_btns">
-          {isJoined ? (
+          {user.isAdmin === 0 ? (
             <>
-              <Link
-                to={`/messages`}
-                state={{ id: club.id, chatName: club.name }} // <-- state prop
-                key={club.id}
-              >
+              {isJoined ? (
+                <>
+                  <Link
+                    to={`/messages`}
+                    state={{ id: club.id, chatName: club.name }} // <-- state prop
+                    key={club.id}
+                  >
+                    <button
+                      className="button"
+                      onClick={() => dispatch(getMessages(club.id))}
+                    >
+                      Chat
+                    </button>
+                  </Link>
+                  <button
+                    className="button"
+                    onClick={() => {
+                      dispatch(leaveClub(club.id));
+                      dispatch(getAllClubs());
+                      dispatch(getMyClubs());
+                    }}
+                  >
+                    Leave
+                  </button>
+                </>
+              ) : (
                 <button
+                  // variant="primary"
+                  onClick={() => {
+                    dispatch(joinClub(club.id));
+                    dispatch(getAllClubs());
+                    dispatch(getMyClubs());
+                  }}
                   className="button"
-                  onClick={() => dispatch(getMessages(club.id))}
                 >
-                  Chat
+                  Join
                 </button>
-              </Link>
-              <button
-                className="button"
-                onClick={() => {
-                  dispatch(leaveClub(club.id));
-                  dispatch(getAllClubs());
-                  dispatch(getMyClubs());
-                }}
-              >
-                Leave
-              </button>
+              )}
             </>
           ) : (
-            <button
-              // variant="primary"
-              onClick={() => {
-                dispatch(joinClub(club.id));
-                dispatch(getAllClubs());
-                dispatch(getMyClubs());
-              }}
-              className="button"
-            >
-              Join
-            </button>
+            <>
+              <button
+                // variant="primary"
+                onClick={() => {
+                  dispatch(deleteClub(club.id));
+                  dispatch(getAllClubs());
+                }}
+                className="button"
+              >
+                Delete
+              </button>
+            </>
           )}
         </div>
       </div>

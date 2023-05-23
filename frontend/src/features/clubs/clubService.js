@@ -35,9 +35,43 @@ const joinClub = async (club_id, token) => {
   }
 };
 
+// admin delete club
+const deleteClub = async (club_id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await axios.delete(API_URL + club_id, config);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// create club
+const createClub = async (club, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await axios.post(API_URL, club, config);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const clubService = {
   getClubs,
   joinClub,
+  deleteClub,
+  createClub,
 };
 
 export default clubService;

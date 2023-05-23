@@ -141,31 +141,46 @@ const leaveClub = asyncHandler(async (req, res) => {
 // @route   POST /api/clubs
 // @access  Private
 const createClub = asyncHandler(async (req, res) => {
-  const { club_name, club_description } = req.body;
+  const { name, description, profile } = req.body;
 
   const checkQuery = "SELECT * FROM clubs WHERE name = ?";
-  db.query(checkQuery, [club_name], (error, results) => {
+  db.query(checkQuery, [name], (error, results) => {
     if (error) {
       throw error;
     } else if (results.length === 0) {
       const createClubQuery = "INSERT INTO clubs SET ?";
       const club = {
         id: uuid(),
-        name: club_name,
-        description: club_description,
+        name: name,
+        description: description,
+        profile: profile,
       };
 
       db.query(createClubQuery, club, (error, results) => {
         if (error) {
           throw error;
         } else {
-          res.status(200).json({
-            message: `Club ${club.name} created successfully`,
-          });
+          res.status(200).json(club);
         }
       });
     } else {
       res.status(400).json({ message: "Club already exists" });
+    }
+  });
+});
+
+// @desc    Delete club
+// @route   POST /api/clubs
+// @access  Private
+const deleteClub = asyncHandler(async (req, res) => {
+  const club_id = req.params.id;
+  const deleteClubQuery = `DELETE FROM clubs WHERE id = ?`;
+
+  db.query(deleteClubQuery, club_id, (error, results) => {
+    if (error) {
+      throw error;
+    } else if (results.affectedRows > 0) {
+      res.status(200).json({ id: club_id });
     }
   });
 });
@@ -177,4 +192,5 @@ module.exports = {
   joinClub,
   leaveClub,
   createClub,
+  deleteClub,
 };

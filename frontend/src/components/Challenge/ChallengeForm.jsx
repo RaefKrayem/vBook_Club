@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createChallenge } from "../../features/challenges/challengeSlice";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Row, Col } from "react-bootstrap";
 import { format } from "date-fns";
 import Card from "react-bootstrap/Card";
 import "../../styles/ChallengeForm.css";
@@ -62,6 +62,7 @@ function ChallengeForm() {
                 value={start_date}
                 onChange={(e) => setStartDate(e.target.value)}
                 required
+                min={new Date().toISOString().split("T")[0]}
                 onBlur={(e) => {
                   const formattedDate = format(
                     new Date(e.target.value),
@@ -78,6 +79,7 @@ function ChallengeForm() {
                 placeholder="Enter end date"
                 value={end_date}
                 onChange={(e) => setEndDate(e.target.value)}
+                min={start_date}
                 required
                 onBlur={(e) => {
                   const formattedDate = format(

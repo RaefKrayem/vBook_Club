@@ -78,7 +78,13 @@ function ClubForm({ onCancel }) {
               </Form.Group>
 
               <Form.Group controlId="end_date" id="challenge_form_group">
-                <Form.Label>Club image: </Form.Label>
+                <Form.Label
+                  style={{
+                    marginRight: "10px",
+                  }}
+                >
+                  Club image:
+                </Form.Label>
                 <Widget
                   publicKey="5f30f5f7cb01c02529d1"
                   id="file"

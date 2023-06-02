@@ -103,7 +103,7 @@ function UserItem({ user, isFriend }) {
         <div className="friend_request_container">
           <Link
             to={`/messages`}
-            state={{ userInfo: user }}
+            state={{ userInfo: user, chatProfile: user.profile }}
             key={user.id}
             className="text-decoration-none friend_request_link"
           >

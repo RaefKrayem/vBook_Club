@@ -21,6 +21,7 @@ function Messages() {
   const [id, setId] = useState(location.state.id);
   console.log("location.state: ", location.state);
   const [chatName, setChatName] = useState(location.state.chatName);
+  const [chatProfile, setChatProfile] = useState(location.state.chatProfile);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -62,7 +63,8 @@ function Messages() {
     <>
       <section className="messages_body">
         <div className="chatName">
-          <h2>{chatName ? chatName : userInfo.username}</h2>
+          <img src={chatProfile} alt="" className="i-chat-avatar" />
+          <h3>{chatName ? chatName : userInfo.username}</h3>
         </div>
         <div
           className="messages_container"

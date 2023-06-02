@@ -14,20 +14,29 @@ function MessageItem({ message, isUserMessage }) {
           {/* if the message is a user message display the profile in the src */}
           {/* else display the default profile */}
           <img
-            // src={
-            //   message.profile
-            //     ? message.profile
-            //     : "https://www.bootdey.com/img/Content/avatar/avatar1.png"
-            // }
-            src={user.profile}
+            src={
+              message.profile
+                ? message.profile
+                : isUserMessage
+                ? user.profile
+                : "https://www.bootdey.com/img/Content/avatar/avatar1.png"
+            }
             alt="Avatar"
             className="rounded-circle"
           />
         </div>
         <div className="chat-body">
           <div className="chat-message">
-            {!isUserMessage ? <h5>{message.sender_username}: </h5> : ""}
-            <p>{message.content}</p>
+            {!isUserMessage ? (
+              <h5 style={{ color: "#1d1e20" }}>{message.sender_username}: </h5>
+            ) : (
+              ""
+            )}
+            {isUserMessage ? (
+              <p>{message.content}</p>
+            ) : (
+              <p style={{ color: "#1d1e20" }}>{message.content}</p>
+            )}
           </div>
         </div>
       </li>

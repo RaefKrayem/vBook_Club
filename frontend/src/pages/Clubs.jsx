@@ -145,9 +145,9 @@ function Clubs() {
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
-              justifyContent: "space-between",
               maxWidth: 1224,
-              width: "80%",
+              width: "100%",
+              paddingLeft: 400,
             }}
           >
             <div
@@ -190,13 +190,14 @@ function Clubs() {
                 />
               </Button>
             </div>
-            {!isCreating && (
+            {!isCreating && user.isAdmin == "1" && (
               <Button
                 variant="primary"
                 onClick={() => setIsCreating(true)}
                 style={{
                   marginBottom: "1rem",
-
+                  marginLeft: "auto",
+                  marginRight: 10,
                   // a suitable color for a create button
                   backgroundColor: "#37383c",
                   borderColor: "#878a94",

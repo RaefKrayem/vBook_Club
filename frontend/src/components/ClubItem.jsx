@@ -35,7 +35,11 @@ function ClubItem({ club, isJoined }) {
                 <>
                   <Link
                     to={`/messages`}
-                    state={{ id: club.id, chatName: club.name }} // <-- state prop
+                    state={{
+                      id: club.id,
+                      chatName: club.name,
+                      profile: club.profile,
+                    }} // <-- state prop
                     key={club.id}
                   >
                     <button

@@ -43,6 +43,7 @@ const registerUser = asyncHandler(async (req, res) => {
           username: user.username,
           email: user.email,
           profile: user.profile,
+          isAdmin: user.isAdmin || 0,
           token: generateToken(user.id),
         });
       });
@@ -70,6 +71,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
     if (results.length > 0) {
       const user = results[0];
+
       bcrypt.compare(password, user.password, (err, result) => {
         if (err) throw err;
 
@@ -103,7 +105,7 @@ const getMe = asyncHandler(async (req, res) => {
 // @route   GET /api/users
 // @access  Private
 const getUsers = asyncHandler(async (req, res) => {
-  const getQuery = "SELECT * FROM users WHERE id != ?";
+  const getQuery = "SELECT * FROM users WHERE id != ? && isAdmin = 0";
   db.query(getQuery, [req.user.id], (error, results) => {
     if (error) throw error;
 

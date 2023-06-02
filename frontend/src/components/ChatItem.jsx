@@ -13,7 +13,11 @@ function ChatItem({ chat }) {
     <>
       <Link
         to={`/messages`}
-        state={{ id: chat.id, chatName: chat.name }} // <-- state prop
+        state={{
+          id: chat.id,
+          chatName: chat.name,
+          chatProfile: chat.profile,
+        }} // <-- state prop
         key={chat.id}
         onClick={() => dispatch(getMessages(chat.id))}
         style={{

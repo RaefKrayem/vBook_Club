@@ -85,7 +85,7 @@ function Register() {
                   placeholder="Enter your name"
                   name="username"
                   value={username}
-                  minLength={6}
+                  minLength={5}
                   onChange={onChange}
                   required
                   className="user_input"

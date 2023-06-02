@@ -14,7 +14,7 @@ function Books() {
   const [startIndex, setStartIndex] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
   // const [query, setQuery] = useState(randomwords(1)[0]); // Set default category to Computer Science
-  const [query, setQuery] = useState("The Phoenix Project");
+  const [query, setQuery] = useState("Atomic habits");
   const maxResults = 20;
   const dispatch = useDispatch();
   const { books, isLoading, isError, message } = useSelector(

@@ -29,7 +29,7 @@ function MessageForm({ chat_id }) {
     <form onSubmit={handleSubmit}>
       <InputGroup className=" comment_input_group">
         <Form.Control
-          placeholder="Add Comment"
+          placeholder="Send a message..."
           aria-label="Recipient's username"
           aria-describedby="basic-addon2"
           value={content}

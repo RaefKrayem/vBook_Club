@@ -1,12 +1,11 @@
 import { useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { saveBook, unsaveBook, getBooks } from "../../features/books/bookSlice";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Comments from "../Comments/Comments";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useState } from "react";
+import { FaStar } from "react-icons/fa";
 import "../../styles/BookPage.css";
 
 function BookItem() {
@@ -68,10 +67,30 @@ function BookItem() {
               </Row>
               <Row>
                 <Col>
+                  <h5>
+                    {bookInfo.averageRating ? (
+                      <>
+                        Average Rating: {bookInfo.averageRating} / 5{" "}
+                        <FaStar
+                          style={{ color: "#f5c518", paddingBottom: "0.2rem" }}
+                        />
+                      </>
+                    ) : (
+                      "No ratings yet"
+                    )}
+                  </h5>
+
+                  {/* add the page count */}
+                  <h5>
+                    {bookInfo.pageCount} pages{" "}
+                    {bookInfo.publishedDate &&
+                      "(" + bookInfo.publishedDate.slice(0, 4) + ")"}
+                  </h5>
+
                   <p>
                     {showFullDescription
                       ? bookInfo.description
-                      : bookInfo.description.slice(0, 1200) + "..."}
+                      : bookInfo.description.slice(0, 900) + "..."}
                   </p>
                   <button onClick={toggleDescription} className="button">
                     {showFullDescription ? "Show Less" : "Show More"}

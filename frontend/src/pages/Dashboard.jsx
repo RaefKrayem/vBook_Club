@@ -6,8 +6,7 @@ import Spinner from "../components/Spinner";
 import { getAllChallenges, reset } from "../features/challenges/challengeSlice";
 import ChallengeForm from "../components/Challenge/ChallengeForm";
 import ChallengeItem from "../components/Challenge/ChallengeItem";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import BardLogin from "../components/BardLogin";
+import { Container, Row, Col } from "react-bootstrap";
 import "../styles/Challenges.css";
 
 function Dashboard() {

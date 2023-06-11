@@ -13,7 +13,6 @@ import {
 import {
   FaPencilAlt,
   FaTrashAlt,
-  FaClock,
   FaBookOpen,
   FaHourglassStart,
   FaHourglassEnd,
@@ -60,76 +59,6 @@ function ChallengeItem({ challenge }) {
   }
 
   return (
-    // <Card
-    //   className="mb-3"
-    //   style={{
-    //     height: "370px",
-    //   }}
-    // >
-    //   <Card.Header
-    //     as="h5"
-    //     style={{ backgroundColor: "#708D81 ", color: "#77BFA3 " }}
-    //   >
-    //     {challenge.name}
-    //   </Card.Header>
-    //   {!isEditing ? (
-    //     <Card.Body>
-    //       <Card.Text>
-    //         <span className="font-weight-bold">Start Date:</span>{" "}
-    //         {new Date(challenge.start_date).toLocaleDateString()} <br />
-    //         <span className="font-weight-bold">End Date:</span>{" "}
-    //         {new Date(challenge.end_date).toLocaleDateString()} <br />
-    //         <span className="font-weight-bold">Completed Pages:</span>{" "}
-    //         {challenge.completed_pages} / {challenge.total_pages} <br />
-    //         <span className="font-weight-bold">Remaining Pages:</span>{" "}
-    //         {challenge.total_pages - challenge.completed_pages} <br />
-    //         <span className="font-weight-bold">Time Left:</span>{" "}
-    //         {new Date(challenge.end_date) > new Date()
-    //           ? Math.ceil(
-    //               (new Date(challenge.end_date) - new Date()) /
-    //                 (1000 * 60 * 60 * 24)
-    //             ) + " days"
-    //           : "Challenge ended"}
-    //         <br />
-    //         <span className="font-weight-bold">Status:</span>{" "}
-    //         <FontAwesomeIcon icon={icon} style={{ color: iconColor }} />
-    //         {challenge.status}
-    //       </Card.Text>
-    //       <ProgressBar
-    //         now={progress}
-    //         label={`${progress}%`}
-    //         style={progressStyle}
-    //       />
-    //       {challenge.status === "in progress" && (
-    //         <>
-    //           <Button
-    //             variant="secondary"
-    //             onClick={handleEdit}
-    //             className="mt-2"
-    //             style={{
-    //               backgroundColor: "#A8763E",
-    //               color: "#F7F3E3",
-    //             }}
-    //           >
-    //             Edit
-    //           </Button>{" "}
-    //         </>
-    //       )}
-
-    //       {/* {isEditing && (
-    //       <ChallengeEditForm challenge={challenge} onCancel={handleCancel} />
-    //     )} */}
-    //     </Card.Body>
-    //   ) : (
-    //     <Card.Body>
-    //       <ChallengeEditForm challenge={challenge} onCancel={handleCancel} />
-    //     </Card.Body>
-    //   )}
-    //   <Button variant="danger" onClick={handleDelete} className="mt-2">
-    //     Delete
-    //   </Button>{" "}
-    // </Card>
-
     <div
       className="challenge_container"
       style={{

@@ -26,7 +26,6 @@ function Clubs() {
   const { clubs, isLoading, isError, message } = useSelector(
     (state) => state.clubs
   );
-  const { myClubs } = useSelector((state) => state.myClubs);
 
   const [query, setQuery] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
@@ -56,22 +55,8 @@ function Clubs() {
       club.name.toLowerCase().includes(query.toLowerCase())
     );
 
-    const filteredMyClubs = myClubs.filter((club) =>
-      club.name.toLowerCase().includes(query.toLowerCase())
-    );
-
-    const combinedResults = [...filteredClubs, ...filteredMyClubs];
-
-    const uniqueResults = combinedResults.reduce((acc, current) => {
-      const isDuplicate = acc.some((item) => item.id === current.id);
-      if (!isDuplicate) {
-        acc.push(current);
-      }
-
-      return acc;
-    }, []);
-    setFilteredResults(uniqueResults);
-  }, [query, clubs, myClubs]);
+    setFilteredResults(filteredClubs);
+  }, [query, clubs]);
 
   const handleCancelCreate = () => {
     setIsCreating(false);
@@ -211,13 +196,12 @@ function Clubs() {
           </div>
           {filteredResults.length > 0 ? (
             <Row>
-              {filteredResults.map((club) => (
+              {filteredResults.map((club, index) => (
                 <Col sm={12} key={club.id}>
                   <ClubItem
+                    key={club.id + index}
                     club={club}
-                    isJoined={myClubs.some(
-                      (joinedClub) => joinedClub.id === club.id
-                    )}
+                    isJoined={club.joined}
                   />
                 </Col>
               ))}

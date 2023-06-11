@@ -27,12 +27,9 @@ app.use("/api/books", require("./routes/bookRoutes"));
 app.use("/api/clubs", require("./routes/clubRoutes"));
 app.use("/api/friends", require("./routes/friendRoutes"));
 app.use("/api/challenges", require("./routes/challengeRoutes"));
-// app.use("/api/categories", require("./routes/categoryRoutes"));
 app.use("/api/messages", require("./routes/messageRoutes"));
 app.use("/api/comments", require("./routes/commentRoutes"));
 app.use("/api/chats", require("./routes/chatRoutes"));
-
-// https://www.youtube.com/watch?v=jD7FnbI76Hg
 
 // override the express default error handler
 app.use(errorHandler);

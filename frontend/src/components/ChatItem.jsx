@@ -35,7 +35,7 @@ function ChatItem({ chat }) {
           </div>
           <div className="i-chat-content">
             <h2>{chat.name}</h2>
-            <p>Last message received...</p>
+            <p></p>
           </div>
         </div>
       </Link>

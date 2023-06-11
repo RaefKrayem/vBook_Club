@@ -28,7 +28,13 @@ function App() {
         {user && <Header />}
         <Routes>
           {user ? (
-            <Route path="/" element={<Books />} />
+            <>
+              {user.isAdmin ? (
+                <Route path="/" element={<Clubs />} />
+              ) : (
+                <Route path="/" element={<Books />} />
+              )}
+            </>
           ) : (
             <Route path="/" element={<Login />} />
           )}

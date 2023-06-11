@@ -13,8 +13,6 @@ function ClubItem({ club, isJoined }) {
   const { user } = useSelector((state) => state.auth);
 
   return (
-    // set a border of border: "1px solid #eef1f4"
-
     <div className="club_card_container">
       <div className="club_card_image">
         <img src={club.profile} alt="" loading="lazy" />
@@ -38,7 +36,7 @@ function ClubItem({ club, isJoined }) {
                     state={{
                       id: club.id,
                       chatName: club.name,
-                      profile: club.profile,
+                      chatProfile: club.profile,
                     }} // <-- state prop
                     key={club.id}
                   >

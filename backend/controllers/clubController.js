@@ -12,7 +12,27 @@ const getClubs = asyncHandler(async (req, res) => {
     if (error) {
       throw error;
     }
-    res.status(200).json(results);
+
+    const clubsIds = results.map((club) => club.id);
+    const getClubsInfoQuery = "SELECT * FROM clubs WHERE id IN (?)";
+    db.query(getClubsInfoQuery, [clubsIds], (error, results) => {
+      if (error) throw error;
+      const clubs = results;
+      const getJoinedClubsQuery =
+        "SELECT club_id FROM join_club WHERE user_id = ?";
+      db.query(getJoinedClubsQuery, [req.user.id], (error, results) => {
+        if (error) throw error;
+        const joinedClubs = results.map((club) => club.club_id);
+        clubs.forEach((club) => {
+          if (joinedClubs.includes(club.id)) {
+            club.joined = true;
+          } else {
+            club.joined = false;
+          }
+        });
+        res.status(200).json(clubs);
+      });
+    });
   });
 });
 

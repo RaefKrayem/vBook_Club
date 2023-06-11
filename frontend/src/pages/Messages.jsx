@@ -1,8 +1,6 @@
 import { useEffect, useState, useContext, useRef } from "react";
-import { useNavigate, Link, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
-import Spinner from "../components/Spinner";
 import {
   getFriendMessages,
   getMessages,
@@ -14,7 +12,6 @@ import "../styles/Messages.css";
 
 function Messages() {
   const location = useLocation();
-  // const id  = useParams();
 
   // new added code
   const [userInfo, setUserInfo] = useState(location.state.userInfo);

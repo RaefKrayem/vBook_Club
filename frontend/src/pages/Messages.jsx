@@ -1,22 +1,26 @@
 import { useEffect, useState, useContext, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getFriendMessages,
-  getMessages,
-  reset,
-} from "../features/messages/messageSlice";
+import { getMessages, reset } from "../features/messages/messageSlice";
 import MessageItem from "../components/Message/MessageItem.jsx";
 import MessageForm from "../components/Message/MessageForm.jsx";
 import "../styles/Messages.css";
 
-function Messages() {
-  const location = useLocation();
+import io from "socket.io-client";
 
-  // new added code
+const socket = io.connect("http://localhost:4000");
+
+function Messages() {
+  console.log("socket: ", socket);
+
+  const location = useLocation();
+  console.log(location.state);
+
+  // userInfo to access from friends and users page
   const [userInfo, setUserInfo] = useState(location.state.userInfo);
+
+  // to access from chatItem
   const [id, setId] = useState(location.state.id);
-  console.log("location.state: ", location.state);
   const [chatName, setChatName] = useState(location.state.chatName);
   const [chatProfile, setChatProfile] = useState(location.state.chatProfile);
 
@@ -30,6 +34,20 @@ function Messages() {
   );
 
   useEffect(() => {
+    socket.emit("join_room", id);
+  }, [id]);
+
+  // handle receiving messages through socket
+  useEffect(() => {
+    console.log("the socket is: ", socket);
+    socket.on("receive_message", (data) => {
+      console.log("received message: ", data);
+      dispatch(getMessages(id));
+    });
+  }, [socket]);
+  // -----------------------------------------------
+
+  useEffect(() => {
     if (isError && messages.length > 0) {
       console.log(message);
     }
@@ -37,14 +55,13 @@ function Messages() {
     if (!user) navigate("/login");
 
     if (id) {
-      console.log("chatName", chatName);
       dispatch(getMessages(id));
     }
 
     return () => {
       dispatch(reset());
     };
-  }, [user, navigate, isError, dispatch]);
+  }, [user, navigate, isError]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -88,7 +105,10 @@ function Messages() {
             </div>
             <div className="div-form">
               {messages.length > 0 && (
-                <MessageForm chat_id={id ? id : messages[0].chat_id} />
+                <MessageForm
+                  chat_id={id ? id : messages[0].chat_id}
+                  socket={socket}
+                />
               )}
             </div>
           </div>

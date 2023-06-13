@@ -14,8 +14,8 @@ import Users from "./pages/Users";
 import Books from "./pages/Books";
 import MyBooks from "./pages/MyBooks";
 import BookItem from "./components/Book/BookItem";
-import BardLogin from "./components/BardLogin";
 import { useSelector } from "react-redux";
+import SocketMessages from "./pages/SocketChat/SocketMessages";
 
 function App() {
   const { user, isLoading, isError, isSuccess, message } = useSelector(
@@ -51,7 +51,7 @@ function App() {
           <Route path="/books" element={<Books />} />
           <Route path="/mybooks" element={<MyBooks />} />
           <Route path="/book/:id" element={<BookItem />} />
-          <Route path="/bard" element={<BardLogin />} />
+          <Route path="/socketMessages" element={<SocketMessages />} />
         </Routes>
       </Router>
       <ToastContainer />

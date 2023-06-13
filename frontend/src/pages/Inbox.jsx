@@ -1,5 +1,5 @@
-import { useEffect, useState, createContext } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // to check if the user exists in the local storage
 import { useSelector, useDispatch } from "react-redux";
 import Spinner from "../components/Spinner";
@@ -36,10 +36,10 @@ function Inbox() {
 
   return (
     <>
-      <div class="inbox_body">
-        <div class="inbox">
-          <h1 class="inbox_h1">My Inbox</h1>
-          <div class="i-chat-container">
+      <div className="inbox_body">
+        <div className="inbox">
+          <h1 className="inbox_h1">My Inbox</h1>
+          <div className="i-chat-container">
             {chats.length > 0 ? (
               <>
                 {chats.map((chat) => (

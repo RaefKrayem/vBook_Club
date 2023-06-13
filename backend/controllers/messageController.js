@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const { db } = require("../config/db");
 const { uuid } = require("uuidv4");
+const { io } = require("../server");
 
 // @desc    Get all messages
 // @route   GET /api/messages

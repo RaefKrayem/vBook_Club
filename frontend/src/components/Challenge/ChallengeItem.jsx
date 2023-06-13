@@ -2,13 +2,15 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteChallenge } from "../../features/challenges/challengeSlice";
 import ChallengeEditForm from "./ChallengeEditForm";
-import { Card, Button, ProgressBar } from "react-bootstrap";
+import { ProgressBar } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
   faTimesCircle,
   faCircle,
 } from "@fortawesome/free-solid-svg-icons";
+
+import "../../styles/Challenge.css";
 
 import {
   FaPencilAlt,

@@ -1,19 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-// import create message from message slice
-import { sendMessage, getMessages } from "../../features/messages/messageSlice";
-import { PaperPlaneRight } from "phosphor-react";
+import { sendMessage } from "../../features/messages/messageSlice";
+import { PaperPlaneRight, User } from "phosphor-react";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
+import { useSelector } from "react-redux";
 
-function MessageForm({ chat_id }) {
+function MessageForm({ chat_id, socket }) {
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
 
-  const handleSubmit = (e) => {
+  const { user } = useSelector((state) => state.auth);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(sendMessage({ content, chat_id }));
-    // dispatch(getMessages(chat_id));
+    await socket.emit("send_message", {
+      id: user._id,
+      sender_username: user.username,
+      sender_id: user.id,
+      chat_id: chat_id,
+      content: content,
+      sent_at:
+        new Date(Date.now()).getHours() +
+        ":" +
+        new Date(Date.now()).getMinutes(),
+      profile: user.profile,
+    });
     clearMessage();
   };
 

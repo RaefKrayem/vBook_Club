@@ -3,14 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaUser } from "react-icons/fa";
-import { login, register, reset } from "../features/auth/authSlice";
+import { register, reset } from "../features/auth/authSlice";
 import Spinner from "../components/Spinner";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import RegisterImage from "../assets/Register.jpg";
 import "../styles/Login.css";
 
 import { Widget } from "@uploadcare/react-widget";

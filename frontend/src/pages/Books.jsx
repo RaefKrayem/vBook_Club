@@ -86,6 +86,9 @@ function Books() {
               type="text"
               placeholder="Enter a book title"
               value={query}
+              onKeyPress={(e) => {
+                e.key === "Enter" && handleSearchSubmit();
+              }}
               style={{
                 backgroundColor: "#37383c",
                 borderColor: "#878a94",

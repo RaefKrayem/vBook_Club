@@ -6,6 +6,10 @@ const { connectDb } = require("./config/db");
 const PORT = process.env.PORT || 5000;
 const cors = require("cors");
 
+const { Server } = require("socket.io");
+const http = require("http");
+const { Socket } = require("dgram");
+
 // Database Connection
 connectDb();
 
@@ -16,6 +20,59 @@ app.use(
     origin: "*",
   })
 );
+
+// ---------------------------------------------------------------------------
+
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+
+// io.on("connection", (socket) => {
+//   console.log("a user connected");
+
+//   socket.on("join_room", (data) => {
+//     socket.join(data);
+//     console.log("User" + socket.id + " joined room: " + data);
+//   });
+
+//   socket.on("send_message", (data) => {
+//     console.log("sending message", data);
+//     socket.to(data.room).emit("receive_message", data);
+//   });
+
+//   socket.on("disconnect", () => {
+//     console.log("user disconnected", socket.id);
+//   });
+// });
+
+io.on("connection", (socket) => {
+  console.log("a user connected");
+
+  socket.on("join_room", (room) => {
+    socket.join(room);
+    console.log("User" + socket.id + " joined room: " + room);
+  });
+
+  socket.on("send_message", (message) => {
+    console.log("sending message", message.content);
+    console.log("to room", message.chat_id);
+    socket.to(message.chat_id).emit("receive_message", message);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("user disconnected", socket.id);
+  });
+});
+
+server.listen(4000, () => {
+  console.log("listening on *:4000");
+});
+
+// ---------------------------------------------------------------------------
 
 // body parser for raw json
 app.use(express.json());

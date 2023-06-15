@@ -31,24 +31,6 @@ const io = new Server(server, {
   },
 });
 
-// io.on("connection", (socket) => {
-//   console.log("a user connected");
-
-//   socket.on("join_room", (data) => {
-//     socket.join(data);
-//     console.log("User" + socket.id + " joined room: " + data);
-//   });
-
-//   socket.on("send_message", (data) => {
-//     console.log("sending message", data);
-//     socket.to(data.room).emit("receive_message", data);
-//   });
-
-//   socket.on("disconnect", () => {
-//     console.log("user disconnected", socket.id);
-//   });
-// });
-
 io.on("connection", (socket) => {
   console.log("a user connected");
 
@@ -71,8 +53,6 @@ io.on("connection", (socket) => {
 server.listen(4000, () => {
   console.log("listening on *:4000");
 });
-
-// ---------------------------------------------------------------------------
 
 // body parser for raw json
 app.use(express.json());
